@@ -9,6 +9,8 @@
       |
       <router-link to="/find-friends">Find Friends</router-link>
       |
+      <router-link to="/friends">Friends</router-link>
+      |
       <span @click="logOut()">Log Out</span>
     </div>
     <router-view />

@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import LogIn from "../views/LogIn.vue";
 import FindFriends from "../views/FindFriends.vue";
+import Friends from "../views/Friends.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes = [
     path: "/find-friends",
     name: "FindFriends",
     component: FindFriends,
+  },
+  {
+    path: "/friends",
+    name: "Friends List",
+    component: Friends,
   },
 ];
 
