@@ -1,11 +1,15 @@
 <template>
   <div id="app">
+    <span id="login-status">{{ loginStatus }}</span>
+
     <div id="nav" v-if="isHome">
-      <router-link to="/">Secret home page</router-link>
-      |
       <router-link to="/find-friends">Find Friends</router-link>
       |
       <router-link to="/chat">Chat</router-link>
+      |
+      <router-link to="/advanced-chat">Cool chat</router-link>
+      |
+      <router-link to="/me">View/Edit My Account</router-link>
       |
       <span @click="logOut()">Log Out</span>
     </div>
@@ -14,6 +18,10 @@
 </template>
 
 <style>
+#login-status {
+  text-align: right;
+  color: gray;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -39,10 +47,30 @@
 <script>
 import axios from "axios";
 export default {
+  data: function () {
+    return {
+      loginStatus: "Not logged in",
+    };
+  },
+  created: function () {
+    this.loginCheck();
+  },
   methods: {
+    loginCheck: function () {
+      if (localStorage.first_name !== "null") {
+        this.loginStatus = `Logged in as ${localStorage.first_name}`;
+        console.log(localStorage);
+      } else {
+        this.loginStatus = "Not logged in";
+      }
+    },
     logOut: function () {
       console.log("logged out!");
-      localStorage.setItem("jwt", "");
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("email");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("first_name");
+      this.loginStatus = "Not logged in";
       axios.defaults.headers.common["Authorization"] = "not logged in";
       this.$router.push("/");
     },
@@ -50,6 +78,9 @@ export default {
   computed: {
     isHome() {
       return this.$route.name !== "Home";
+    },
+    isLogIn() {
+      return this.$route.name !== "LogIn";
     },
   },
 };

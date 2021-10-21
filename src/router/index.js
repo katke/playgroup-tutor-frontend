@@ -5,6 +5,8 @@ import CreateAccount from "../views/CreateAccount.vue";
 import LogIn from "../views/LogIn.vue";
 import FindFriends from "../views/FindFriends.vue";
 import Chat from "../views/Chat.vue";
+import MyProfile from "../views/MyProfile.vue";
+import AdvancedChat from "../views/AdvancedChat.vue";
 
 Vue.use(VueRouter);
 
@@ -15,12 +17,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/me",
+    name: "My Profile",
+    component: MyProfile,
   },
   {
     path: "/create-account",
@@ -41,6 +40,11 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: Chat,
+  },
+  {
+    path: "/advanced-chat",
+    name: "AdvancedChat",
+    component: AdvancedChat,
   },
 ];
 

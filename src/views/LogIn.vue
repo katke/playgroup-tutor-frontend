@@ -31,9 +31,13 @@ export default {
   created: function () {},
   methods: {
     signIn: function () {
+      console.log(this.inputParams);
       axios.post("/sessions", this.inputParams).then((response) => {
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
+        localStorage.setItem("user_id", response.data.user_id);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("first_name", response.data.first_name);
         console.log(response.data, "Success!");
         this.$router.push("/find-friends");
       });
