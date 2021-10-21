@@ -3,13 +3,9 @@
     <div id="nav" v-if="isHome">
       <router-link to="/">Secret home page</router-link>
       |
-      <router-link to="/log-in">Log In</router-link>
-      |
-      <router-link to="/create-account">Create Account</router-link>
-      |
       <router-link to="/find-friends">Find Friends</router-link>
       |
-      <router-link to="/friends">Friends</router-link>
+      <router-link to="/chat">Chat</router-link>
       |
       <span @click="logOut()">Log Out</span>
     </div>
@@ -48,7 +44,7 @@ export default {
       console.log("logged out!");
       localStorage.setItem("jwt", "");
       axios.defaults.headers.common["Authorization"] = "not logged in";
-      this.$router.push("/log-in");
+      this.$router.push("/");
     },
   },
   computed: {

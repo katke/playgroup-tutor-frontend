@@ -22,7 +22,10 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      inputParams: {},
+      inputParams: {
+        email: "test@gmail.com",
+        password: "password",
+      },
     };
   },
   created: function () {},

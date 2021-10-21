@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import LogIn from "../views/LogIn.vue";
 import FindFriends from "../views/FindFriends.vue";
-import Friends from "../views/Friends.vue";
+import Chat from "../views/Chat.vue";
 
 Vue.use(VueRouter);
 
@@ -38,9 +38,9 @@ const routes = [
     component: FindFriends,
   },
   {
-    path: "/friends",
-    name: "Friends List",
-    component: Friends,
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
   },
 ];
 
