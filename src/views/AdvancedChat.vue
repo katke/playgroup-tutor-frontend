@@ -106,55 +106,58 @@ export default {
     };
   },
   methods: {
-    showFriends: function () {
+    loadFriends: function () {
       axios.get("/friends").then((response) => {
         this.friends = response.data;
-        // this.showMessages(this.friends[0]);
-        // Need to change it so this is a function, and waits for the messages to load..
-        // vvv
+      });
+    },
+    test: function () {},
+    loadChatroomData: function () {
+      axios.get("/friends").then((response) => {
+        this.friends = response.data;
+        console.log("test1");
         axios.get("/my-messages").then((response) => {
-          this.myMessages = response.data.filter((message) => {
-            return message.sender_id === this.friends[0].id || message.receiver_id === this.friends[0].id;
-          });
-          //  ^^^
+          this.myMessages = response.data;
+          console.log("all my messages", response.data);
           this.rooms[0].roomName = this.friends[0].first_name;
           this.rooms[0].avatar = this.friends[0].profile_picture;
           this.rooms[0].lastMessage.content = this.myMessages[0].text;
           this.rooms[0].lastMessage.senderId = this.friends[0].id;
           this.rooms[0].lastMessage.username = this.friends[0].first_name;
-          this.rooms[0].users[0]._id = this.friends[0].id;
-          this.rooms[0].users[0].username = this.friends[0].first_name;
-          this.rooms[0].users[0].avatar = this.friends[0].profile_picture;
-          this.rooms[1].users[1]._id = this.friends[1].id;
-          this.rooms[1].users[1].username = this.friends[1].first_name;
-          this.rooms[1].users[1].avatar = this.friends[1].profile_picture;
+          console.log("my friends, ", this.friends);
+          this.rooms[0].users[0]._id = localStorage.user_id;
+          this.rooms[0].users[0].username = localStorage.first_name;
+          this.rooms[0].users[0].avatar = localStorage.profile_picture;
+          this.rooms[0].users[1]._id = this.friends[0].id;
+          this.rooms[0].users[1].username = this.friends[0].first_name;
+          this.rooms[0].users[1].avatar = this.friends[0].profile_picture;
 
-          console.log(this.rooms[0]);
-
-          // users: [
-          //   {
-          //     _id: 1234,
-          //     username: "John Doe",
-          //     avatar: "assets/imgs/doe.png",
-          //     status: {
-          //       state: "online",
-          //       lastChanged: "today, 14:30",
-          //     },
-          //   },
-          //   {
-          //     _id: 4321,
-          //     username: "John Snow",
-          //     avatar: "assets/imgs/snow.png",
-          //     status: {
-          //       state: "offline",
-          //       lastChanged: "14 July, 20:00",
-          //     },
-          //   },
-          // ],
+          console.log("this room", this.rooms[0]);
         });
       });
+
+      // users: [
+      //   {
+      //     _id: 1234,
+      //     username: "John Doe",
+      //     avatar: "assets/imgs/doe.png",
+      //     status: {
+      //       state: "online",
+      //       lastChanged: "today, 14:30",
+      //     },
+      //   },
+      //   {
+      //     _id: 4321,
+      //     username: "John Snow",
+      //     avatar: "assets/imgs/snow.png",
+      //     status: {
+      //       state: "offline",
+      //       lastChanged: "14 July, 20:00",
+      //     },
+      //   },
+      // ],
     },
-    showMessages: function (friend) {
+    loadMessages: function (friend) {
       // this.current_friend = friend;
       axios.get("/my-messages").then((response) => {
         this.myMessages = response.data.filter((message) => {
@@ -166,7 +169,7 @@ export default {
   },
   created() {
     this.currentUserId = localStorage.user_id;
-    this.showFriends();
+    this.loadChatroomData();
     // this.rooms[0].roomName = this.friends[0].first_name;
   },
 };

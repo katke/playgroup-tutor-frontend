@@ -38,6 +38,7 @@ export default {
         localStorage.setItem("user_id", response.data.user_id);
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("first_name", response.data.first_name);
+        localStorage.setItem("profile_picture", response.data.profile_picture);
         console.log(response.data, "Success!");
         this.$router.push("/find-friends");
       });
