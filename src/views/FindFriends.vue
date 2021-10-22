@@ -1,6 +1,8 @@
 <template>
   <div class="find-friends">
     <h1>Welcome to Playgroup Tutor!</h1>
+    {{ distance }}
+
     <div v-for="user in users" v-bind:key="user.id">
       {{ user.first_name }}
       <div>
@@ -12,6 +14,7 @@
       </div>
       <br />
     </div>
+    <div></div>
   </div>
 </template>
 
@@ -23,16 +26,27 @@ img {
 
 <script>
 import axios from "axios";
+import distance from "@turf/distance";
 export default {
   data: function () {
     return {
       users: [],
+      distance: 0,
     };
   },
   created: function () {
     this.usersIndex();
+    this.findDistance();
   },
   methods: {
+    findDistance: function () {
+      var from = [18.180555, -66.749961];
+      var to = [18.361945, -67.175597];
+      var options = { units: "miles" };
+      this.distance = distance(from, to, options);
+
+      // this.distance = turf.distance(from, to, options);
+    },
     usersIndex: function () {
       axios.get("/users").then((response) => {
         console.log(response);
