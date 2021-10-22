@@ -14,8 +14,13 @@ export default {
     return {
       rooms: [],
       messages: [],
-      currentUserId: 1,
+      currentUserId: 1234,
     };
+  },
+  methods: {},
+  mounted() {
+    this.currentUserId = localStorage.user_id;
+    console.log(this.currentUserId);
   },
 };
 </script>

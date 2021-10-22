@@ -59,7 +59,6 @@ export default {
     loginCheck: function () {
       if (localStorage.first_name !== "null") {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
-        console.log(localStorage);
       } else {
         this.loginStatus = "Not logged in";
       }
