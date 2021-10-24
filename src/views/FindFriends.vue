@@ -1,8 +1,7 @@
 <template>
   <div class="find-friends">
     <h1>Welcome to Playgroup Tutor!</h1>
-    {{ distance }}
-
+    <h3>Search your library for a planeswalker...</h3>
     <div v-for="user in users" v-bind:key="user.id">
       {{ user.first_name }}
       <div>
@@ -10,6 +9,7 @@
       </div>
       {{ user.about_me }}
       <div>
+        <div>distance: {{ user.distance }} miles</div>
         <button @click="addFriend(user)">Add {{ user.first_name }} as a friend</button>
       </div>
       <br />
@@ -27,30 +27,30 @@ img {
 <script>
 import axios from "axios";
 import distance from "@turf/distance";
+// import { component } from "vue/types/umd";
 export default {
   data: function () {
     return {
       users: [],
-      distance: 0,
     };
   },
   created: function () {
     this.usersIndex();
-    this.findDistance();
   },
   methods: {
-    findDistance: function () {
-      var from = [18.180555, -66.749961];
-      var to = [18.361945, -67.175597];
+    findDistance: function (user) {
+      var from = [user.latitude, user.longitude];
+      var to = [localStorage.latitude, localStorage.longitude];
       var options = { units: "miles" };
-      this.distance = distance(from, to, options);
-
-      // this.distance = turf.distance(from, to, options);
+      return distance(from, to, options).toFixed(1);
     },
     usersIndex: function () {
       axios.get("/users").then((response) => {
-        console.log(response);
         this.users = response.data;
+        this.users.forEach((user) => {
+          user.distance = this.findDistance(user);
+        });
+        this.users.sort((a, b) => (a.distance > b.distance ? 1 : b.distance > a.distance ? -1 : 0));
       });
     },
     addFriend: function (requested_user) {

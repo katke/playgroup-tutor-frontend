@@ -23,7 +23,7 @@ export default {
   data: function () {
     return {
       inputParams: {
-        email: "test@gmail.com",
+        email: "wanda@test.com",
         password: "password",
       },
     };
@@ -39,6 +39,8 @@ export default {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("first_name", response.data.first_name);
         localStorage.setItem("profile_picture", response.data.profile_picture);
+        localStorage.setItem("latitude", response.data.latitude);
+        localStorage.setItem("longitude", response.data.longitude);
         console.log(response.data, "Success!");
         this.$router.push("/find-friends");
       });

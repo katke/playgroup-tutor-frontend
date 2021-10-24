@@ -16,7 +16,7 @@
       </div>
       <div>
         zip_code:
-        <input type="number" v-model="inputParams.zip_code" />
+        <input type="text" v-model="inputParams.zipcode" />
       </div>
       <div>
         profile_picture:
