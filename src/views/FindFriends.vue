@@ -4,6 +4,7 @@
     <h3>Search your library for a planeswalker...</h3>
     <div v-for="user in users" v-bind:key="user.id">
       {{ user.first_name }}
+      <span id="tag">#{{ user.id }}</span>
       <div>
         <img :src="user.profile_picture" alt="" />
       </div>
@@ -22,12 +23,15 @@
 img {
   width: 200px;
 }
+#tag {
+  color: lightgray;
+}
 </style>
 
 <script>
 import axios from "axios";
 import distance from "@turf/distance";
-// import { component } from "vue/types/umd";
+
 export default {
   data: function () {
     return {
@@ -47,10 +51,23 @@ export default {
     usersIndex: function () {
       axios.get("/users").then((response) => {
         this.users = response.data;
+
+        // deletes yourself from the array of users
+        for (var index = 0; index < this.users.length; index++) {
+          if (this.users[index].id == localStorage.user_id) {
+            this.users.splice(index, 1);
+          }
+        }
+
+        // calculates all the distances
         this.users.forEach((user) => {
           user.distance = this.findDistance(user);
         });
-        this.users.sort((a, b) => (a.distance > b.distance ? 1 : b.distance > a.distance ? -1 : 0));
+
+        // sorts by distance
+        this.users.sort(function (a, b) {
+          return a.distance - b.distance;
+        });
       });
     },
     addFriend: function (requested_user) {
