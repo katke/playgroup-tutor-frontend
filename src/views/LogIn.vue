@@ -12,6 +12,10 @@
     <div>
       <button @click="signIn()">Log in</button>
     </div>
+    <div>
+      <br />
+      <button @click="showCreateAccount()">Wait, I need to make an account first!</button>
+    </div>
   </div>
 </template>
 
