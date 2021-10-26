@@ -7,6 +7,7 @@ import FindFriends from "../views/FindFriends.vue";
 import Chat from "../views/Chat.vue";
 import MyProfile from "../views/MyProfile.vue";
 import AdvancedChat from "../views/AdvancedChat.vue";
+import FriendRequests from "../views/FriendRequests.vue";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,11 @@ const routes = [
     path: "/advanced-chat",
     name: "AdvancedChat",
     component: AdvancedChat,
+  },
+  {
+    path: "/friend-requests",
+    name: "FriendRequests",
+    component: FriendRequests,
   },
 ];
 

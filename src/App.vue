@@ -9,6 +9,8 @@
       |
       <router-link to="/advanced-chat">Cool chat</router-link>
       |
+      <router-link to="/friend-requests">Friend Requests</router-link>
+      |
       <router-link to="/me">View/Edit My Account</router-link>
       |
       <span @click="logOut()">Log Out</span>
