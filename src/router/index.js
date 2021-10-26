@@ -29,12 +29,12 @@ const routes = [
   },
   {
     path: "/log-in",
-    name: "LogIn",
+    name: "Log In",
     component: LogIn,
   },
   {
     path: "/find-friends",
-    name: "FindFriends",
+    name: "Find Friends",
     component: FindFriends,
   },
   {
@@ -44,12 +44,12 @@ const routes = [
   },
   {
     path: "/advanced-chat",
-    name: "AdvancedChat",
+    name: "Advanced Chat",
     component: AdvancedChat,
   },
   {
     path: "/friend-requests",
-    name: "FriendRequests",
+    name: "Friend Requests",
     component: FriendRequests,
   },
 ];

@@ -88,10 +88,9 @@ export default {
   },
   computed: {
     isHome() {
-      return this.$route.name !== "Home";
-    },
-    isLogIn() {
-      return this.$route.name !== "LogIn";
+      return this.$route.name !== "Home" && this.$route.name !== "Log In" && this.$route.name !== "Create Account"
+        ? true
+        : false;
     },
   },
 };
