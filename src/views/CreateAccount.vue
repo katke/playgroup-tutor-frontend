@@ -10,6 +10,7 @@
         Password:
         <input type="text" v-model="inputParams.password" />
       </div>
+      <br />
       <div>
         First Name:
         <input type="text" v-model="inputParams.first_name" />
@@ -30,14 +31,15 @@
         Age:
         <input type="number" v-model="inputParams.age" />
       </div>
-      <div v-for="format in favorite_formats" v-bind:key="format.name">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" v-bind:id="format.name" v-model="format.checked" />
-          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
-        </div>
-      </div>
-      <button @click="createAccount()">Sign up</button>
     </div>
+    <br />
+    <div v-for="format in favorite_formats" v-bind:key="format.name">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" v-bind:id="format.name" v-model="format.checked" />
+        <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+      </div>
+    </div>
+    <button @click="createAccount()">Sign up</button>
   </div>
 </template>
 

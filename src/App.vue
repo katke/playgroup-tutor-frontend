@@ -57,10 +57,16 @@ export default {
   created: function () {
     this.loginCheck();
   },
+  // watch: {
+  //   localStorage.first_name: function () {
+  //     this.loginCheck();
+  //   },
+  // },
   methods: {
     loginCheck: function () {
-      if (localStorage.first_name !== "null") {
+      if (localStorage.first_name) {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
+        console.log(localStorage);
       } else {
         this.loginStatus = "Not logged in";
       }
@@ -71,6 +77,10 @@ export default {
       localStorage.removeItem("email");
       localStorage.removeItem("user_id");
       localStorage.removeItem("first_name");
+      localStorage.removeItem("latitude");
+      localStorage.removeItem("longitude");
+      localStorage.removeItem("profile_picture");
+
       this.loginStatus = "Not logged in";
       axios.defaults.headers.common["Authorization"] = "not logged in";
       this.$router.push("/");
