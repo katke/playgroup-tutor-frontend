@@ -36,24 +36,41 @@
       <button @click="saveEdit(`email`)">Save</button>
     </div>
     <div v-if="!editing.first_name" @click="showUpdate(`first_name`)">
-      <span id="user-attribute">First_Name:</span>
+      <span id="user-attribute">First Name:</span>
       {{ user.first_name }}
     </div>
     <div v-if="editing.first_name">
-      <span id="user-attribute">Editing your First_Name:</span>
+      <span id="user-attribute">Editing your First Name:</span>
       <input v-model="user.first_name" class="input" />
       <button @click="disableEditing(`first_name`)">Cancel</button>
       <button @click="saveEdit(`first_name`)">Save</button>
     </div>
-    <div v-if="!editing.zip_code" @click="showUpdate(`zip_code`)">
+    <div v-if="!editing.zipcode" @click="showUpdate(`zipcode`)">
       <span id="user-attribute">Zip Code:</span>
-      {{ user.zip_code }}
+      {{ user.zipcode }}
     </div>
-    <div v-if="editing.zip_code">
-      <span id="user-attribute">Editing your Profile Picture:</span>
-      <input v-model="user.zip_code" class="input" />
-      <button @click="disableEditing(`zip_code`)">Cancel</button>
-      <button @click="saveEdit(`zip_code`)">Save</button>
+    <div v-if="editing.zipcode">
+      <span id="user-attribute">Editing your Zip Code:</span>
+      <input v-model="user.zipcode" class="input" />
+      <button @click="disableEditing(`zipcode`)">Cancel</button>
+      <button @click="saveEdit(`zipcode`)">Save</button>
+    </div>
+    <div>
+      <br />
+      <span id="user-attribute">Favorite Formats:</span>
+    </div>
+    <div v-for="format in favorite_formats" v-bind:key="format.name">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          @click="updateFormats(format)"
+          v-bind:id="format.name"
+          v-model="format.checked"
+        />
+        <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+      </div>
     </div>
   </div>
 </template>
@@ -76,8 +93,20 @@ export default {
         email: false,
         first_name: false,
         profile_picture: false,
-        zip_code: false,
+        zipcode: false,
       },
+      favorite_formats: [
+        { id: 0, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Standard", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Draft / Cube", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Modern", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Pauper", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Pioneer", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Brawl", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Historic", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Legacy", checked: false, user_id: localStorage.user_id },
+        { id: 0, name: "Vintage", checked: false, user_id: localStorage.user_id },
+      ],
     };
   },
   created() {
@@ -87,6 +116,16 @@ export default {
     importCurrentUser: function () {
       this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
         this.user = response.data;
+        axios.get("/favoriteformats").then((response) => {
+          this.favorite_formats.forEach((format) => {
+            response.data.forEach((myformat) => {
+              if (format.name === myformat.format) {
+                format.checked = true;
+                format.id = myformat.id;
+              }
+            });
+          });
+        });
       });
     },
     showUpdate: function (field) {
@@ -99,6 +138,16 @@ export default {
       axios.patch(`/users/${localStorage.user_id}`, this.user).then(() => {
         this.editing[field] = false;
       });
+    },
+    updateFormats: function (format) {
+      if (format.checked !== true) {
+        axios.post("/favoriteformats", format).then((response) => {
+          format.id = response.data.id;
+        });
+      } else {
+        axios.delete(`/favoriteformats/${format.id}`);
+        format.id = 0;
+      }
     },
   },
 };

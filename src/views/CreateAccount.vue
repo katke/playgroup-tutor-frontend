@@ -11,23 +11,23 @@
         <input type="text" v-model="inputParams.password" />
       </div>
       <div>
-        first_name:
+        First Name:
         <input type="text" v-model="inputParams.first_name" />
       </div>
       <div>
-        zip_code:
+        Zip Code:
         <input type="text" v-model="inputParams.zipcode" />
       </div>
       <div>
-        profile_picture:
+        Profile Picture:
         <input type="text" v-model="inputParams.profile_picture" />
       </div>
       <div>
-        about_me:
+        About Me:
         <input type="text" v-model="inputParams.about_me" />
       </div>
       <div>
-        age:
+        Age:
         <input type="number" v-model="inputParams.age" />
       </div>
       <div v-for="format in favorite_formats" v-bind:key="format.name">
@@ -68,13 +68,13 @@ export default {
   },
   created: function () {},
   methods: {
-    testData: function () {
-      this.favorite_formats.forEach((format) => {
-        if (format.checked === true) {
-          axios.post("/favoriteformats", format);
-        }
-      });
-    },
+    // testData: function () {
+    //   this.favorite_formats.forEach((format) => {
+    //     if (format.checked === true) {
+    //       axios.post("/favoriteformats", format);
+    //     }
+    //   });
+    // },
     createAccount: function () {
       axios.post("/users", this.inputParams).then((response) => {
         console.log(response.data);
