@@ -36,9 +36,6 @@
           <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
         </div>
       </div>
-      <button @click="testData()">send data</button>
-      {{ favorite_formats }}
-      {{ inputParams }}
       <button @click="createAccount()">Sign up</button>
     </div>
   </div>
@@ -68,19 +65,16 @@ export default {
   },
   created: function () {},
   methods: {
-    // testData: function () {
-    //   this.favorite_formats.forEach((format) => {
-    //     if (format.checked === true) {
-    //       axios.post("/favoriteformats", format);
-    //     }
-    //   });
-    // },
     createAccount: function () {
       axios.post("/users", this.inputParams).then((response) => {
-        console.log(response.data);
-        this.inputParams = {};
-        this.$router.push("/log-in");
+        this.favorite_formats.forEach((format) => {
+          if (format.checked === true) {
+            format.user_id = response.data.id;
+            axios.post("/favoriteformats", format);
+          }
+        });
       });
+      this.$router.push("/log-in");
     },
   },
 };

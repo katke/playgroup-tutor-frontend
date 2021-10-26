@@ -122,6 +122,7 @@ export default {
               if (format.name === myformat.format) {
                 format.checked = true;
                 format.id = myformat.id;
+                format.user_id = localStorage.user_id;
               }
             });
           });
