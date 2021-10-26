@@ -1,5 +1,6 @@
 <template>
   <div class="createaccount">
+    <button @click="showLogIn()">Wait, let me log in</button>
     <h2>Create Account</h2>
     <div>
       <div>
@@ -67,6 +68,9 @@ export default {
   },
   created: function () {},
   methods: {
+    showLogIn: function () {
+      this.$router.push("/log-in");
+    },
     createAccount: function () {
       axios.post("/users", this.inputParams).then((response) => {
         this.favorite_formats.forEach((format) => {

@@ -34,6 +34,9 @@ export default {
   },
   created: function () {},
   methods: {
+    showCreateAccount: function () {
+      this.$router.push("/create-account");
+    },
     signIn: function () {
       console.log(this.inputParams);
       axios.post("/sessions", this.inputParams).then((response) => {
