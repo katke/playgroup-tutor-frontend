@@ -47,18 +47,14 @@ export default {
     };
   },
   methods: {
-    loadFriends: function () {
-      axios.get("/friends").then((response) => {
-        this.friends = response.data;
-      });
-    },
     test: function () {},
     loadChatroomData: function () {
       axios.get("/friends").then((response) => {
         this.friends = response.data;
+        console.log("my friends", response);
         axios.get("/my-messages").then((response) => {
           this.myMessages = response.data;
-          // loop test
+          console.log("my messages", response.data);
           const rooms = [];
           this.friends.forEach((friend) => {
             rooms.push({

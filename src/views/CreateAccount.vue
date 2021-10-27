@@ -34,6 +34,7 @@
       </div>
     </div>
     <br />
+    <div>What are your favorite formats?</div>
     <div v-for="format in favorite_formats" v-bind:key="format.name">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" v-bind:id="format.name" v-model="format.checked" />
