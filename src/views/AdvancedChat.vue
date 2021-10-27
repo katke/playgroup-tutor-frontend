@@ -1,11 +1,21 @@
 <template>
-  <chat-window :current-user-id="currentUserId" :rooms="rooms" :messages="messages" />
+  <chat-window
+    :height="screenHeight"
+    :styles="styles"
+    :current-user-id="currentUserId"
+    :rooms="rooms"
+    :messages="messages"
+    :loading-rooms="loadingRooms"
+    :rooms-loaded="roomsLoaded"
+    :messages-loaded="messagesLoaded"
+  />
 </template>
 
 <script>
 import ChatWindow from "vue-advanced-chat";
 import "vue-advanced-chat/dist/vue-advanced-chat.css";
 import axios from "axios";
+// <need to download some component? idk >import { parseTimestamp } from "@/utils/dates";
 
 export default {
   components: {
@@ -14,34 +24,60 @@ export default {
   data() {
     return {
       friend: { first_name: "Wilma" },
+      roomsPerPage: 15,
       rooms: [],
-      messages: [
+      roomId: "",
+      startRooms: null,
+      endRooms: null,
+      roomsLoaded: false,
+      loadingRooms: true,
+      allUsers: [],
+      loadingLastMessageByRoom: 0,
+      roomsLoadedCount: false,
+      selectedRoom: null,
+      messagesPerPage: 20,
+      messages: [],
+      messagesLoaded: false,
+      roomMessage: "",
+      startMessages: null,
+      endMessages: null,
+      roomsListeners: [],
+      listeners: [],
+      typingMessageCache: "",
+      disableForm: false,
+      addNewRoom: null,
+      addRoomUsername: "",
+      inviteRoomId: null,
+      invitedUsername: "",
+      removeRoomId: null,
+      removeUserId: "",
+      removeUsers: [],
+      roomActions: [
+        { name: "inviteUser", title: "Invite User" },
+        { name: "removeUser", title: "Remove User" },
+        { name: "deleteRoom", title: "Delete Room" },
+      ],
+      menuActions: [
+        { name: "inviteUser", title: "Invite User" },
+        { name: "removeUser", title: "Remove User" },
+        { name: "deleteRoom", title: "Delete Room" },
+      ],
+      styles: { container: { borderRadius: "4px" } },
+      templatesText: [
         {
-          _id: 1,
-          indexId: 8,
-          content: "Message 1",
-          senderId: 4,
-          username: "Wilma",
-          avatar: "assets/imgs/doe.png",
-          date: "13 November",
-          timestamp: "10:20",
-          system: false,
-          saved: true,
-          distributed: true,
-          seen: true,
-          deleted: false,
-          disableActions: false,
-          disableReactions: false,
-          files: [{}],
-          reactions: {},
-          replyMessage: {
-            content: "Reply Message",
-            senderId: 4321,
-            files: [{}],
-          },
+          tag: "help",
+          text: "This is the help",
+        },
+        {
+          tag: "action",
+          text: "This is the action",
+        },
+        {
+          tag: "action 2",
+          text: "This is the second action",
         },
       ],
-      currentUserId: 8,
+      currentUserId: localStorage.user_id,
       myMessages: [],
       friends: [],
     };
@@ -55,6 +91,10 @@ export default {
         axios.get("/my-messages").then((response) => {
           this.myMessages = response.data;
           console.log("my messages", response.data);
+
+          console.log(response.data[0].created_at.substring(0, 4));
+
+          console.log("BIG TEST", this.formatMessage(response.data[0]));
           const rooms = [];
           this.friends.forEach((friend) => {
             rooms.push({
@@ -64,16 +104,7 @@ export default {
               unreadCount: 0,
               index: 1,
               typingUsers: [4321],
-              lastMessage: {
-                content: "test",
-                senderId: friend.id,
-                username: friend.first_name,
-                timestamp: "10:20",
-                saved: true,
-                distributed: false,
-                seen: false,
-                new: true,
-              },
+              lastMessage: this.messages[0],
               users: [
                 {
                   _id: localStorage.user_id,
@@ -100,14 +131,96 @@ export default {
         });
       });
     },
-    loadMessages: function (friend) {
-      // this.current_friend = friend;
-      axios.get("/my-messages").then((response) => {
-        this.myMessages = response.data.filter((message) => {
-          return message.sender_id === friend.id || message.receiver_id === friend.id;
+
+    //   >>>>>>>>>> CHAT PRESET FUNCTIONS <<<<<<<<<<
+    fetchMessages({ room, options = {} }) {
+      this.$emit("show-demo-options", false);
+
+      if (options.reset) {
+        this.resetMessages();
+        this.roomId = room.roomId;
+      }
+
+      if (this.endMessages && !this.startMessages) {
+        return (this.messagesLoaded = true);
+      }
+
+      let ref = "test";
+
+      let query = ref.orderBy("timestamp", "desc").limit(this.messagesPerPage);
+
+      if (this.startMessages) query = query.startAfter(this.startMessages);
+
+      this.selectedRoom = room.roomId;
+
+      query.get().then((messages) => {
+        // this.incrementDbCounter('Fetch Room Messages', messages.size)
+        if (this.selectedRoom !== room.roomId) return;
+
+        if (messages.empty || messages.docs.length < this.messagesPerPage) {
+          setTimeout(() => (this.messagesLoaded = true), 0);
+        }
+
+        if (this.startMessages) this.endMessages = this.startMessages;
+        this.startMessages = messages.docs[messages.docs.length - 1];
+
+        let listenerQuery = ref.orderBy("timestamp");
+
+        if (this.startMessages) {
+          listenerQuery = listenerQuery.startAt(this.startMessages);
+        }
+        if (this.endMessages) {
+          listenerQuery = listenerQuery.endAt(this.endMessages);
+        }
+
+        if (options.reset) this.messages = [];
+
+        messages.forEach((message) => {
+          const formattedMessage = this.formatMessage(room, message);
+          this.messages.unshift(formattedMessage);
         });
-        console.log(this.myMessages);
+
+        const listener = listenerQuery.onSnapshot((snapshots) => {
+          // this.incrementDbCounter('Listen Room Messages', snapshots.size)
+          this.listenMessages(snapshots, room);
+        });
+        this.listeners.push(listener);
       });
+    },
+    formatMessage(room, message) {
+      const senderUser = message.sender;
+
+      const { timestamp } = message.created_at;
+
+      const formattedMessage = {
+        ...message,
+        ...{
+          senderId: message.sender_id,
+          _id: message.id,
+          seconds: timestamp.seconds,
+          timestamp: "10:23",
+          date: "21 10 1999",
+          username: senderUser.first_name,
+          // avatar: senderUser ? senderUser.avatar : null,
+          distributed: true,
+        },
+      };
+
+      if (message.replyMessage) {
+        formattedMessage.replyMessage = {
+          ...message.replyMessage,
+          ...{
+            senderId: message.replyMessage.sender_id,
+          },
+        };
+      }
+
+      return formattedMessage;
+    },
+  },
+  computed: {
+    screenHeight() {
+      return this.isDevice ? window.innerHeight + "px" : "calc(100vh - 80px)";
     },
   },
   created() {
