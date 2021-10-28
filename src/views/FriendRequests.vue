@@ -1,17 +1,21 @@
 <template>
-  <div>
-    <h1>Friend Requests:</h1>
-    <div v-if="friendRequests.length === 0">No friend requests!</div>
-    <div v-for="request in friendRequests" v-bind:key="request.id">
-      {{ request.requester.first_name }}
-      <span id="tag">#{{ request.requester.id }}</span>
-      <div>
-        <img :src="request.requester.profile_picture" alt="" />
-      </div>
-      {{ request.requester.about_me }}
-      <div>distance: {{ request.requester.distance }} miles</div>
-      <button @click="acceptRequest(request)">Accept Friend Request!</button>
-    </div>
+  <div class="home">
+    <main id="main">
+      <section id="friend-requests">
+        <h1>Friend Requests:</h1>
+        <div v-if="friendRequests.length === 0">No friend requests!</div>
+        <div v-for="request in friendRequests" v-bind:key="request.id">
+          {{ request.requester.first_name }}
+          <span id="tag">#{{ request.requester.id }}</span>
+          <div>
+            <img :src="request.requester.profile_picture" alt="" />
+          </div>
+          {{ request.requester.about_me }}
+          <div>distance: {{ request.requester.distance }} miles</div>
+          <button @click="acceptRequest(request)">Accept Friend Request!</button>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
 

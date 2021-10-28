@@ -14,14 +14,32 @@
             <li><a href="/chat">Chat</a></li>
             <li><a href="/advanced-chat">Cool chat</a></li>
             <li><a href="/friend-requests">Friend Requests</a></li>
-            <li><a href="/me">View/Edit My Account</a></li>
+            <!-- <li><a href="/me">View/Edit My Account</a></li> -->
           </ul>
+
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <!-- .navbar -->
 
-        <div class="header-social-links">
-          <button id="logout" @click="logOut()">LOG OUT</button>
+        <div class="navbar order-last order-lg-0">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ loginStatus }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="/me">View / Edit my Profile</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" @click="logOut()">Log out</a></li>
+            </ul>
+          </div>
+
+          <!-- <button id="logout" @click="logOut()">LOG OUT</button> -->
         </div>
       </div>
     </header>

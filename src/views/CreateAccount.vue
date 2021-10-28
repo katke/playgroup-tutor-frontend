@@ -1,8 +1,11 @@
 <template>
-  <div class="createaccount">
+  <div id="create">
     <main id="main">
+      <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
+        <a href="/" class="btn-about">Log in</a>
+      </div>
       <!-- ======= About Section ======= -->
-      <section id="about" class="about">
+      <section id="about" class="about" data-aos="zoom-up" data-aos-delay="100">
         <div class="container" data-aos="fade-up">
           <div class="section-title">
             <h2>Create your account</h2>
@@ -13,7 +16,7 @@
               <div>
                 <strong>Profile Picture:</strong>
               </div>
-              <img src="assets/img/about.jpg" class="img-fluid" alt="" />
+              <img src="assets/img/about.jpg" class="img-fluid" alt="" id="profile-pic" />
               <div>Search for your favorite card:</div>
               <input type="text" />
             </div>
@@ -82,11 +85,9 @@
                   </ul>
                 </div>
               </div>
-
-              <button @click="createAccount()">Sign up</button>
-              <div @click="showLogIn()">
-                <a class="btn-about" href="/log-in">Wait, let me log in</a>
-              </div>
+            </div>
+            <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+              <button @click="createAccount()" class="btn-about">Sign up</button>
             </div>
           </div>
         </div>

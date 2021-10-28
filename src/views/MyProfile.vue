@@ -22,8 +22,11 @@
                 <button @click="saveEdit(`profile_picture`)">Save</button>
               </div>
 
-              <div>Search for your favorite card:</div>
-              <input type="text" />
+              <div>
+                Search for your favorite card:
+                <input type="text" width="100%" />
+                <button>Search</button>
+              </div>
             </div>
 
             <div class="col-lg-8 pt-4 pt-lg-0 content">
