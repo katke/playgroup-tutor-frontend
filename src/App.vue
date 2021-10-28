@@ -11,8 +11,8 @@
           <ul>
             <!-- <li><a class="active" href="/">Home</a></li> -->
             <li><a href="/find-friends">Find Friends</a></li>
-            <li><a href="/chat">Chat</a></li>
-            <li><a href="/advanced-chat">Cool chat</a></li>
+            <!-- <li><a href="/chat">Chat</a></li> -->
+            <li><a href="/advanced-chat">Chat</a></li>
             <li><a href="/friend-requests">Friend Requests</a></li>
             <!-- <li><a href="/me">View/Edit My Account</a></li> -->
           </ul>

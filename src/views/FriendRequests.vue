@@ -1,18 +1,28 @@
 <template>
-  <div class="home">
+  <div id="create">
     <main id="main">
-      <section id="friend-requests">
+      <section>
         <h1>Friend Requests:</h1>
         <div v-if="friendRequests.length === 0">No friend requests!</div>
-        <div v-for="request in friendRequests" v-bind:key="request.id">
-          {{ request.requester.first_name }}
-          <span id="tag">#{{ request.requester.id }}</span>
+        <div
+          v-for="request in friendRequests"
+          v-bind:key="request.id"
+          class="container d-flex flex-column align-items-center"
+          data-aos="fade-up"
+        >
+          <img :src="request.requester.profile_picture" alt="" id="profile-pic" />
+          {{ request.requester.first_name }} #{{ request.requester.id }}
           <div>
-            <img :src="request.requester.profile_picture" alt="" />
+            {{ request.requester.about_me }}
           </div>
-          {{ request.requester.about_me }}
           <div>distance: {{ request.requester.distance }} miles</div>
-          <button @click="acceptRequest(request)">Accept Friend Request!</button>
+          <div>
+            <button @click="acceptRequest(request)" class="btn-about">Accept Friend Request!</button>
+          </div>
+          <li v-for="format in request.requester.favoriteformats" v-bind:key="`format-${format.id}`">
+            {{ format.format }}
+          </li>
+          <br />
         </div>
       </section>
     </main>
