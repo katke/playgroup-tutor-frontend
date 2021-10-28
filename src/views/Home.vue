@@ -5,20 +5,14 @@
       <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
         <h1>Welcome to Playgroup Tutor!</h1>
         <h2>Find nearby MTG players and form new playgroups</h2>
-        <button @click="showLogIn()" class="btn-about">Log in</button>
-        <span v-if="seeLogIn">
-          <span>
-            Email:
-            <input type="text" v-model="inputParams.email" />
-          </span>
-          <span>
-            Password:
-            <input type="text" v-model="inputParams.password" />
-          </span>
-          <span>
-            <button @click="signIn()">Log in</button>
-          </span>
-        </span>
+        <p class="blurry_box">
+          Email:
+          <input type="text" v-model="inputParams.email" />
+          Password:
+          <input type="text" v-model="inputParams.password" />
+        </p>
+        <button @click="signIn()" class="btn-about">Log in</button>
+
         <a href="/create-account" class="btn-about">Create Account</a>
       </div>
     </section>
