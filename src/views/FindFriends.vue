@@ -1,36 +1,38 @@
 <template>
   <div class="find-friends">
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Search your library for a planeswalker...</h2>
-          <p>
-            Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.
-          </p>
-        </div>
+    <main id="main">
+      <!-- ======= Services Section ======= -->
+      <section id="services" class="services">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <h2>Search your library for a planeswalker...</h2>
+            <p>
+              Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+              consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat
+              sit in iste officiis commodi quidem hic quas.
+            </p>
+          </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="50">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" v-for="user in users" v-bind:key="user.id">
-            <div class="icon-box">
-              <h4>
-                <a href="">{{ user.first_name }}</a>
-              </h4>
-              <div>
-                <img :src="user.profile_picture" alt="" id="profile-pic" />
+          <div class="row" data-aos="fade-up" data-aos-delay="50">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" v-for="user in users" v-bind:key="user.id">
+              <div class="icon-box">
+                <h4>
+                  <a href="">{{ user.first_name }}</a>
+                </h4>
+                <div>
+                  <img :src="user.profile_picture" alt="" id="profile-pic" />
+                </div>
+                <p>{{ user.about_me }}</p>
+                <p>Distance from you: {{ user.distance }} miles</p>
+                <li v-for="format in user.favoriteformats" v-bind:key="`format-${format.id}`">
+                  {{ format.format }}
+                </li>
               </div>
-              <p>{{ user.about_me }}</p>
-              <p>Distance from you: {{ user.distance }} miles</p>
-              <li v-for="format in user.favoriteformats" v-bind:key="`format-${format.id}`">
-                {{ format.format }}
-              </li>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   </div>
 </template>
 

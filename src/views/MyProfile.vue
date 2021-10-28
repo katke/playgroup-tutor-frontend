@@ -14,7 +14,7 @@
                 <strong>Profile Picture:</strong>
               </div>
               <div v-if="!editing.profile_picture" @click="showUpdate(`profile_picture`)">
-                <img v-bind:src="user.profile_picture" alt="" />
+                <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
               </div>
               <div v-if="editing.profile_picture">
                 <input v-model="user.profile_picture" class="input" />

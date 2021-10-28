@@ -9,7 +9,7 @@
 
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul>
-            <li><a class="active" href="/">Home</a></li>
+            <!-- <li><a class="active" href="/">Home</a></li> -->
             <li><a href="/find-friends">Find Friends</a></li>
             <li><a href="/chat">Chat</a></li>
             <li><a href="/advanced-chat">Cool chat</a></li>
