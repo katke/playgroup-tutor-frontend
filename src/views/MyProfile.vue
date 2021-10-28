@@ -24,8 +24,8 @@
 
               <div>
                 Search for your favorite card:
-                <input type="text" width="100%" />
-                <button>Search</button>
+                <input type="text" width="100%" v-model="scryfallName" />
+                <button @click="scryfallSearch(scryfallName)">Search</button>
               </div>
             </div>
 
@@ -142,6 +142,8 @@
 
 <script>
 import axios from "axios";
+import http from "http";
+
 export default {
   data() {
     return {
@@ -166,6 +168,7 @@ export default {
         { id: 0, name: "Legacy", checked: false, user_id: localStorage.user_id },
         { id: 0, name: "Vintage", checked: false, user_id: localStorage.user_id },
       ],
+      scryfallName: "",
     };
   },
   created() {
@@ -208,6 +211,11 @@ export default {
         axios.delete(`/favoriteformats/${format.id}`);
         format.id = 0;
       }
+    },
+    scryfallSearch: function (cardName) {
+      http.get(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`).then((response) => {
+        console.log(response.body);
+      });
     },
   },
 };
