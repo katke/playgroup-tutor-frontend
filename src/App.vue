@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top">
+    <header id="header" class="fixed-top" v-if="isHome">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <h1 class="logo me-auto me-lg-0"><a href="#">Playgroup Tutor</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
