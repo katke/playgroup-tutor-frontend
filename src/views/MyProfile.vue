@@ -17,7 +17,6 @@
                 <img v-bind:src="user.profile_picture" alt="" />
               </div>
               <div v-if="editing.profile_picture">
-                Editing your Profile Picture:
                 <input v-model="user.profile_picture" class="input" />
                 <button @click="disableEditing(`profile_picture`)">Cancel</button>
                 <button @click="saveEdit(`profile_picture`)">Save</button>
@@ -37,29 +36,31 @@
 
               <div v-if="editing.email">
                 <h3>
-                  Editing your Email:
                   <input v-model="user.email" class="input" />
+                  <button @click="disableEditing(`email`)">Cancel</button>
+                  <button @click="saveEdit(`email`)">Save</button>
                 </h3>
               </div>
               <p class="fst-italic">
                 Never tell anyone your full name or address. You should always meet strangers at public places like game
                 stores, libraries, or bars.
               </p>
+              <br />
               <div class="row">
                 <div class="col-lg-6">
                   <ul>
                     <li>
                       <i class="bi bi-rounded-right"></i>
-                      <div v-if="!editing.first_name" @click="showUpdate(`first_name`)">
+                      <span v-if="!editing.first_name" @click="showUpdate(`first_name`)">
                         <strong>First Name:</strong>
                         {{ user.first_name }}
-                      </div>
-                      <div v-if="editing.first_name">
-                        <strong>Editing your First Name:</strong>
+                      </span>
+                      <span v-if="editing.first_name">
+                        <strong>First Name:</strong>
                         <input v-model="user.first_name" class="input" />
                         <button @click="disableEditing(`first_name`)">Cancel</button>
                         <button @click="saveEdit(`first_name`)">Save</button>
-                      </div>
+                      </span>
                     </li>
                     <li>
                       <i class="bi bi-rounded-right"></i>
@@ -68,7 +69,7 @@
                         {{ user.zipcode }}
                       </span>
                       <span v-if="editing.zipcode">
-                        <strong>Editing your Zip Code:</strong>
+                        <strong>Zip Code:</strong>
                         <input v-model="user.zipcode" class="input" />
                         <button @click="disableEditing(`zipcode`)">Cancel</button>
                         <button @click="saveEdit(`zipcode`)">Save</button>
@@ -82,7 +83,7 @@
                         {{ user.about_me }}
                       </span>
                       <span v-if="editing.about_me">
-                        Editing your About Me:
+                        <strong>A little about yourself:</strong>
                         <input v-model="user.about_me" class="input" />
                         <button @click="disableEditing(`about_me`)">Cancel</button>
                         <button @click="saveEdit(`about_me`)">Save</button>
@@ -99,7 +100,7 @@
                         {{ user.age }}
                       </span>
                       <span v-if="editing.age">
-                        <strong>Editing your Age:</strong>
+                        <strong>Age:</strong>
                         <input v-model="user.age" class="input" />
                         <button @click="disableEditing(`age`)">Cancel</button>
                         <button @click="saveEdit(`age`)">Save</button>
@@ -107,7 +108,6 @@
                     </li>
                     <li>
                       <div>
-                        <br />
                         <strong>Favorite Formats:</strong>
                       </div>
                       <div v-for="format in favorite_formats" v-bind:key="format.name">
