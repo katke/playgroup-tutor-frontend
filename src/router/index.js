@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import CreateAccount from "../views/CreateAccount.vue";
-import LogIn from "../views/LogIn.vue";
 import FindFriends from "../views/FindFriends.vue";
 import Chat from "../views/Chat.vue";
 import MyProfile from "../views/MyProfile.vue";
@@ -26,11 +25,6 @@ const routes = [
     path: "/create-account",
     name: "Create Account",
     component: CreateAccount,
-  },
-  {
-    path: "/log-in",
-    name: "Log In",
-    component: LogIn,
   },
   {
     path: "/find-friends",

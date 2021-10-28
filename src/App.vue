@@ -3,48 +3,29 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
       <div class="container-fluid d-flex justify-content-between align-items-center">
-        <h1 class="logo me-auto me-lg-0"><a href="index.html">Playgroup Tutor</a></h1>
+        <h1 class="logo me-auto me-lg-0"><a href="#">Playgroup Tutor</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid" /></a> -->
 
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul>
-            <li><a class="active" href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="resume.html">Resume</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/find-friends">Find Friends</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/advanced-chat">Cool chat</a></li>
+            <li><a href="/friend-requests">Friend Requests</a></li>
+            <li><a href="/me">View/Edit My Account</a></li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <!-- .navbar -->
 
         <div class="header-social-links">
-          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <button id="logout" @click="logOut()">LOG OUT</button>
         </div>
       </div>
     </header>
     <!-- End Header -->
-    <!-- 
-    <span id="login-status">{{ loginStatus }}</span>
-
-    <div id="nav" v-if="isHome">
-      <router-link to="/find-friends">Find Friends</router-link>
-      |
-      <router-link to="/chat">Chat</router-link>
-      |
-      <router-link to="/advanced-chat">Cool chat</router-link>
-      |
-      <router-link to="/friend-requests">Friend Requests</router-link>
-      |
-      <router-link to="/me">View/Edit My Account</router-link>
-      |
-      <span @click="logOut()">Log Out</span>
-    </div> -->
 
     <!-- ROUTER VIEW -->
     <router-view />
@@ -53,21 +34,19 @@
     <footer id="footer">
       <div class="container">
         <div class="copyright">
-          &copy; Copyright
-          <strong><span>Kelly</span></strong>
-          . All Rights Reserved
+          Created by
+          <strong><span>David Ryan</span></strong>
+          2021
         </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/ -->
-          Designed by
-          <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+        <div class="credits"></div>
       </div>
     </footer>
     <!-- End  Footer -->
+
+    <!-- <div id="preloader"></div> -->
+    <!-- <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+      <i class="bi bi-arrow-up-short"></i>
+    </a> -->
   </div>
 </template>
 
@@ -84,11 +63,6 @@ export default {
   created: function () {
     this.loginCheck();
   },
-  // watch: {
-  //   localStorage.first_name: function () {
-  //     this.loginCheck();
-  //   },
-  // },
   methods: {
     loginCheck: function () {
       if (localStorage.first_name) {

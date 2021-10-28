@@ -1,85 +1,141 @@
 <template>
   <div class="my-profile">
-    <h1>View/Edit your account</h1>
-    <h2>{{ user.first_name }}</h2>
-    <div v-if="!editing.profile_picture" @click="showUpdate(`profile_picture`)">
-      <span id="user-attribute">
-        Profile Picture:
-        <img v-bind:src="user.profile_picture" alt="" />
-      </span>
-    </div>
-    <div v-if="editing.profile_picture">
-      <span id="user-attribute">Editing your Profile Picture:</span>
-      <input v-model="user.profile_picture" class="input" />
-      <button @click="disableEditing(`profile_picture`)">Cancel</button>
-      <button @click="saveEdit(`profile_picture`)">Save</button>
-    </div>
-    <img v-bind:src="user.about_me" alt="" />
-    <div v-if="!editing.about_me" @click="showUpdate(`about_me`)">
-      <span id="user-attribute">About Me:</span>
-      {{ user.about_me }}
-    </div>
-    <div v-if="editing.about_me">
-      <span id="user-attribute">Editing your About Me:</span>
-      <input v-model="user.about_me" class="input" />
-      <button @click="disableEditing(`about_me`)">Cancel</button>
-      <button @click="saveEdit(`about_me`)">Save</button>
-    </div>
-    <div v-if="!editing.email" @click="showUpdate(`email`)">
-      <span id="user-attribute">Email:</span>
-      {{ user.email }}
-    </div>
-    <div v-if="editing.email">
-      <span id="user-attribute">Editing your Email:</span>
-      <input v-model="user.email" class="input" />
-      <button @click="disableEditing(`email`)">Cancel</button>
-      <button @click="saveEdit(`email`)">Save</button>
-    </div>
-    <div v-if="!editing.first_name" @click="showUpdate(`first_name`)">
-      <span id="user-attribute">First Name:</span>
-      {{ user.first_name }}
-    </div>
-    <div v-if="editing.first_name">
-      <span id="user-attribute">Editing your First Name:</span>
-      <input v-model="user.first_name" class="input" />
-      <button @click="disableEditing(`first_name`)">Cancel</button>
-      <button @click="saveEdit(`first_name`)">Save</button>
-    </div>
-    <div v-if="!editing.zipcode" @click="showUpdate(`zipcode`)">
-      <span id="user-attribute">Zip Code:</span>
-      {{ user.zipcode }}
-    </div>
-    <div v-if="editing.zipcode">
-      <span id="user-attribute">Editing your Zip Code:</span>
-      <input v-model="user.zipcode" class="input" />
-      <button @click="disableEditing(`zipcode`)">Cancel</button>
-      <button @click="saveEdit(`zipcode`)">Save</button>
-    </div>
-    <div>
-      <br />
-      <span id="user-attribute">Favorite Formats:</span>
-    </div>
-    <div v-for="format in favorite_formats" v-bind:key="format.name">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          @click="updateFormats(format)"
-          v-bind:id="format.name"
-          v-model="format.checked"
-        />
-        <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
-      </div>
-    </div>
+    <main id="main">
+      <!-- ======= About Section ======= -->
+      <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <h2>Your account</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div>
+                <strong>Profile Picture:</strong>
+              </div>
+              <div v-if="!editing.profile_picture" @click="showUpdate(`profile_picture`)">
+                <img v-bind:src="user.profile_picture" alt="" />
+              </div>
+              <div v-if="editing.profile_picture">
+                Editing your Profile Picture:
+                <input v-model="user.profile_picture" class="input" />
+                <button @click="disableEditing(`profile_picture`)">Cancel</button>
+                <button @click="saveEdit(`profile_picture`)">Save</button>
+              </div>
+
+              <div>Search for your favorite card:</div>
+              <input type="text" />
+            </div>
+
+            <div class="col-lg-8 pt-4 pt-lg-0 content">
+              <h3>
+                <div v-if="!editing.email" @click="showUpdate(`email`)">
+                  Email:
+                  {{ user.email }}
+                </div>
+              </h3>
+
+              <div v-if="editing.email">
+                <h3>
+                  Editing your Email:
+                  <input v-model="user.email" class="input" />
+                </h3>
+              </div>
+              <p class="fst-italic">
+                Never tell anyone your full name or address. You should always meet strangers at public places like game
+                stores, libraries, or bars.
+              </p>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul>
+                    <li>
+                      <i class="bi bi-rounded-right"></i>
+                      <div v-if="!editing.first_name" @click="showUpdate(`first_name`)">
+                        <strong>First Name:</strong>
+                        {{ user.first_name }}
+                      </div>
+                      <div v-if="editing.first_name">
+                        <strong>Editing your First Name:</strong>
+                        <input v-model="user.first_name" class="input" />
+                        <button @click="disableEditing(`first_name`)">Cancel</button>
+                        <button @click="saveEdit(`first_name`)">Save</button>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="bi bi-rounded-right"></i>
+                      <span v-if="!editing.zipcode" @click="showUpdate(`zipcode`)">
+                        <strong>Zip Code:</strong>
+                        {{ user.zipcode }}
+                      </span>
+                      <span v-if="editing.zipcode">
+                        <strong>Editing your Zip Code:</strong>
+                        <input v-model="user.zipcode" class="input" />
+                        <button @click="disableEditing(`zipcode`)">Cancel</button>
+                        <button @click="saveEdit(`zipcode`)">Save</button>
+                      </span>
+                    </li>
+
+                    <li>
+                      <i class="bi bi-rounded-right"></i>
+                      <span v-if="!editing.about_me" @click="showUpdate(`about_me`)">
+                        <strong>A little about yourself:</strong>
+                        {{ user.about_me }}
+                      </span>
+                      <span v-if="editing.about_me">
+                        Editing your About Me:
+                        <input v-model="user.about_me" class="input" />
+                        <button @click="disableEditing(`about_me`)">Cancel</button>
+                        <button @click="saveEdit(`about_me`)">Save</button>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul>
+                    <li>
+                      <i class="bi bi-rounded-right"></i>
+                      <span v-if="!editing.age" @click="showUpdate(`age`)">
+                        <strong>Age:</strong>
+                        {{ user.age }}
+                      </span>
+                      <span v-if="editing.age">
+                        <strong>Editing your Age:</strong>
+                        <input v-model="user.age" class="input" />
+                        <button @click="disableEditing(`age`)">Cancel</button>
+                        <button @click="saveEdit(`age`)">Save</button>
+                      </span>
+                    </li>
+                    <li>
+                      <div>
+                        <br />
+                        <strong>Favorite Formats:</strong>
+                      </div>
+                      <div v-for="format in favorite_formats" v-bind:key="format.name">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            @click="updateFormats(format)"
+                            v-bind:id="format.name"
+                            v-model="format.checked"
+                          />
+                          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
 
-<style scoped>
-#user-attribute {
-  font-weight: bold;
-}
-</style>
+<style></style>
 
 <script>
 import axios from "axios";

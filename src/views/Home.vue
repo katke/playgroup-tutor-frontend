@@ -6,19 +6,19 @@
         <h1>Welcome to Playgroup Tutor!</h1>
         <h2>Find nearby MTG players and form new playgroups</h2>
         <button @click="showLogIn()" class="btn-about">Log in</button>
-        <div v-if="seeLogIn">
-          <div>
+        <span v-if="seeLogIn">
+          <span>
             Email:
             <input type="text" v-model="inputParams.email" />
-          </div>
-          <div>
+          </span>
+          <span>
             Password:
             <input type="text" v-model="inputParams.password" />
-          </div>
-          <div>
+          </span>
+          <span>
             <button @click="signIn()">Log in</button>
-          </div>
-        </div>
+          </span>
+        </span>
         <a href="/create-account" class="btn-about">Create Account</a>
       </div>
     </section>
