@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@syncfusion/ej2-vue-dropdowns": "^19.3.47",
     "@turf/buffer": "^6.5.0",
     "@turf/collect": "^6.5.0",
     "@turf/distance": "^6.5.0",
@@ -16,8 +17,7 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-advanced-chat": "^1.2.1",
-    "vue-cool-select": "^3.5.2",
-    "vue-router": "^3.2.0"
+    "vue-cool-select": "^3.5.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

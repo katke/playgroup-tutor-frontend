@@ -13,37 +13,35 @@
               <div>
                 <strong>Profile Picture:</strong>
               </div>
-              <div v-if="!editing.profile_picture" @click="showUpdate(`profile_picture`)">
-                <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
-              </div>
-              <div v-if="editing.profile_picture">
-                <input v-model="user.profile_picture" class="input" />
-                <button @click="disableEditing(`profile_picture`)">Cancel</button>
-                <button @click="saveEdit(`profile_picture`)">Save</button>
-              </div>
-
+              <img v-bind:src="user.profile_picture" alt="" width="100%" />
               <div>
-                Search for your favorite card:
+                <br />
+                <strong>Search for your favorite card:</strong>
                 <input type="text" width="100%" v-model="scryfallName" />
                 <button @click="scryfallSearch(scryfallName)">Search</button>
+                <div>
+                  <br />
+                  <strong>Preview:</strong>
+                  <img :src="picturePreview" alt="" width="100%" />
+                  <button v-if="picturePreview" @click="pictureEdit(picturePreview)">Save it!</button>
+                  <li v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                    {{ card.name }}
+                  </li>
+                </div>
               </div>
             </div>
 
             <div class="col-lg-8 pt-4 pt-lg-0 content">
-              <h3>
-                <div v-if="!editing.email" @click="showUpdate(`email`)">
-                  Email:
-                  {{ user.email }}
-                </div>
-              </h3>
-
-              <div v-if="editing.email">
-                <h3>
-                  <input v-model="user.email" class="input" />
-                  <button @click="disableEditing(`email`)">Cancel</button>
-                  <button @click="saveEdit(`email`)">Save</button>
-                </h3>
+              <div v-if="!editing.email" @click="showUpdate(`email`)">
+                <h3>Email: {{ user.email }}</h3>
               </div>
+              <div v-if="editing.email">
+                <input v-model="user.email" class="input" />
+                <button @click="disableEditing(`email`)">Cancel</button>
+                <button @click="saveEdit(`email`)">Save</button>
+              </div>
+              <h3>Password: ********</h3>
+
               <p class="fst-italic">
                 Never tell anyone your full name or address. You should always meet strangers at public places like game
                 stores, libraries, or bars.
@@ -138,22 +136,19 @@
   </div>
 </template>
 
-<style></style>
-
 <script>
 import axios from "axios";
-import http from "http";
 
 export default {
   data() {
     return {
       user: {},
+      cards: [],
       editing: {
         about_me: false,
         age: false,
         email: false,
         first_name: false,
-        profile_picture: false,
         zipcode: false,
       },
       favorite_formats: [
@@ -168,7 +163,8 @@ export default {
         { id: 0, name: "Legacy", checked: false, user_id: localStorage.user_id },
         { id: 0, name: "Vintage", checked: false, user_id: localStorage.user_id },
       ],
-      scryfallName: "",
+      scryfallName: null,
+      picturePreview: null,
     };
   },
   created() {
@@ -202,6 +198,27 @@ export default {
         this.editing[field] = false;
       });
     },
+    scryfallSearch: function (cardName) {
+      fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.cards = data.data;
+          // console.log(data["image_uris"]["art_crop"]);
+          // this.picturePreview = data["image_uris"]["art_crop"];
+        });
+    },
+    selectCard: function (card) {
+      this.picturePreview = card["image_uris"]["art_crop"];
+    },
+    pictureEdit: function (imageString) {
+      this.user.profile_picture = imageString;
+      this.saveEdit(`profile_picture`);
+      this.scryfallName = null;
+      this.picturePreview = null;
+      location.reload();
+      return false;
+    },
     updateFormats: function (format) {
       if (format.checked !== true) {
         axios.post("/favoriteformats", format).then((response) => {
@@ -211,11 +228,6 @@ export default {
         axios.delete(`/favoriteformats/${format.id}`);
         format.id = 0;
       }
-    },
-    scryfallSearch: function (cardName) {
-      http.get(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`).then((response) => {
-        console.log(response.body);
-      });
     },
   },
 };

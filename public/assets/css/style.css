@@ -1187,3 +1187,7 @@ section {
 #create .btn-about:hover {
   background: #3dc8b7;
 }
+
+@import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-inputs/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-dropdowns/styles/material.css";

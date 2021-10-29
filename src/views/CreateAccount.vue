@@ -17,8 +17,19 @@
                 <strong>Profile Picture:</strong>
               </div>
               <img src="assets/img/about.jpg" class="img-fluid" alt="" id="profile-pic" />
-              <div>Search for your favorite card:</div>
-              <input type="text" />
+              <div></div>
+              <strong>Search for your favorite card:</strong>
+              <input type="text" width="100%" v-model="scryfallName" />
+              <button @click="scryfallSearch(scryfallName)">Search</button>
+              <div>
+                <br />
+                <strong>Preview:</strong>
+                <img :src="picturePreview" alt="" width="100%" />
+                <button v-if="picturePreview" @click="pictureEdit(picturePreview)">Save it!</button>
+                <li v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                  {{ card.name }}
+                </li>
+              </div>
             </div>
             <div class="col-lg-8 pt-4 pt-lg-0 content">
               <h3>
@@ -116,12 +127,35 @@ export default {
         { name: "Legacy", checked: false },
         { name: "Vintage", checked: false },
       ],
+      scryfallName: null,
+      picturePreview: null,
     };
   },
   created: function () {},
   methods: {
     showLogIn: function () {
       this.$router.push("/log-in");
+    },
+    scryfallSearch: function (cardName) {
+      fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.cards = data.data;
+          // console.log(data["image_uris"]["art_crop"]);
+          // this.picturePreview = data["image_uris"]["art_crop"];
+        });
+    },
+    selectCard: function (card) {
+      this.picturePreview = card["image_uris"]["art_crop"];
+    },
+    pictureEdit: function (imageString) {
+      this.user.profile_picture = imageString;
+      this.saveEdit(`profile_picture`);
+      this.scryfallName = null;
+      this.picturePreview = null;
+      location.reload();
+      return false;
     },
     createAccount: function () {
       axios.post("/users", this.inputParams).then((response) => {
