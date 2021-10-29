@@ -5,15 +5,15 @@
       <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
         <h1>Welcome to Playgroup Tutor!</h1>
         <h2>Find nearby MTG players and form new playgroups</h2>
-        <p class="blurry_box">
+        <div class="blurry_box">
           Email:
           <input type="text" v-model="inputParams.email" />
           Password:
           <input type="text" v-model="inputParams.password" />
-        </p>
+        </div>
         <button @click="signIn()" class="btn-about">Log in</button>
 
-        <a href="/create-account" class="btn-about">Create Account</a>
+        <button @click="showCreateAccount()" class="btn-about">Create Account</button>
       </div>
     </section>
     <!-- End Hero -->
@@ -41,7 +41,7 @@ export default {
       this.seeLogIn = !this.seeLogIn;
     },
     showCreateAccount: function () {
-      this.$router.push("/create-account");
+      this.$router.push("/create-account#");
     },
     signIn: function () {
       console.log(this.inputParams);

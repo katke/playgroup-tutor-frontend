@@ -13,7 +13,7 @@
               <div>
                 <strong>Profile Picture:</strong>
               </div>
-              <img v-bind:src="user.profile_picture" alt="" width="100%" />
+              <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
               <div>
                 <br />
                 <strong>Search for your favorite card:</strong>

@@ -1154,7 +1154,13 @@ section {
 }
 
 #profile-pic {
-  width: 250px;
+  width: auto;
+  max-height: 200px;
+  transition: all ease-in-out 0.3s;
+}
+
+#user-id {
+  color: rgb(202, 202, 202);
 }
 
 .blurry_box {
@@ -1168,9 +1174,16 @@ section {
   max-width: 100%;
   max-height: 100%;
   padding: 10px 20px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
 }
 
-#create .btn-about {
+.dropdown-item {
+  color: black;
+}
+
+.btn-about {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-weight: 600;
@@ -1184,7 +1197,7 @@ section {
   color: #fff;
   background: #34b7a7;
 }
-#create .btn-about:hover {
+.btn-about:hover {
   background: #3dc8b7;
 }
 

@@ -9,12 +9,9 @@
 
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul>
-            <!-- <li><a class="active" href="/">Home</a></li> -->
             <li><a href="/find-friends">Find Friends</a></li>
-            <!-- <li><a href="/chat">Chat</a></li> -->
             <li><a href="/advanced-chat">Chat</a></li>
             <li><a href="/friend-requests">Friend Requests</a></li>
-            <!-- <li><a href="/me">View/Edit My Account</a></li> -->
           </ul>
 
           <i class="bi bi-list mobile-nav-toggle"></i>
@@ -38,8 +35,6 @@
               <li><a class="dropdown-item" @click="logOut()">Log out</a></li>
             </ul>
           </div>
-
-          <!-- <button id="logout" @click="logOut()">LOG OUT</button> -->
         </div>
       </div>
     </header>
@@ -60,11 +55,7 @@
       </div>
     </footer>
     <!-- End  Footer -->
-
     <!-- <div id="preloader"></div> -->
-    <!-- <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-      <i class="bi bi-arrow-up-short"></i>
-    </a> -->
   </div>
 </template>
 

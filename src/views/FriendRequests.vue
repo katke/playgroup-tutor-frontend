@@ -2,7 +2,7 @@
   <div id="create">
     <main id="main">
       <section>
-        <h1>Friend Requests:</h1>
+        <h1 class="container d-flex flex-column align-items-center">Friend Requests:</h1>
         <div v-if="friendRequests.length === 0">No friend requests!</div>
         <div
           v-for="request in friendRequests"
@@ -11,7 +11,10 @@
           data-aos="fade-up"
         >
           <img :src="request.requester.profile_picture" alt="" id="profile-pic" />
-          {{ request.requester.first_name }} #{{ request.requester.id }}
+          <div>
+            {{ request.requester.first_name }}
+            <span id="user-id">#{{ request.requester.id }}</span>
+          </div>
           <div>
             {{ request.requester.about_me }}
           </div>
