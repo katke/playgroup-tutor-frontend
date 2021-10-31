@@ -94,6 +94,9 @@ export default {
       axios.defaults.headers.common["Authorization"] = "not logged in";
       this.$router.push("/");
     },
+    toMe: function () {
+      this.$router.push("/me");
+    },
   },
   computed: {
     isHome() {
