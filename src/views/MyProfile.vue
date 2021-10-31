@@ -18,16 +18,10 @@
                 <br />
                 <strong>Search for your favorite card:</strong>
                 <input type="text" width="100%" v-model="scryfallName" />
-                <button @click="scryfallSearch(scryfallName)">Search</button>
-                <div>
-                  <br />
-                  <strong>Preview:</strong>
-                  <img :src="picturePreview" alt="" width="100%" />
-                  <button v-if="picturePreview" @click="pictureEdit(picturePreview)">Save it!</button>
-                  <li v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
-                    {{ card.name }}
-                  </li>
-                </div>
+                <button @click="scryfallSearch(scryfallName)" data-bs-toggle="modal" data-bs-target="#cardList">
+                  Search
+                </button>
+                <button @click="testModal()">TEST</button>
               </div>
             </div>
 
@@ -133,17 +127,68 @@
         </div>
       </section>
     </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="cardList" tabindex="-1" aria-labelledby="cardListLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cardListLabel">Which card did you mean?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid position-relative position-trbl-0 overflow-hidden h-100">
+              <div class="row" id="card-picker">
+                <div class="col-5">
+                  <div class="col-inner">
+                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">{{ card.name }}</div>
+                  </div>
+                </div>
+                <div class="col-7">
+                  <div class="col-innner">
+                    <img :src="picturePreview" alt="" id="picture-preview" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button
+              class="btn btn-primary"
+              v-if="picturePreview"
+              @click="pictureEdit(picturePreview)"
+              data-bs-dismiss="modal"
+            >
+              Save it!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END MODAL -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Vue from "vue";
+import VuejsDialog from "vuejs-dialog";
+// import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
 
+// include the default style
+import "vuejs-dialog/dist/vuejs-dialog.min.css";
+
+// Tell Vue to install the plugin.
+Vue.use(VuejsDialog, {});
 export default {
   data() {
     return {
+      showModal: false,
       user: {},
       cards: [],
+      scryfallName: "",
+      picturePreview: "",
       editing: {
         about_me: false,
         age: false,
@@ -163,14 +208,16 @@ export default {
         { id: 0, name: "Legacy", checked: false, user_id: localStorage.user_id },
         { id: 0, name: "Vintage", checked: false, user_id: localStorage.user_id },
       ],
-      scryfallName: null,
-      picturePreview: null,
     };
   },
   created() {
     this.importCurrentUser();
   },
   methods: {
+    testModal: function () {
+      this.showModal = true;
+      console.log("it worked?");
+    },
     importCurrentUser: function () {
       this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
         this.user = response.data;
@@ -204,6 +251,7 @@ export default {
         .then((data) => {
           console.log(data);
           this.cards = data.data;
+          this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
           // console.log(data["image_uris"]["art_crop"]);
           // this.picturePreview = data["image_uris"]["art_crop"];
         });
@@ -216,7 +264,6 @@ export default {
       this.saveEdit(`profile_picture`);
       this.scryfallName = null;
       this.picturePreview = null;
-      location.reload();
       return false;
     },
     updateFormats: function (format) {

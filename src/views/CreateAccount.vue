@@ -115,6 +115,8 @@ export default {
   data: function () {
     return {
       inputParams: {},
+      scryfallName: "",
+      picturePreview: "",
       favorite_formats: [
         { name: "Commander (EDH)", checked: false },
         { name: "Standard", checked: false },
@@ -127,8 +129,6 @@ export default {
         { name: "Legacy", checked: false },
         { name: "Vintage", checked: false },
       ],
-      scryfallName: null,
-      picturePreview: null,
     };
   },
   created: function () {},
