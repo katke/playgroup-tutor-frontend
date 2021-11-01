@@ -4,7 +4,6 @@
       <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
         <a href="/" class="btn-about">Log in</a>
       </div>
-      <!-- ======= About Section ======= -->
       <section id="about" class="about" data-aos="zoom-up" data-aos-delay="100">
         <div class="container" data-aos="fade-up">
           <div class="section-title">
@@ -14,9 +13,8 @@
           <div class="row">
             <div class="col-lg-4">
               <div>
-                <strong>Profile Picture:</strong>
+                <h3><strong>Profile Picture:</strong></h3>
               </div>
-
               <img :src="picturePreview" class="img-fluid" alt="" id="profile-pic" />
               <br />
               <strong>Search for your favorite card:</strong>
@@ -86,10 +84,9 @@
                 Password:
                 <input type="text" v-model="inputParams.password" />
               </h3>
-              <p class="fst-italic">
-                Never tell anyone your full name or address. You should always meet strangers at public places like game
-                stores, libraries, or bars.
-              </p>
+              <br />
+              <hr />
+              <br />
               <div class="row">
                 <div class="col-lg-6">
                   <ul>
@@ -101,13 +98,20 @@
                     <li>
                       <i class="bi bi-rounded-right"></i>
                       <strong>Zip code:</strong>
-                      <input type="text" v-model="inputParams.zipcode" />
+                      <!-- <input type="text" v-model="inputParams.zipcode" /> -->
                     </li>
-                    <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>A little about yourself:</strong>
-                      <input type="text" v-model="inputParams.about_me" />
-                    </li>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">
+                        <strong>A little about yourself:</strong>
+                      </label>
+                      <textarea
+                        placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="5"
+                        v-model="inputParams.about_me"
+                      ></textarea>
+                    </div>
                   </ul>
                 </div>
                 <div class="col-lg-6">
@@ -141,6 +145,21 @@
             <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
               <button @click="createAccount()" class="btn-about">Sign up</button>
             </div>
+
+            <!-- PLAYGROUND -->
+            <form class="row g-3 needs-validation" novalidate id="signup-form">
+              <div class="col-md-3">
+                <label for="zipcodeForm" class="form-label">Zip Code</label>
+                <input type="text" class="form-control" id="zipcodeForm" required v-model="inputParams.zipcode" />
+                <div class="invalid-feedback">Please provide a valid zip code.</div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+
+              <div class="col-12">
+                <button class="btn btn-primary" type="submit" @click="zipTester()">zip checker</button>
+              </div>
+            </form>
+            <!-- END PLAYGROUND -->
           </div>
         </div>
       </section>
@@ -185,6 +204,30 @@
       </div>
     </div>
     <!-- END MODAL -->
+
+    <!-- ERRORS -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+        />
+      </symbol>
+    </svg>
+
+    <div
+      class="alert alert-danger d-flex align-items-center alert-dismissible fade show"
+      role="alert"
+      v-for="error in errors"
+      :key="error"
+    >
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+        <use xlink:href="#exclamation-triangle-fill" />
+      </svg>
+      <div>{{ error }}!</div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- end ERRORS -->
   </div>
 </template>
 
@@ -199,6 +242,7 @@ export default {
       scryfallName: "",
       picturePreview: "",
       cards: [],
+      errors: [],
       favorite_formats: [
         { id: 1, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
         { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
@@ -235,14 +279,32 @@ export default {
   },
   created: function () {
     let coinFlip = Math.floor(Math.random() * 2);
-    console.log(coinFlip);
     if (coinFlip === 0) {
+      // picks a random color
       this.picturePreview = this.colors[Math.floor(Math.random() * 5) + 1].img;
     } else {
+      // picks a random guild
       this.picturePreview = this.guilds[Math.floor(Math.random() * 10) + 1].img;
     }
   },
   methods: {
+    zipTester: function () {
+      // let form = document.getElementById("signup-form");
+      // form.classList.add("was-validated");
+      let zipform = document.getElementById("zipcodeForm");
+      axios
+        .get(`/locations/${this.inputParams.zipcode}`)
+        .then(() => {
+          zipform.classList.add("is-valid");
+          zipform.classList.remove("is-invalid");
+        })
+        .catch((error) => {
+          this.errors = error.response.errors;
+          zipform.classList.add("is-invalid");
+          zipform.classList.remove("is-valid");
+        });
+      console.log(zipform);
+    },
     showLogIn: function () {
       this.$router.push("/log-in");
     },
@@ -263,15 +325,22 @@ export default {
       this.picturePreview = card.img;
     },
     createAccount: function () {
-      axios.post("/users", this.inputParams).then((response) => {
-        this.favorite_formats.forEach((format) => {
-          if (format.checked === true) {
-            format.user_id = response.data.id;
-            axios.post("/favoriteformats", format);
-          }
+      axios
+        .post("/users", this.inputParams)
+        .then((response) => {
+          this.favorite_formats.forEach((format) => {
+            if (format.checked === true) {
+              format.user_id = response.data.id;
+              axios.post("/favoriteformats", format).then(() => {
+                this.$router.push("/");
+              });
+            }
+          });
+        })
+        .catch((error) => {
+          console.log("ERROR!", error.response.data.errors);
+          this.errors = error.response.data.errors;
         });
-      });
-      this.$router.push("/");
     },
   },
 };
