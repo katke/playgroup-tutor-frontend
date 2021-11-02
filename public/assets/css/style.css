@@ -1210,6 +1210,21 @@ section {
   max-height: 300px;
 }
 
+.alert-danger {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 60%;
+  z-index: 9999;
+  border-radius: 0px;
+}
+
+::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+/* more imports */
+
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-vue-inputs/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-vue-dropdowns/styles/material.css";
