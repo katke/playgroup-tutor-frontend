@@ -9,157 +9,165 @@
           <div class="section-title">
             <h2>Create your account</h2>
           </div>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div>
-                <h3><strong>Profile Picture:</strong></h3>
-              </div>
-              <img :src="picturePreview" class="img-fluid" alt="" id="profile-pic" />
-              <br />
-              <strong>Search for your favorite card:</strong>
-              <input type="text" width="100%" v-model="scryfallName" />
-              <button @click="scryfallSearch(scryfallName)" data-bs-toggle="modal" data-bs-target="#cardList">
-                Search
-              </button>
-              <!-- <button @click="testModal()">TEST</button> -->
-              <br />
-              <br />
-              <strong>Or choose your:</strong>
-              <!-- Color choosing dropdown  -->
-              <div class="input-group mb-3">
-                <button
-                  class="btn btn-outline-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Favorite Color...
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <span
-                      class="dropdown-item"
-                      @click="selectIcon(color)"
-                      v-for="color in colors"
-                      :key="`color-id-${color.id}`"
-                    >
-                      {{ color.name }}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <!-- end Color choosing dropdown  -->
-              <!-- guild choosing dropdown  -->
-              <div class="input-group mb-3">
-                <button
-                  class="btn btn-outline-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Ravnica Guild...
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a
-                      class="dropdown-item"
-                      @click="selectIcon(guild)"
-                      v-for="guild in guilds"
-                      :key="`guild-id-${guild.id}`"
-                    >
-                      {{ guild.name }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- end guild choosing dropdown  -->
-            </div>
-            <div class="col-lg-8 pt-4 pt-lg-0 content">
-              <h3>
-                Email:
-                <input type="text" v-model="inputParams.email" />
-              </h3>
-              <h3>
-                Password:
-                <input type="text" v-model="inputParams.password" />
-              </h3>
-              <br />
-              <hr />
-              <br />
-              <div class="row">
-                <div class="col-lg-6">
-                  <ul>
+          <div class="row g-3" novalidate>
+            <div class="row">
+              <!-- profile picture section -->
+              <form class="col-lg-4" v-on:submit.prevent="scryfallSearch(scryfallName)">
+                <div>
+                  <h3><strong>Profile Picture</strong></h3>
+                </div>
+                <img :src="inputParams.profile_picture" class="img-fluid" alt="" id="profile-pic" />
+                <br />
+                <hr />
+                <strong>Search for your favorite card...</strong>
+                <div class="input-group">
+                  <input type="text" v-model="scryfallName" class="form-control" />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
+                      Search
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <strong>Or choose your...</strong>
+                <!-- Color choosing dropdown  -->
+                <div class="input-group mb-3">
+                  <button
+                    class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Favorite Color
+                  </button>
+                  <ul class="dropdown-menu">
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>First Name:</strong>
-                      <input type="text" v-model="inputParams.first_name" />
+                      <span
+                        class="dropdown-item"
+                        @click="selectIcon(color)"
+                        v-for="color in colors"
+                        :key="`color-id-${color.id}`"
+                      >
+                        {{ color.name }}
+                      </span>
                     </li>
-                    <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>Zip code:</strong>
-                      <!-- <input type="text" v-model="inputParams.zipcode" /> -->
-                    </li>
-                    <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">
-                        <strong>A little about yourself:</strong>
-                      </label>
-                      <textarea
-                        placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
-                        class="form-control"
-                        id="exampleFormControlTextarea1"
-                        rows="5"
-                        v-model="inputParams.about_me"
-                      ></textarea>
-                    </div>
                   </ul>
                 </div>
-                <div class="col-lg-6">
-                  <ul>
+                <!-- end Color choosing dropdown  -->
+                <!-- guild choosing dropdown  -->
+                <div class="input-group mb-3">
+                  <button
+                    class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Ravnica Guild
+                  </button>
+                  <ul class="dropdown-menu">
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>Age:</strong>
-                      <input type="text" v-model="inputParams.age" />
+                      <a
+                        class="dropdown-item"
+                        @click="selectIcon(guild)"
+                        v-for="guild in guilds"
+                        :key="`guild-id-${guild.id}`"
+                      >
+                        {{ guild.name }}
+                      </a>
                     </li>
-                    <li>
-                      <div>
-                        <strong>What are your favorite formats?</strong>
+                  </ul>
+                </div>
+                <!-- end guild choosing dropdown  -->
+              </form>
+              <!-- end profile picture section -->
+
+              <!-- forms section -->
+              <form class="col-lg-8 pt-4 pt-lg-0 content" id="signup-form " v-on:submit.prevent="createAccount()">
+                <div class="row">
+                  <div class="col">
+                    <h3>
+                      <label for="EmailForm" class="form-label">Email</label>
+                    </h3>
+
+                    <input type="text" class="form-control" id="EmailForm" v-model="inputParams.email" />
+                    <div class="invalid-feedback">{{ errors["Email"] }}.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col">
+                    <h3>
+                      <label for="PasswordForm" class="form-label">Password</label>
+                    </h3>
+
+                    <input type="text" class="form-control" id="PasswordForm" v-model="inputParams.password" />
+                    <div class="invalid-feedback">{{ errors["Password"] }}.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-lg-6">
+                    <ul>
+                      <li>
+                        <strong><label for="FirstForm" class="form-label">First Name</label></strong>
+                        <input type="text" class="form-control" id="FirstForm" v-model="inputParams.first_name" />
+                        <div class="invalid-feedback">{{ errors["First"] }}.</div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </li>
+                      <li>
+                        <strong><label for="ZIPForm" class="form-label">Zip Code</label></strong>
+                        <input type="text" class="form-control" id="ZIPForm" v-model="inputParams.zipcode" />
+                        <div class="invalid-feedback">{{ errors["ZIP"] }}</div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </li>
+                      <div class="mb-3">
+                        <label for="AboutForm" class="form-label">
+                          <strong>A little about yourself</strong>
+                        </label>
+                        <textarea
+                          placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
+                          class="form-control"
+                          id="AboutForm"
+                          rows="7"
+                          v-model="inputParams.about_me"
+                        ></textarea>
+                        <div class="invalid-feedback">{{ errors["About"] }}</div>
+                        <div class="valid-feedback">Looks good!</div>
                       </div>
-                      <div v-for="format in favorite_formats" v-bind:key="format.name">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            v-bind:id="format.name"
-                            v-model="format.checked"
-                          />
-                          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                    </ul>
+                  </div>
+                  <div class="col-lg-6">
+                    <ul>
+                      <li>
+                        <strong><label for="AgeForm" class="form-label">Age</label></strong>
+                        <input type="number" class="form-control" id="AgeForm" v-model="inputParams.age" min="18" />
+                        <div class="invalid-feedback">I'm sorry, you must be over 18 to use this site.</div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </li>
+                      <li>
+                        <div>
+                          <strong>What are your favorite formats?</strong>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
+                        <div v-for="format in favorite_formats" v-bind:key="format.name">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              v-bind:id="format.name"
+                              v-model="format.checked"
+                            />
+                            <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+                <div class="container align-items-center" data-aos="zoom-in" data-aos-delay="50">
+                  <button type="submit" class="btn-about">Sign up</button>
+                </div>
+              </form>
             </div>
-            <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-              <button @click="createAccount()" class="btn-about">Sign up</button>
-            </div>
-
-            <!-- PLAYGROUND -->
-            <form class="row g-3 needs-validation" novalidate id="signup-form">
-              <div class="col-md-3">
-                <label for="zipcodeForm" class="form-label">Zip Code</label>
-                <input type="text" class="form-control" id="zipcodeForm" required v-model="inputParams.zipcode" />
-                <div class="invalid-feedback">Please provide a valid zip code.</div>
-                <div class="valid-feedback">Looks good!</div>
-              </div>
-
-              <div class="col-12">
-                <button class="btn btn-primary" type="submit" @click="zipTester()">zip checker</button>
-              </div>
-            </form>
-            <!-- END PLAYGROUND -->
           </div>
         </div>
       </section>
@@ -183,7 +191,7 @@
                 </div>
                 <div class="col-7">
                   <div class="col-innner">
-                    <img :src="picturePreview" alt="" id="picture-preview" />
+                    <img :src="scryfallPreview" alt="" id="picture-preview" />
                   </div>
                 </div>
               </div>
@@ -193,8 +201,10 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button
               class="btn btn-primary"
-              v-if="picturePreview"
-              @click="pictureEdit(picturePreview)"
+              @click="
+                inputParams.profile_picture = scryfallPreview;
+                cards = [];
+              "
               data-bs-dismiss="modal"
             >
               Save it!
@@ -204,30 +214,6 @@
       </div>
     </div>
     <!-- END MODAL -->
-
-    <!-- ERRORS -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-      <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-        <path
-          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-        />
-      </symbol>
-    </svg>
-
-    <div
-      class="alert alert-danger d-flex align-items-center alert-dismissible fade show"
-      role="alert"
-      v-for="error in errors"
-      :key="error"
-    >
-      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" />
-      </svg>
-      <div>{{ error }}!</div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <!-- end ERRORS -->
   </div>
 </template>
 
@@ -238,11 +224,18 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      inputParams: {},
+      inputParams: { profile_picture: "/assets/img/icons/B.png" },
       scryfallName: "",
-      picturePreview: "",
+      scryfallPreview: "",
       cards: [],
-      errors: [],
+      errors: {
+        Password: "",
+        Email: "",
+        First: "",
+        Age: "",
+        About: "",
+        ZIP: "",
+      },
       favorite_formats: [
         { id: 1, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
         { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
@@ -277,34 +270,17 @@ export default {
       ],
     };
   },
-  created: function () {
+  mounted: function () {
     let coinFlip = Math.floor(Math.random() * 2);
     if (coinFlip === 0) {
       // picks a random color
-      this.picturePreview = this.colors[Math.floor(Math.random() * 5) + 1].img;
+      this.inputParams.profile_picture = this.colors[Math.floor(Math.random() * 5) + 1].img;
     } else {
       // picks a random guild
-      this.picturePreview = this.guilds[Math.floor(Math.random() * 10) + 1].img;
+      this.inputParams.profile_picture = this.guilds[Math.floor(Math.random() * 10) + 1].img;
     }
   },
   methods: {
-    zipTester: function () {
-      // let form = document.getElementById("signup-form");
-      // form.classList.add("was-validated");
-      let zipform = document.getElementById("zipcodeForm");
-      axios
-        .get(`/locations/${this.inputParams.zipcode}`)
-        .then(() => {
-          zipform.classList.add("is-valid");
-          zipform.classList.remove("is-invalid");
-        })
-        .catch((error) => {
-          this.errors = error.response.errors;
-          zipform.classList.add("is-invalid");
-          zipform.classList.remove("is-valid");
-        });
-      console.log(zipform);
-    },
     showLogIn: function () {
       this.$router.push("/log-in");
     },
@@ -312,17 +288,21 @@ export default {
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           this.cards = data.data;
+          this.scryfallPreview = this.cards[0]["image_uris"]["art_crop"];
+
           // console.log(data["image_uris"]["art_crop"]);
-          // this.picturePreview = data["image_uris"]["art_crop"];
+          // this.inputParams.profile_picture = data["image_uris"]["art_crop"];
         });
     },
     selectCard: function (card) {
-      this.picturePreview = card["image_uris"]["art_crop"];
+      this.scryfallPreview = card["image_uris"]["art_crop"];
+      this.inputParams.profile_picture = card.img;
     },
     selectIcon: function (card) {
-      this.picturePreview = card.img;
+      this.inputParams.profile_picture = card.img;
+      this.inputParams.profile_picture = card.img;
     },
     createAccount: function () {
       axios
@@ -338,8 +318,36 @@ export default {
           });
         })
         .catch((error) => {
+          // reset errors
+          this.errors = {
+            Password: "",
+            Email: "",
+            First: "",
+            ZIP: "",
+            Age: "",
+            About: "",
+          };
+          for (var key in this.errors) {
+            // console.log(key);
+            let form = document.getElementById(`${key}Form`);
+            // console.log(form);
+            form.classList.add("is-valid");
+            form.classList.remove("is-invalid");
+          }
+
+          // now make any error an invalid state
           console.log("ERROR!", error.response.data.errors);
-          this.errors = error.response.data.errors;
+          error.response.data.errors.forEach((error) => {
+            let errorName = error.split(" ")[0];
+            this.errors[errorName] = error;
+            let form = document.getElementById(`${errorName}Form`);
+            // console.log(form)
+            if (form) {
+              form.classList.add("is-invalid");
+              form.classList.remove("is-valid");
+            }
+          });
+          // console.log(this.errors);
         });
     },
   },
