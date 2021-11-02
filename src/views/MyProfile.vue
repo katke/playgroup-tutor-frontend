@@ -75,7 +75,7 @@
                     </li>
                   </ul>
                 </div>
-                <!-- guild choosing dropdown  -->
+                <!-- end guild choosing dropdown  -->
               </div>
             </form>
             <!-- end profile picture section -->
@@ -228,13 +228,19 @@
             <div class="container-fluid position-relative position-trbl-0 overflow-hidden h-100">
               <div class="row" id="card-picker">
                 <div class="col-5">
-                  <div class="col-inner">
+                  <div class="col-inner" v-if="!showSaveButton">
                     <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">{{ card.name }}</div>
+                  </div>
+                  <div class="col-inner" v-if="showSaveButton">
+                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                      {{ card.set_name }}
+                    </div>
                   </div>
                 </div>
                 <div class="col-7">
                   <div class="col-innner">
                     <img :src="picturePreview" alt="" id="picture-preview" />
+                    <div style="font-style: italic">Artist: {{ selectedCard.artist }}</div>
                   </div>
                 </div>
               </div>
@@ -243,6 +249,17 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button
+              v-if="!showSaveButton"
+              class="btn btn-primary"
+              @click="
+                scryfallFormatSearch(selectedCard.name);
+                cards = [];
+              "
+            >
+              Next! Choose which printing...
+            </button>
+            <button
+              v-if="showSaveButton"
               class="btn btn-primary"
               @click="
                 pictureEdit(picturePreview);
@@ -256,7 +273,6 @@
         </div>
       </div>
     </div>
-    <!-- END MODAL -->
   </div>
 </template>
 
@@ -277,6 +293,8 @@ export default {
       showModal: false,
       user: {},
       cards: [],
+      selectedCard: {},
+      showSaveButton: false,
       picturePreview: "",
       scryfallName: "",
       editing: {
@@ -369,15 +387,35 @@ export default {
         });
     },
     scryfallSearch: function (cardName) {
+      this.showSaveButton = false;
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
           this.cards = data.data;
+          this.selectedCard = this.cards[0];
           this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+        });
+    },
+    scryfallFormatSearch: function (cardName) {
+      this.showSaveButton = true;
+      fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log("raw card data", data);
+          let formatsearch = data.prints_search_uri;
+          // console.log("link", formatsearch);
+          fetch(formatsearch)
+            .then((response) => response.json())
+            .then((data) => {
+              this.cards = data.data;
+              this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+              // console.log("formats", data);
+            });
         });
     },
     selectCard: function (card) {
       this.picturePreview = card["image_uris"]["art_crop"];
+      this.selectedCard = card;
     },
     pictureEdit: function (imageString) {
       console.log(imageString);

@@ -185,13 +185,19 @@
             <div class="container-fluid position-relative position-trbl-0 overflow-hidden h-100">
               <div class="row" id="card-picker">
                 <div class="col-5">
-                  <div class="col-inner">
+                  <div class="col-inner" v-if="!showSaveButton">
                     <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">{{ card.name }}</div>
+                  </div>
+                  <div class="col-inner" v-if="showSaveButton">
+                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                      {{ card.set_name }}
+                    </div>
                   </div>
                 </div>
                 <div class="col-7">
                   <div class="col-innner">
                     <img :src="scryfallPreview" alt="" id="picture-preview" />
+                    <div style="font-style: italic">Artist: {{ selectedCard.artist }}</div>
                   </div>
                 </div>
               </div>
@@ -200,9 +206,20 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button
+              v-if="!showSaveButton"
               class="btn btn-primary"
               @click="
-                inputParams.profile_picture = scryfallPreview;
+                scryfallFormatSearch(selectedCard.name);
+                cards = [];
+              "
+            >
+              Next! Choose which printing...
+            </button>
+            <button
+              v-if="showSaveButton"
+              class="btn btn-primary"
+              @click="
+                saveCard();
                 cards = [];
               "
               data-bs-dismiss="modal"
@@ -228,6 +245,8 @@ export default {
       scryfallName: "",
       scryfallPreview: "",
       cards: [],
+      selectedCard: {},
+      showSaveButton: false,
       errors: {
         Password: "",
         Email: "",
@@ -285,20 +304,41 @@ export default {
       this.$router.push("/log-in");
     },
     scryfallSearch: function (cardName) {
+      this.showSaveButton = false;
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
           this.cards = data.data;
+          this.selectedCard = this.cards[0];
           this.scryfallPreview = this.cards[0]["image_uris"]["art_crop"];
-
           // console.log(data["image_uris"]["art_crop"]);
           // this.inputParams.profile_picture = data["image_uris"]["art_crop"];
         });
     },
+    scryfallFormatSearch: function (cardName) {
+      this.showSaveButton = true;
+      fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log("raw card data", data);
+          let formatsearch = data.prints_search_uri;
+          // console.log("link", formatsearch);
+          fetch(formatsearch)
+            .then((response) => response.json())
+            .then((data) => {
+              this.cards = data.data;
+              this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+              // console.log("formats", data);
+            });
+        });
+    },
     selectCard: function (card) {
       this.scryfallPreview = card["image_uris"]["art_crop"];
-      this.inputParams.profile_picture = card.img;
+      this.selectedCard = card;
+    },
+    saveCard: function () {
+      this.inputParams.profile_picture = this.selectedCard["image_uris"]["art_crop"];
     },
     selectIcon: function (card) {
       this.inputParams.profile_picture = card.img;
