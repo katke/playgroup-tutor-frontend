@@ -78,7 +78,7 @@ export default {
       }
     },
     logOut: function () {
-      console.log("logged out!");
+      // console.log("logged out!");
       localStorage.removeItem("jwt");
       localStorage.removeItem("email");
       localStorage.removeItem("user_id");

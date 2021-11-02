@@ -60,7 +60,7 @@ export default {
     usersIndex: function () {
       axios.get("/users").then((response) => {
         this.users = response.data;
-        console.log(response.data);
+        // console.log(response.data);
 
         // deletes yourself from the array of users
         for (var index = 0; index < this.users.length; index++) {

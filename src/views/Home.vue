@@ -40,7 +40,7 @@ export default {
       this.$router.push("/create-account#");
     },
     signIn: function () {
-      console.log(this.inputParams);
+      // console.log(this.inputParams);
       axios.post("/sessions", this.inputParams).then((response) => {
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
