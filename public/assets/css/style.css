@@ -1210,15 +1210,6 @@ section {
   max-height: 300px;
 }
 
-.alert-danger {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 60%;
-  z-index: 9999;
-  border-radius: 0px;
-}
-
 ::-webkit-input-placeholder {
   font-style: italic;
 }
