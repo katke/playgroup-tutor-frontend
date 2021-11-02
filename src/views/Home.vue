@@ -20,7 +20,11 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.request-count {
+  color: red;
+}
+</style>
 
 <script>
 import axios from "axios";

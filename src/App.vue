@@ -9,7 +9,12 @@
           <ul>
             <li><a href="/find-friends">Find Friends</a></li>
             <li><a href="/advanced-chat">Chat</a></li>
-            <li><a href="/friend-requests">Friend Requests</a></li>
+            <li>
+              <a href="/friend-requests">
+                Friend Requests&nbsp;
+                <span id="friend-requests" class="">({{ friendRequests }})</span>
+              </a>
+            </li>
           </ul>
 
           <i class="bi bi-list mobile-nav-toggle"></i>
@@ -63,11 +68,13 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      friendRequests: 0,
       loginStatus: "Not logged in",
     };
   },
-  created: function () {
+  mounted: function () {
     this.loginCheck();
+    this.friendRequestCount();
   },
   methods: {
     loginCheck: function () {
@@ -76,6 +83,17 @@ export default {
       } else {
         this.loginStatus = "Not logged in";
       }
+    },
+    friendRequestCount: function () {
+      axios.get("/friend-requests").then((response) => {
+        this.friendRequests = response.data.length;
+        let form = document.getElementById("friend-requests");
+        if (response.data.length > 0) {
+          form.classList.add("request-count");
+        } else {
+          form.classList.remove("request-count");
+        }
+      });
     },
     logOut: function () {
       // console.log("logged out!");

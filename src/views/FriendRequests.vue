@@ -1,8 +1,8 @@
 <template>
   <div id="create">
     <main id="main">
-      <section>
-        <h1 class="container d-flex flex-column align-items-center">Friend Requests:</h1>
+      <section class="container d-flex flex-column align-items-center">
+        <h1>Friend Requests:</h1>
         <div v-if="friendRequests.length === 0">No friend requests!</div>
         <div
           v-for="request in friendRequests"
@@ -67,8 +67,14 @@ export default {
 
     acceptRequest: function (request) {
       let params = { status: "Accepted" };
+      for (var index = 0; index < this.friendRequests.length; index++) {
+        if (this.friendRequests[index].id == request.id) {
+          this.friendRequests.splice(index, 1);
+        }
+      }
       axios.patch(`/relationships/${request.id}`, params).then((response) => {
         console.log(response.data);
+        this.$parent.friendRequestCount();
       });
     },
   },
