@@ -32,14 +32,10 @@ export default {
         email: "wanda@test.com",
         password: "password",
       },
-      seeLogIn: false,
     };
   },
   created: function () {},
   methods: {
-    showLogIn: function () {
-      this.seeLogIn = !this.seeLogIn;
-    },
     showCreateAccount: function () {
       this.$router.push("/create-account#");
     },
@@ -54,7 +50,7 @@ export default {
         localStorage.setItem("profile_picture", response.data.profile_picture);
         localStorage.setItem("latitude", response.data.latitude);
         localStorage.setItem("longitude", response.data.longitude);
-        console.log(response.data, "Success!");
+        this.$parent.loginCheck();
         this.$router.push("/find-friends");
       });
     },
