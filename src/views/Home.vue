@@ -55,6 +55,7 @@ export default {
         localStorage.setItem("latitude", response.data.latitude);
         localStorage.setItem("longitude", response.data.longitude);
         this.$parent.loginCheck();
+        this.$parent.friendRequestCount();
         this.$router.push("/find-friends");
       });
     },
