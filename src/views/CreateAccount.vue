@@ -9,164 +9,191 @@
           <div class="section-title">
             <h2>Create your account</h2>
           </div>
-          <div class="row g-3" novalidate>
-            <div class="row">
-              <!-- profile picture section -->
-              <form class="col-lg-4" v-on:submit.prevent="scryfallSearch(scryfallName)">
-                <div>
-                  <h3><strong>Profile Picture</strong></h3>
+          <div class="row g-3">
+            <!-- profile picture section -->
+            <div class="col-lg-4">
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <form v-on:submit.prevent="scryfallSearch(scryfallName)">
+                    <div class="section-title">
+                      <h3><strong>Profile Picture</strong></h3>
+                    </div>
+                    <img
+                      :src="inputParams.profile_picture"
+                      class="img-fluid centered-element"
+                      alt=""
+                      id="profile-pic"
+                    />
+                    <hr />
+                    <strong>Search for your favorite card...</strong>
+                    <div class="input-group">
+                      <input type="text" v-model="scryfallName" class="form-control" />
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
+                          Search
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-                <img :src="inputParams.profile_picture" class="img-fluid" alt="" id="profile-pic" />
-                <br />
-                <hr />
-                <strong>Search for your favorite card...</strong>
-                <div class="input-group">
-                  <input type="text" v-model="scryfallName" class="form-control" />
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
-                      Search
-                    </button>
-                  </div>
-                </div>
-                <br />
+              </div>
+              <div class="row">
                 <strong>Or choose your...</strong>
                 <!-- Color choosing dropdown  -->
-                <div class="input-group mb-3">
-                  <button
-                    class="btn btn-outline-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Favorite Color
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <span
-                        class="dropdown-item"
-                        @click="selectIcon(color)"
-                        v-for="color in colors"
-                        :key="`color-id-${color.id}`"
-                      >
-                        {{ color.name }}
-                      </span>
-                    </li>
-                  </ul>
+                <div class="col-6 mb-3">
+                  <div class="input-group">
+                    <button
+                      class="btn btn-outline-secondary centered-element dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Favorite Color
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <span
+                          class="dropdown-item"
+                          @click="selectIcon(color)"
+                          v-for="color in colors"
+                          :key="`color-id-${color.id}`"
+                        >
+                          {{ color.name }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
                 <!-- end Color choosing dropdown  -->
                 <!-- guild choosing dropdown  -->
-                <div class="input-group mb-3">
-                  <button
-                    class="btn btn-outline-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Ravnica Guild
+                <div class="col-6 mb-3">
+                  <div class="input-group">
+                    <button
+                      class="btn btn-outline-secondary centered-element dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Ravnica Guild
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          @click="selectIcon(guild)"
+                          v-for="guild in guilds"
+                          :key="`guild-id-${guild.id}`"
+                        >
+                          {{ guild.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button class="btn btn-outline-dark centered-element" @click="randomScryfall()">
+                    Or a random card!
                   </button>
-                  <ul class="dropdown-menu">
+                </div>
+              </div>
+
+              <!-- end guild choosing dropdown  -->
+            </div>
+            <!-- end profile picture section -->
+
+            <!-- forms section -->
+            <form class="col-lg-8 pt-4 pt-lg-0 content" id="signup-form " v-on:submit.prevent="createAccount()">
+              <div class="row">
+                <div class="col">
+                  <h3>
+                    <label for="EmailForm" class="form-label">Email</label>
+                  </h3>
+
+                  <input type="text" class="form-control" id="EmailForm" v-model="inputParams.email" />
+                  <div class="invalid-feedback">{{ errors["Email"] }}.</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col">
+                  <h3>
+                    <label for="PasswordForm" class="form-label">Password</label>
+                  </h3>
+
+                  <input type="text" class="form-control" id="PasswordForm" v-model="inputParams.password" />
+                  <div class="invalid-feedback">{{ errors["Password"] }}.</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul>
                     <li>
-                      <a
-                        class="dropdown-item"
-                        @click="selectIcon(guild)"
-                        v-for="guild in guilds"
-                        :key="`guild-id-${guild.id}`"
-                      >
-                        {{ guild.name }}
-                      </a>
+                      <strong><label for="FirstForm" class="form-label">First Name</label></strong>
+                      <input type="text" class="form-control" id="FirstForm" v-model="inputParams.first_name" />
+                      <div class="invalid-feedback">{{ errors["First"] }}.</div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </li>
+                    <li>
+                      <strong><label for="ZIPForm" class="form-label">Zip Code</label></strong>
+                      <input type="text" class="form-control" id="ZIPForm" v-model="inputParams.zipcode" />
+                      <div class="invalid-feedback">{{ errors["ZIP"] }}</div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </li>
+                    <div class="mb-3">
+                      <label for="AboutForm" class="form-label">
+                        <strong>A little about yourself</strong>
+                      </label>
+                      <textarea
+                        placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
+                        class="form-control"
+                        id="AboutForm"
+                        rows="7"
+                        v-model="inputParams.about_me"
+                      ></textarea>
+                      <div class="invalid-feedback">{{ errors["About"] }}</div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul>
+                    <li>
+                      <strong><label for="AgeForm" class="form-label">Age</label></strong>
+                      <input type="number" class="form-control" id="AgeForm" v-model="inputParams.age" min="18" />
+                      <div class="invalid-feedback">I'm sorry, you must be over 18 to use this site.</div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </li>
+                    <li>
+                      <div>
+                        <strong>What are your favorite formats?</strong>
+                      </div>
+                      <div v-for="format in favorite_formats" v-bind:key="format.name">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            v-bind:id="format.name"
+                            v-model="format.checked"
+                          />
+                          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                        </div>
+                      </div>
                     </li>
                   </ul>
                 </div>
-                <!-- end guild choosing dropdown  -->
-              </form>
-              <!-- end profile picture section -->
-
-              <!-- forms section -->
-              <form class="col-lg-8 pt-4 pt-lg-0 content" id="signup-form " v-on:submit.prevent="createAccount()">
-                <div class="row">
-                  <div class="col">
-                    <h3>
-                      <label for="EmailForm" class="form-label">Email</label>
-                    </h3>
-
-                    <input type="text" class="form-control" id="EmailForm" v-model="inputParams.email" />
-                    <div class="invalid-feedback">{{ errors["Email"] }}.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                  </div>
-                  <div class="col">
-                    <h3>
-                      <label for="PasswordForm" class="form-label">Password</label>
-                    </h3>
-
-                    <input type="text" class="form-control" id="PasswordForm" v-model="inputParams.password" />
-                    <div class="invalid-feedback">{{ errors["Password"] }}.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                  </div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-lg-6">
-                    <ul>
-                      <li>
-                        <strong><label for="FirstForm" class="form-label">First Name</label></strong>
-                        <input type="text" class="form-control" id="FirstForm" v-model="inputParams.first_name" />
-                        <div class="invalid-feedback">{{ errors["First"] }}.</div>
-                        <div class="valid-feedback">Looks good!</div>
-                      </li>
-                      <li>
-                        <strong><label for="ZIPForm" class="form-label">Zip Code</label></strong>
-                        <input type="text" class="form-control" id="ZIPForm" v-model="inputParams.zipcode" />
-                        <div class="invalid-feedback">{{ errors["ZIP"] }}</div>
-                        <div class="valid-feedback">Looks good!</div>
-                      </li>
-                      <div class="mb-3">
-                        <label for="AboutForm" class="form-label">
-                          <strong>A little about yourself</strong>
-                        </label>
-                        <textarea
-                          placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
-                          class="form-control"
-                          id="AboutForm"
-                          rows="7"
-                          v-model="inputParams.about_me"
-                        ></textarea>
-                        <div class="invalid-feedback">{{ errors["About"] }}</div>
-                        <div class="valid-feedback">Looks good!</div>
-                      </div>
-                    </ul>
-                  </div>
-                  <div class="col-lg-6">
-                    <ul>
-                      <li>
-                        <strong><label for="AgeForm" class="form-label">Age</label></strong>
-                        <input type="number" class="form-control" id="AgeForm" v-model="inputParams.age" min="18" />
-                        <div class="invalid-feedback">I'm sorry, you must be over 18 to use this site.</div>
-                        <div class="valid-feedback">Looks good!</div>
-                      </li>
-                      <li>
-                        <div>
-                          <strong>What are your favorite formats?</strong>
-                        </div>
-                        <div v-for="format in favorite_formats" v-bind:key="format.name">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              v-bind:id="format.name"
-                              v-model="format.checked"
-                            />
-                            <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="container align-items-center" data-aos="zoom-in" data-aos-delay="50">
-                  <button type="submit" class="btn-about">Sign up</button>
-                </div>
-              </form>
+              </div>
+              <button class="d-none">This is my hidden button to allow the 2nd form to work</button>
+            </form>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div data-aos="zoom-in" data-aos-delay="50">
+                <button @click="createAccount()" class="btn-about centered-element">Sign up</button>
+              </div>
             </div>
           </div>
         </div>
@@ -331,6 +358,13 @@ export default {
               this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
               // console.log("formats", data);
             });
+        });
+    },
+    randomScryfall: function () {
+      fetch("https://api.scryfall.com/cards/random")
+        .then((response) => response.json())
+        .then((data) => {
+          this.inputParams.profile_picture = data["image_uris"]["art_crop"];
         });
     },
     selectCard: function (card) {

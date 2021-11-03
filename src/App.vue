@@ -107,15 +107,17 @@ export default {
       }
     },
     friendRequestCount: function () {
-      axios.get("/friend-requests").then((response) => {
-        this.friendRequests = response.data.length;
-        let form = document.getElementById("friend-requests");
-        if (response.data.length > 0) {
-          form.classList.add("request-count");
-        } else {
-          form.classList.remove("request-count");
-        }
-      });
+      if (localStorage.jwt) {
+        axios.get("/friend-requests").then((response) => {
+          this.friendRequests = response.data.length;
+          let form = document.getElementById("friend-requests");
+          if (response.data.length > 0) {
+            form.classList.add("request-count");
+          } else {
+            form.classList.remove("request-count");
+          }
+        });
+      }
     },
     logOut: function () {
       // console.log("logged out!");

@@ -8,76 +8,95 @@
             <h2>Your account</h2>
           </div>
 
-          <div class="row">
+          <div class="row g-3">
             <!-- profile picture section -->
-            <form class="col-lg-4" v-on:submit.prevent="scryfallSearch(scryfallName)">
-              <div>
-                <h3><strong>Profile Picture:</strong></h3>
-              </div>
-              <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
-              <div>
-                <hr />
-                <strong>Search for your favorite card...</strong>
-                <div class="input-group">
-                  <input type="text" v-model="scryfallName" class="form-control" />
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
-                      Search
-                    </button>
+            <div class="col-lg-4">
+              <div class="row">
+                <div class="col-12">
+                  <h3><strong>Profile Picture:</strong></h3>
+                  <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
+                  <div>
+                    <hr />
+                    <form v-on:submit.prevent="scryfallSearch(scryfallName)">
+                      <strong>Search for your favorite card...</strong>
+                      <div class="input-group">
+                        <input type="text" v-model="scryfallName" class="form-control" />
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
+                            Search
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
-                <br />
-                <strong>Or choose your...</strong>
-                <!-- Color choosing dropdown  -->
-                <div class="input-group mb-3">
-                  <button
-                    class="btn btn-outline-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Favorite Color
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <span
-                        class="dropdown-item"
-                        @click="pictureEdit(color.img)"
-                        v-for="color in colors"
-                        :key="`color-id-${color.id}`"
-                      >
-                        {{ color.name }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-                <!-- Color choosing dropdown  -->
-                <!-- guild choosing dropdown  -->
-                <div class="input-group mb-3">
-                  <button
-                    class="btn btn-outline-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Ravnica Guild
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        @click="pictureEdit(guild.img)"
-                        v-for="guild in guilds"
-                        :key="`guild-id-${guild.id}`"
-                      >
-                        {{ guild.name }}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- end guild choosing dropdown  -->
               </div>
-            </form>
+
+              <div class="row">
+                <strong>Or choose your...</strong>
+
+                <!-- Color Choosing Dropdown  -->
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <button
+                      class="btn btn-outline-secondary dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Favorite Color
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <span
+                          class="dropdown-item"
+                          @click="pictureEdit(color.img)"
+                          v-for="color in colors"
+                          :key="`color-id-${color.id}`"
+                        >
+                          {{ color.name }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- End Color  -->
+                <!-- Guild Choosing Dropdown  -->
+                <div class="col-6">
+                  <div class="input-group mb-3 col-6">
+                    <button
+                      class="btn btn-outline-secondary dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Ravnica Guild
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          @click="pictureEdit(guild.img)"
+                          v-for="guild in guilds"
+                          :key="`guild-id-${guild.id}`"
+                        >
+                          {{ guild.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- End Guild  -->
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-secondary centered-element" @click="randomScryfall()">
+                    Or a random card!
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- end profile picture section -->
 
             <!-- form section -->
@@ -286,6 +305,7 @@ import VuejsDialog from "vuejs-dialog";
 import "vuejs-dialog/dist/vuejs-dialog.min.css";
 
 // Tell Vue to install the plugin.
+
 Vue.use(VuejsDialog, {});
 export default {
   data() {
@@ -411,6 +431,13 @@ export default {
               this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
               // console.log("formats", data);
             });
+        });
+    },
+    randomScryfall: function () {
+      fetch("https://api.scryfall.com/cards/random")
+        .then((response) => response.json())
+        .then((data) => {
+          this.pictureEdit(data["image_uris"]["art_crop"]);
         });
     },
     selectCard: function (card) {
