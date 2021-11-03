@@ -18,12 +18,12 @@
           </ul>
           <!-- End Desktop Navbar -->
           <!-- ======= Mobile Dropdown -->
-          <div class="navbar order-last order-lg-0">
+          <div class="navbar order-last order-lg-0" id="mobile-dropdown">
             <div class="dropdown">
-              <i class="bi bi-list mobile-nav-toggle dropdown-toggle" data-bs-toggle="dropdown" id="mobileDropdown"></i>
+              <i class="bi bi-list mobile-nav-toggle" data-bs-toggle="dropdown" id="mobileDropdown"></i>
 
-              <ul class="dropdown-menu" aria-labelledby="mobileDropdown">
-                <li><a href="/find-friends" class="dropdown-item">Find Friends</a></li>
+              <ul class="dropdown" aria-labelledby="mobileDropdown">
+                <li class=""><a href="/find-friends" class="dropdown-item">Find Friends</a></li>
                 <li><a href="/advanced-chat" class="dropdown-item">Chat</a></li>
                 <li>
                   <a href="/friend-requests" class="dropdown-item">
