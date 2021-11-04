@@ -9,7 +9,7 @@
           <ul>
             <li><a href="/find-friends">Find Friends</a></li>
             <li><a href="/advanced-chat">Chat</a></li>
-            <li><a href="/test-chat">Test Chat</a></li>
+            <li><a href="/test-chat"></a></li>
             <li>
               <a href="/friend-requests">
                 Friend Requests&nbsp;
@@ -62,7 +62,6 @@
     <!-- End Header -->
 
     <!-- ======= Router view ======= -->
-
     <router-view />
 
     <!-- ======= Footer ======= -->
