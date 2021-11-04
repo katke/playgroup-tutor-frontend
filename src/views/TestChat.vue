@@ -180,16 +180,19 @@ export default {
   },
   created() {
     this.importFriends();
-    axios.get(`/users/${localStorage.user_id}`).then((response) => {
-      this.user = response.data;
-      this.myself = {
-        name: this.user.first_name,
-        id: this.user.user_id,
-        profilePicture: this.user.profile_picture,
-      };
-    });
+    this.importUser;
   },
   methods: {
+    importUser: function () {
+      axios.get(`/users/${localStorage.user_id}`).then((response) => {
+        this.user = response.data;
+        this.myself = {
+          name: this.user.first_name,
+          id: this.user.user_id,
+          profilePicture: this.user.profile_picture,
+        };
+      });
+    },
     importFriends: function () {
       axios.get("/friends").then((response) => {
         console.log("friends", response.data);
