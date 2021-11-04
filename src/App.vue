@@ -64,60 +64,62 @@
     <router-view />
 
     <!-- Chat! -->
-    <div class="btn-group friends-floaty">
-      <button
-        class="btn btn-danger dropdown-toggle"
-        type="button"
-        id="dropdownMenuClickable"
-        data-bs-toggle="dropdown"
-        data-bs-auto-close="false"
-        aria-expanded="false"
-      >
-        Chat with Friends
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickable">
-        <li class="dropdown-item" v-for="friend in friends" :key="`chat-${friend.id}`" @click="loadChatRoom(friend)">
-          {{ friend.first_name }}
-        </li>
-      </ul>
-    </div>
+    <div v-if="isHome">
+      <div class="btn-group friends-floaty">
+        <button
+          class="btn btn-danger dropdown-toggle"
+          type="button"
+          id="dropdownMenuClickable"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="false"
+          aria-expanded="false"
+        >
+          Chat with Friends
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickable">
+          <li class="dropdown-item" v-for="friend in friends" :key="`chat-${friend.id}`" @click="loadChatRoom(friend)">
+            {{ friend.first_name }}
+          </li>
+        </ul>
+      </div>
 
-    <div class="chat-floaty">
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animate__animated animate__fadeInUp"
-        leave-active-class="animate__animated animate__fadeOutDown"
-      >
-        <Chat
-          v-if="visible"
-          :participants="participants"
-          :myself="myself"
-          :messages="messages"
-          :chat-title="chatTitle"
-          :placeholder="placeholder"
-          :colors="colors"
-          :border-style="borderStyle"
-          :hide-close-button="hideCloseButton"
-          :close-button-icon-size="closeButtonIconSize"
-          :submit-icon-size="submitIconSize"
-          :load-more-messages="toLoad.length > 0 ? loadMoreMessages : null"
-          :async-mode="asyncMode"
-          :scroll-bottom="scrollBottom"
-          :display-header="true"
-          :send-images="true"
-          :profile-picture-config="profilePictureConfig"
-          :timestamp-config="timestampConfig"
-          :link-options="linkOptions"
-          :accept-image-types="'.png, .jpeg, .jpg'"
-          @onImageClicked="onImageClicked"
-          @onImageSelected="onImageSelected"
-          @onMessageSubmit="onMessageSubmit"
-          @onClose="onClose"
-        />
-      </transition>
-      <!-- disabled settings: 
+      <div class="chat-floaty">
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animate__animated animate__fadeInUp"
+          leave-active-class="animate__animated animate__fadeOutDown"
+        >
+          <Chat
+            v-if="visible"
+            :participants="participants"
+            :myself="myself"
+            :messages="messages"
+            :chat-title="chatTitle"
+            :placeholder="placeholder"
+            :colors="colors"
+            :border-style="borderStyle"
+            :hide-close-button="hideCloseButton"
+            :close-button-icon-size="closeButtonIconSize"
+            :submit-icon-size="submitIconSize"
+            :load-more-messages="toLoad.length > 0 ? loadMoreMessages : null"
+            :async-mode="asyncMode"
+            :scroll-bottom="scrollBottom"
+            :display-header="true"
+            :send-images="true"
+            :profile-picture-config="profilePictureConfig"
+            :timestamp-config="timestampConfig"
+            :link-options="linkOptions"
+            :accept-image-types="'.png, .jpeg, .jpg'"
+            @onImageClicked="onImageClicked"
+            @onImageSelected="onImageSelected"
+            @onMessageSubmit="onMessageSubmit"
+            @onClose="onClose"
+          />
+        </transition>
+        <!-- disabled settings: 
             :submit-image-icon-size="submitImageIconSize"
            -->
+      </div>
     </div>
     <!-- end Chat -->
     <!-- ======= Footer ======= -->
@@ -262,14 +264,14 @@ export default {
   },
   mounted: function () {
     this.loginCheck();
-    this.friendRequestCount();
-    this.importFriends();
-    this.importUser();
   },
   methods: {
     loginCheck: function () {
-      if (localStorage.first_name) {
+      if (localStorage.jwt) {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
+        this.friendRequestCount();
+        this.importFriends();
+        this.importUser();
       } else {
         this.loginStatus = "Not logged in";
       }
