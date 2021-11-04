@@ -8,7 +8,6 @@
           <!-- ======= Desktop Navbar ======= -->
           <ul>
             <li><a href="/find-friends">Find Friends</a></li>
-            <li><a href="/advanced-chat">Chat</a></li>
             <li><a href="/test-chat"></a></li>
             <li>
               <a href="/friend-requests">
