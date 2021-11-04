@@ -359,8 +359,8 @@ export default {
           });
 
           bulkMessages.forEach((message) => {
-            console.log(message.created_at.substring(11, 13));
-            console.log(this.timeConverter(message.created_at.substring(11, 13)));
+            // console.log(message.created_at.substring(11, 13));
+            // console.log(this.timeConverter(message.created_at.substring(11, 13)));
             let tempMessage = {
               content: message.text,
               participantId: message.sender_id,
