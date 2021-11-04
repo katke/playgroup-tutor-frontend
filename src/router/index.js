@@ -7,6 +7,7 @@ import Chat from "../views/Chat.vue";
 import MyProfile from "../views/MyProfile.vue";
 import AdvancedChat from "../views/AdvancedChat.vue";
 import FriendRequests from "../views/FriendRequests.vue";
+import TestChat from "../views/TestChat.vue";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,11 @@ const routes = [
     path: "/friend-requests",
     name: "Friend Requests",
     component: FriendRequests,
+  },
+  {
+    path: "/test-chat",
+    name: "TestChat",
+    component: TestChat,
   },
 ];
 
