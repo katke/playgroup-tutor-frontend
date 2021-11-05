@@ -1,32 +1,114 @@
 <template>
   <div class="find-friends">
     <main id="main">
-      <!-- ======= Services Section ======= -->
-      <section id="services" class="services">
-        <div class="container" data-aos="fade-up">
-          <div class="section-title">
-            <h2>Search your library for a planeswalker...</h2>
-            <p>Here are all the users that you can add as friends! :)</p>
-          </div>
-          <div class="row" data-aos="fade-up" data-aos-delay="50">
-            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" v-for="user in users" v-bind:key="user.id">
-              <div class="icon-box">
-                <h4>
-                  {{ user.first_name }}
-                  <span id="user-id">#{{ user.id }}</span>
-                </h4>
-                <div>
-                  <img :src="user.profile_picture" alt="" id="profile-pic" />
+      <section id="portfolio" class="portfolio">
+        <div class="section-title">
+          <h2>Search your library for a planeswalker...</h2>
+          <p>Here are all the users that you can add as friends! :)</p>
+          <p>Click on a user to see more info</p>
+        </div>
+        <div class="container-fluid d-flex flex-column flex-grow-1 vh-100 overflow-hidden">
+          <div class="row flex-grow-1 overflow-hidden" data-aos="fade-up" data-aos-delay="50">
+            <div class="col-2 mh-100 overflow-auto py-2">
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+              <div class="">Here's all the filter info</div>
+            </div>
+            <div class="col mh-100 overflow-auto py-2">
+              <div
+                class="row p-1"
+                data-bs-toggle="collapse"
+                :data-bs-target="`#collapse-${user.id}`"
+                aria-expanded="false"
+                :aria-controls="`#collapse-${user.id}`"
+                v-for="user in users"
+                v-bind:key="user.id"
+              >
+                <div class="col-7">
+                  <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
                 </div>
-                <p>{{ user.about_me }}</p>
-                <p>Distance from you: {{ user.distance }} miles</p>
-                <li v-for="format in user.favoriteformats" v-bind:key="`format-${format.id}`">
-                  {{ format.format }}
-                </li>
-                <div>
-                  <button @click="addFriend(user)" class="btn-about">Friend Request {{ user.first_name }}</button>
+                <div class="col-5">
+                  <h3>
+                    {{ user.first_name }}
+                    <span id="user-id">#{{ user.id }}</span>
+                  </h3>
+                  <ul class="list-group">
+                    <li v-for="format in user.favoriteformats" class="list-group-item" :key="`format-${format.id}`">
+                      {{ format.format }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- more info -->
+                <div class="collapse" :id="`collapse-${user.id}`">
+                  <div class="card card-body">
+                    {{ user.about_me }}
+                    <div>
+                      <div style="color: gray">Distance from you: ~{{ user.distance }} miles</div>
+                      <div style="color: gray">Age: {{ user.age }} miles</div>
+                      <br />
+                      <div>
+                        <button @click="addFriend(user)" class="btn btn-outline-danger">
+                          Friend Request {{ user.first_name }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="col-4 mh-100 overflow-auto py-2">
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
+              <div>Here's all the map info</div>
             </div>
           </div>
         </div>
