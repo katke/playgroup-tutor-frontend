@@ -369,12 +369,16 @@ export default {
     let coinFlip = Math.floor(Math.random() * 2);
     if (coinFlip === 0) {
       // picks a random color
-      this.inputParams.profile_picture = this.colors[Math.floor(Math.random() * 5) + 1].img;
-      console.log(this.inputParams.profile_picture);
+      setTimeout(() => {
+        this.inputParams.profile_picture = this.colors[Math.floor(Math.random() * 5) + 1].img;
+        console.log(this.inputParams.profile_picture);
+      }, 30);
     } else {
       // picks a random guild
-      this.inputParams.profile_picture = this.guilds[Math.floor(Math.random() * 10) + 1].img;
-      console.log(this.inputParams.profile_picture);
+      setTimeout(() => {
+        this.inputParams.profile_picture = this.guilds[Math.floor(Math.random() * 10) + 1].img;
+        console.log(this.inputParams.profile_picture);
+      }, 30);
     }
   },
   methods: {
@@ -383,6 +387,19 @@ export default {
     },
     scryfallSearch: function (cardName) {
       this.showSaveButton = false;
+
+      // reset all selected items
+      let actives = document.getElementsByClassName("active");
+      console.log("test", actives);
+      actives.forEach((element) => {
+        element.classList.remove("active");
+      });
+      actives.forEach((element) => {
+        element.classList.remove("active");
+      });
+      // just doing it twice works.. not sure why but I'll leave it for now
+      //
+
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
@@ -390,7 +407,6 @@ export default {
           this.cards = data.data;
           this.selectedCard = this.cards[0];
           // console.log("cards list", this.cards);
-          // console.log("first card", this.cards[0]);
           setTimeout(() => {
             let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
             firstCard.classList.add("active");
