@@ -14,7 +14,7 @@
             <div class="col-lg-4">
               <div class="row">
                 <div class="col-12 mb-3">
-                  <form v-on:submit.prevent="scryfallSearch(scryfallName)">
+                  <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
                     <div class="section-title">
                       <h3><strong>Profile Picture</strong></h3>
                     </div>
@@ -29,7 +29,7 @@
                     <hr />
                     <strong>Search for your favorite card...</strong>
                     <div class="input-group">
-                      <input type="text" v-model="scryfallName" class="form-control" />
+                      <input type="text" v-model="scryfallNameField" class="form-control" />
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
                           Search
@@ -235,7 +235,13 @@
                       {{ card.name }}
                     </div>
                   </div>
-                  <div class="list-group" id="list-tab" role="tablist" v-if="showSaveButton">
+                  <div
+                    class="list-group"
+                    id="list-tab"
+                    role="tablist"
+                    v-if="showSaveButton"
+                    style="max-height: 50vh; overflow: auto"
+                  >
                     <div
                       class="list-group-item list-group-item-action"
                       data-bs-toggle="list"
@@ -318,8 +324,7 @@ export default {
   data: function () {
     return {
       inputParams: { profile_picture: "/assets/img/icons/B.png" },
-      scryfallName: "",
-      scryfallPreview: "",
+      scryfallNameField: "",
       cards: [],
       selectedCard: {},
       showSaveButton: false,

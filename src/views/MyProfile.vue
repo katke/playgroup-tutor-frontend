@@ -17,10 +17,10 @@
                   <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
                   <div>
                     <hr />
-                    <form v-on:submit.prevent="scryfallSearch(scryfallName)">
+                    <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
                       <strong>Search for your favorite card...</strong>
                       <div class="input-group">
-                        <input type="text" v-model="scryfallName" class="form-control" />
+                        <input type="text" v-model="scryfallNameField" class="form-control" />
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
                             Search
@@ -237,29 +237,81 @@
 
     <!-- Modal -->
     <div class="modal fade" id="cardList" tabindex="-1" aria-labelledby="cardListLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="cardListLabel">Which card did you mean?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <div class="container-fluid position-relative position-trbl-0 overflow-hidden h-100">
-              <div class="row" id="card-picker">
-                <div class="col-5">
-                  <div class="col-inner" v-if="!showSaveButton">
-                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">{{ card.name }}</div>
+          <div class="modal-body" style="height: 60vh">
+            <div class="container-fluid d-flex flex-column flex-grow-1 overflow-hidden">
+              <div class="row flex-grow-1 overflow-hidden" id="card-picker">
+                <div class="col-5 overflow-auto py-2">
+                  <div
+                    class="list-group"
+                    id="card-list"
+                    role="tablist"
+                    v-if="!showSaveButton"
+                    style="max-height: 50vh; overflow: auto"
+                  >
+                    <div
+                      class="list-group-item list-group-item-action"
+                      data-bs-toggle="list"
+                      :href="`#image-${card.id}`"
+                      v-for="card in cards"
+                      :key="`card-${card.id}`"
+                      :id="`card-id-${card.id}`"
+                      @click="selectCard(card)"
+                      :aria-controls="`list-${card.id}`"
+                    >
+                      {{ card.name }}
+                    </div>
                   </div>
-                  <div class="col-inner" v-if="showSaveButton">
-                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                  <div
+                    class="list-group"
+                    id="list-tab"
+                    role="tablist"
+                    v-if="showSaveButton"
+                    style="max-height: 50vh; overflow: auto"
+                  >
+                    <div
+                      class="list-group-item list-group-item-action"
+                      data-bs-toggle="list"
+                      :href="`#image-${card.id}`"
+                      v-for="card in cards"
+                      :key="`format-${card.id}`"
+                      :id="`format-id-${card.id}`"
+                      @click="selectCard(card)"
+                    >
                       {{ card.set_name }}
                     </div>
                   </div>
                 </div>
-                <div class="col-7">
-                  <div class="col-innner">
-                    <img :src="picturePreview" alt="" id="picture-preview" />
-                    <div style="font-style: italic">Artist: {{ selectedCard.artist }}</div>
+                <div class="col-7 mh-100 overflow-auto py-2">
+                  <div class="tab-content" id="nav-tabContent">
+                    <div
+                      class="tab-pane fade"
+                      role="tabpanel"
+                      v-for="card in cards"
+                      :key="`img-${card.id}`"
+                      :id="`image-${card.id}`"
+                    >
+                      <img
+                        v-if="card.image_uris && card.image_uris.art_crop"
+                        :src="card.image_uris.art_crop"
+                        alt=""
+                        id="picture-preview"
+                        class="centered-element"
+                      />
+                      <!-- <img
+                        v-if="card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris.art_crop"
+                        :src="card.card_faces[0].image_uris.art_crop"
+                        alt=""
+                        id="picture-preview"
+                        class="centered-element"
+                      /> -->
+                      <div style="font-style: italic" class="float-end">Artist: {{ card.artist }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -281,7 +333,7 @@
               v-if="showSaveButton"
               class="btn btn-primary"
               @click="
-                pictureEdit(picturePreview);
+                pictureEdit();
                 cards = [];
               "
               data-bs-dismiss="modal"
@@ -292,6 +344,7 @@
         </div>
       </div>
     </div>
+    <!-- END MODAL -->
   </div>
 </template>
 
@@ -315,8 +368,7 @@ export default {
       cards: [],
       selectedCard: {},
       showSaveButton: false,
-      picturePreview: "",
-      scryfallName: "",
+      scryfallNameField: "",
       editing: {
         about_me: false,
         age: false,
@@ -408,27 +460,59 @@ export default {
     },
     scryfallSearch: function (cardName) {
       this.showSaveButton = false;
+
+      // reset all selected items
+      let actives = document.getElementsByClassName("active");
+      console.log("test", actives);
+      actives.forEach((element) => {
+        element.classList.remove("active");
+      });
+      actives.forEach((element) => {
+        element.classList.remove("active");
+      });
+      // just doing it twice works.. not sure why but I'll leave it for now
+      //
+
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
+          // console.log("raw data", data);
           this.cards = data.data;
           this.selectedCard = this.cards[0];
-          this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+          // console.log("cards list", this.cards);
+          setTimeout(() => {
+            let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+            firstCard.classList.add("active");
+            let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+            firstPicture.classList.add("show");
+            firstPicture.classList.add("active");
+          }, 30);
         });
     },
     scryfallFormatSearch: function (cardName) {
       this.showSaveButton = true;
+      let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+      firstCard.classList.remove("active");
+      let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+      firstPicture.classList.remove("show");
+      firstPicture.classList.remove("active");
       fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
-          // console.log("raw card data", data);
           let formatsearch = data.prints_search_uri;
-          // console.log("link", formatsearch);
           fetch(formatsearch)
             .then((response) => response.json())
             .then((data) => {
               this.cards = data.data;
-              this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+              this.selectedCard = this.cards[0];
+
+              setTimeout(() => {
+                let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+                firstCard.classList.add("active");
+                let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+                firstPicture.classList.add("show");
+                firstPicture.classList.add("active");
+              }, 30);
               // console.log("formats", data);
             });
         });
@@ -437,20 +521,21 @@ export default {
       fetch("https://api.scryfall.com/cards/random")
         .then((response) => response.json())
         .then((data) => {
-          this.pictureEdit(data["image_uris"]["art_crop"]);
+          this.selectedCard = data;
+          this.pictureEdit();
         });
     },
     selectCard: function (card) {
-      this.picturePreview = card["image_uris"]["art_crop"];
       this.selectedCard = card;
     },
-    pictureEdit: function (imageString) {
-      console.log(imageString);
-      this.user.profile_picture = imageString;
-      this.saveEdit(`profile_picture`);
-      this.scryfallName = null;
-      this.picturePreview = null;
-      return false;
+    pictureEdit: function () {
+      if (this.selectedCard.card_faces) {
+        this.user.profile_picture = this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
+      } else {
+        this.user.profile_picture = this.selectedCard["image_uris"]["art_crop"];
+      }
+      axios.patch(`/users/${localStorage.user_id}`, this.user);
+      this.scryfallNameField = null;
     },
     updateFormats: function (format) {
       if (format.checked !== true) {
