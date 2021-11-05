@@ -1221,7 +1221,7 @@ section {
 
 #picture-preview {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 40vh;
 }
 
 .centered-element {

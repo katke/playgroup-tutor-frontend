@@ -205,17 +205,23 @@
 
     <!-- Modal -->
     <div class="modal fade" id="cardList" tabindex="-1" aria-labelledby="cardListLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="cardListLabel">Which card did you mean?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <div class="container-fluid d-flex flex-column flex-grow-1 vh-100 overflow-hidden">
+          <div class="modal-body" style="height: 50vh">
+            <div class="container-fluid d-flex flex-column flex-grow-1 overflow-hidden">
               <div class="row flex-grow-1 overflow-hidden" id="card-picker">
-                <div class="col-5 mh-100 overflow-auto py-2">
-                  <div class="list-group" id="card-list" role="tablist" v-if="!showSaveButton">
+                <div class="col-5 overflow-auto py-2">
+                  <div
+                    class="list-group"
+                    id="card-list"
+                    role="tablist"
+                    v-if="!showSaveButton"
+                    style="max-height: 40vh; overflow: auto"
+                  >
                     <div
                       class="list-group-item list-group-item-action"
                       data-bs-toggle="list"
@@ -260,12 +266,12 @@
                         class="centered-element"
                       />
                       <!-- <img
-                          v-if="card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris.art_crop"
-                          :src="card.card_faces[0].image_uris.art_crop"
-                          alt=""
-                          id="picture-preview"
-                          class="centered-element"
-                        /> -->
+                        v-if="card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris.art_crop"
+                        :src="card.card_faces[0].image_uris.art_crop"
+                        alt=""
+                        id="picture-preview"
+                        class="centered-element"
+                      /> -->
                       <div style="font-style: italic" class="float-end">Artist: {{ card.artist }}</div>
                     </div>
                   </div>
