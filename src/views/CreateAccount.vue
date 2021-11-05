@@ -211,7 +211,7 @@
             <h5 class="modal-title" id="cardListLabel">Which card did you mean?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" style="height: 50vh">
+          <div class="modal-body" style="height: 60vh">
             <div class="container-fluid d-flex flex-column flex-grow-1 overflow-hidden">
               <div class="row flex-grow-1 overflow-hidden" id="card-picker">
                 <div class="col-5 overflow-auto py-2">
@@ -220,7 +220,7 @@
                     id="card-list"
                     role="tablist"
                     v-if="!showSaveButton"
-                    style="max-height: 40vh; overflow: auto"
+                    style="max-height: 50vh; overflow: auto"
                   >
                     <div
                       class="list-group-item list-group-item-action"
