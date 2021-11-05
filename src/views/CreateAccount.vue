@@ -18,12 +18,14 @@
                     <div class="section-title">
                       <h3><strong>Profile Picture</strong></h3>
                     </div>
-                    <img
-                      :src="inputParams.profile_picture"
-                      class="img-fluid centered-element"
-                      alt=""
-                      id="profile-pic"
-                    />
+                    <div class="preview-box">
+                      <img
+                        :src="inputParams.profile_picture"
+                        class="img-fluid centered-element"
+                        alt=""
+                        id="profile-pic"
+                      />
+                    </div>
                     <hr />
                     <strong>Search for your favorite card...</strong>
                     <div class="input-group">
@@ -126,7 +128,8 @@
                   <div class="valid-feedback">Looks good!</div>
                 </div>
               </div>
-              <hr />
+              <br />
+              <!-- <hr /> -->
               <div class="row">
                 <div class="col-lg-6">
                   <ul>
@@ -170,16 +173,16 @@
                       <div>
                         <strong>What are your favorite formats?</strong>
                       </div>
-                      <div v-for="format in favorite_formats" v-bind:key="format.name">
+                      <div v-for="format in favorite_formats" :key="format.name">
                         <div class="form-check">
                           <input
                             class="form-check-input"
                             type="checkbox"
                             value=""
-                            v-bind:id="format.name"
+                            :id="format.name"
                             v-model="format.checked"
                           />
-                          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                          <label class="form-check-label" :for="format.name">{{ format.name }}</label>
                         </div>
                       </div>
                     </li>
@@ -209,22 +212,62 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="container-fluid position-relative position-trbl-0 overflow-hidden h-100">
-              <div class="row" id="card-picker">
-                <div class="col-5">
-                  <div class="col-inner" v-if="!showSaveButton">
-                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">{{ card.name }}</div>
+            <div class="container-fluid d-flex flex-column flex-grow-1 vh-100 overflow-hidden">
+              <div class="row flex-grow-1 overflow-hidden" id="card-picker">
+                <div class="col-5 mh-100 overflow-auto py-2">
+                  <div class="list-group" id="card-list" role="tablist" v-if="!showSaveButton">
+                    <div
+                      class="list-group-item list-group-item-action"
+                      data-bs-toggle="list"
+                      :href="`#image-${card.id}`"
+                      v-for="card in cards"
+                      :key="`card-${card.id}`"
+                      :id="`card-id-${card.id}`"
+                      @click="selectCard(card)"
+                      :aria-controls="`list-${card.id}`"
+                    >
+                      {{ card.name }}
+                    </div>
                   </div>
-                  <div class="col-inner" v-if="showSaveButton">
-                    <div v-for="card in cards" v-bind:key="card.id" @click="selectCard(card)">
+                  <div class="list-group" id="list-tab" role="tablist" v-if="showSaveButton">
+                    <div
+                      class="list-group-item list-group-item-action"
+                      data-bs-toggle="list"
+                      :href="`#image-${card.id}`"
+                      v-for="card in cards"
+                      :key="`format-${card.id}`"
+                      :id="`format-id-${card.id}`"
+                      @click="selectCard(card)"
+                    >
                       {{ card.set_name }}
                     </div>
                   </div>
                 </div>
-                <div class="col-7">
-                  <div class="col-innner">
-                    <img :src="scryfallPreview" alt="" id="picture-preview" />
-                    <div style="font-style: italic">Artist: {{ selectedCard.artist }}</div>
+                <div class="col-7 mh-100 overflow-auto py-2">
+                  <div class="tab-content" id="nav-tabContent">
+                    <div
+                      class="tab-pane fade"
+                      role="tabpanel"
+                      v-for="card in cards"
+                      :key="`img-${card.id}`"
+                      :id="`image-${card.id}`"
+                    >
+                      <img
+                        v-if="card.image_uris && card.image_uris.art_crop"
+                        :src="card.image_uris.art_crop"
+                        alt=""
+                        id="picture-preview"
+                        class="centered-element"
+                      />
+                      <!-- <img
+                          v-if="card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris.art_crop"
+                          :src="card.card_faces[0].image_uris.art_crop"
+                          alt=""
+                          id="picture-preview"
+                          class="centered-element"
+                        /> -->
+                      <div style="font-style: italic" class="float-end">Artist: {{ card.artist }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,14 +359,16 @@ export default {
       ],
     };
   },
-  mounted: function () {
+  created: function () {
     let coinFlip = Math.floor(Math.random() * 2);
     if (coinFlip === 0) {
       // picks a random color
       this.inputParams.profile_picture = this.colors[Math.floor(Math.random() * 5) + 1].img;
+      console.log(this.inputParams.profile_picture);
     } else {
       // picks a random guild
       this.inputParams.profile_picture = this.guilds[Math.floor(Math.random() * 10) + 1].img;
+      console.log(this.inputParams.profile_picture);
     }
   },
   methods: {
@@ -335,27 +380,44 @@ export default {
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
+          // console.log("raw data", data);
           this.cards = data.data;
           this.selectedCard = this.cards[0];
-          this.scryfallPreview = this.cards[0]["image_uris"]["art_crop"];
-          // console.log(data["image_uris"]["art_crop"]);
-          // this.inputParams.profile_picture = data["image_uris"]["art_crop"];
+          // console.log("cards list", this.cards);
+          // console.log("first card", this.cards[0]);
+          setTimeout(() => {
+            let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+            firstCard.classList.add("active");
+            let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+            firstPicture.classList.add("show");
+            firstPicture.classList.add("active");
+          }, 30);
         });
     },
     scryfallFormatSearch: function (cardName) {
       this.showSaveButton = true;
+      let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+      firstCard.classList.remove("active");
+      let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+      firstPicture.classList.remove("show");
+      firstPicture.classList.remove("active");
       fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
-          // console.log("raw card data", data);
           let formatsearch = data.prints_search_uri;
-          // console.log("link", formatsearch);
           fetch(formatsearch)
             .then((response) => response.json())
             .then((data) => {
               this.cards = data.data;
-              this.picturePreview = this.cards[0]["image_uris"]["art_crop"];
+              this.selectedCard = this.cards[0];
+
+              setTimeout(() => {
+                let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+                firstCard.classList.add("active");
+                let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+                firstPicture.classList.add("show");
+                firstPicture.classList.add("active");
+              }, 30);
               // console.log("formats", data);
             });
         });
@@ -368,11 +430,14 @@ export default {
         });
     },
     selectCard: function (card) {
-      this.scryfallPreview = card["image_uris"]["art_crop"];
       this.selectedCard = card;
     },
     saveCard: function () {
-      this.inputParams.profile_picture = this.selectedCard["image_uris"]["art_crop"];
+      if (this.selectedCard.card_faces) {
+        this.inputParams.profile_picture = this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
+      } else {
+        this.inputParams.profile_picture = this.selectedCard["image_uris"]["art_crop"];
+      }
     },
     selectIcon: function (card) {
       this.inputParams.profile_picture = card.img;

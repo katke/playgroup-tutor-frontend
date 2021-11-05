@@ -10,37 +10,12 @@
         <div class="container-fluid d-flex flex-column flex-grow-1 vh-100 overflow-hidden">
           <div class="row flex-grow-1 overflow-hidden" data-aos="fade-up" data-aos-delay="50">
             <div class="col-2 mh-100 overflow-auto py-2">
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
-              <div class="">Here's all the filter info</div>
+              <div v-for="format in favorite_formats" :key="format.name">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" :id="format.name" v-model="format.checked" />
+                  <label class="form-check-label" :for="format.name">{{ format.name }}</label>
+                </div>
+              </div>
             </div>
             <div class="col mh-100 overflow-auto py-2">
               <div
@@ -56,10 +31,11 @@
                   <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
                 </div>
                 <div class="col-5">
-                  <h3>
+                  <span style="font-size: 25px">
                     {{ user.first_name }}
-                    <span id="user-id">#{{ user.id }}</span>
-                  </h3>
+                  </span>
+                  <span id="user-id">#{{ user.id }}</span>
+
                   <ul class="list-group">
                     <li v-for="format in user.favoriteformats" class="list-group-item" :key="`format-${format.id}`">
                       {{ format.format }}
@@ -127,6 +103,19 @@ export default {
   data: function () {
     return {
       users: [],
+      favorite_formats: [
+        { id: 1, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
+        { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
+        { id: 3, name: "Draft / Cube", checked: false, user_id: localStorage.user_id },
+        { id: 4, name: "Modern", checked: false, user_id: localStorage.user_id },
+        { id: 5, name: "Pauper", checked: false, user_id: localStorage.user_id },
+        { id: 6, name: "Pioneer", checked: false, user_id: localStorage.user_id },
+        { id: 7, name: "Brawl", checked: false, user_id: localStorage.user_id },
+        { id: 8, name: "Historic", checked: false, user_id: localStorage.user_id },
+        { id: 9, name: "Legacy", checked: false, user_id: localStorage.user_id },
+        { id: 10, name: "Vintage", checked: false, user_id: localStorage.user_id },
+      ],
+      user: this.$parent.user,
     };
   },
   created: function () {

@@ -281,10 +281,12 @@ export default {
         axios.get("/friend-requests").then((response) => {
           this.friendRequests = response.data.length;
           let form = document.getElementById("friend-requests");
-          if (response.data.length > 0) {
-            form.classList.add("request-count");
-          } else {
-            form.classList.remove("request-count");
+          if (form) {
+            if (response.data.length > 0) {
+              form.classList.add("request-count");
+            } else {
+              form.classList.remove("request-count");
+            }
           }
         });
       }

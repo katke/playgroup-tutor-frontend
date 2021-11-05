@@ -1154,8 +1154,14 @@ section {
   font-family: Helvetica, sans-serif;
 }
 
-#profile-pic {
+.find-friend.profile-pic {
   width: auto;
+  max-width: 300px;
+  max-width: 100%;
+  transition: all ease-in-out 0.3s;
+}
+
+#profile-pic {
   max-height: 200px;
   transition: all ease-in-out 0.3s;
 }
