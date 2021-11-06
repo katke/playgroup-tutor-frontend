@@ -83,12 +83,12 @@
         </ul>
       </div>
 
-      <div class="chat-floaty">
-        <transition
-          name="custom-classes-transition"
-          enter-active-class="animate__animated animate__fadeInUp"
-          leave-active-class="animate__animated animate__fadeOutDown"
-        >
+      <transition
+        name="custom-classes-transition"
+        enter-active-class="animate__animated animate__fadeInUp"
+        leave-active-class="animate__animated animate__fadeOutDown"
+      >
+        <div class="chat-floaty" v-if="visible">
           <Chat
             v-if="visible"
             :participants="participants"
@@ -115,11 +115,11 @@
             @onMessageSubmit="onMessageSubmit"
             @onClose="onClose"
           />
-        </transition>
-        <!-- disabled settings: 
+          <!-- disabled settings: 
             :submit-image-icon-size="submitImageIconSize"
            -->
-      </div>
+        </div>
+      </transition>
     </div>
     <!-- end Chat -->
     <!-- ======= Footer ======= -->
