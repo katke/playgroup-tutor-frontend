@@ -1,46 +1,135 @@
 <template>
-  <div class="find-friends">
-    <main id="main">
-      <section id="portfolio" class="portfolio">
-        <div class="section-title">
-          <h2>Search your library for a planeswalker...</h2>
-          <p>Here are all the users that you can add as friends! :)</p>
-          <p>Click on a user to see more info</p>
+  <main id="main">
+    <section id="find-friends" class="find-friends">
+      <div class="container">
+        <div class="row">
+          <div class="section-title">
+            <h2>Search your library for a planeswalker...</h2>
+
+            <label for="customRange1" class="form-label">
+              Showing all users ({{ filteredUsers.length }}) within
+              <input type="number" style="color: blue; max-width: 50px" v-model="distance" />
+              miles
+            </label>
+            <div>
+              <input type="range" class="form-range" id="customRange1" v-model="distance" style="max-width: 300px" />
+            </div>
+            <div class="form-check float-end">
+              <input class="form-check-inline" type="checkbox" value="" id="any-distance" v-model="anyDistance" />
+              <label class="form-check-label" for="any-distance">All users ({{ rawUsers.length }})</label>
+            </div>
+          </div>
         </div>
-        <div class="container-fluid d-flex flex-column flex-grow-1 vh-100 overflow-hidden">
-          <div class="row flex-grow-1 overflow-hidden" data-aos="fade-up" data-aos-delay="50">
-            <div class="col-2 mh-100 overflow-auto py-2">
-              <div v-for="format in favorite_formats" :key="format.name">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" :id="format.name" v-model="format.checked" />
-                  <label class="form-check-label" :for="format.name">{{ format.name }}</label>
-                </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="50">
+          <!-- left column -->
+          <div class="col-2" id="col-left">
+            <h2>Filters</h2>
+            <div class="form-check">
+              <input
+                v-model="formats.all"
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                checked
+                id="all-formats"
+                data-filter="*"
+                disabled
+              />
+              <label class="form-check-label" for="all-formats">All formats</label>
+            </div>
+            <hr />
+            <!-- every format -->
+            <div>
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Commander"
+                  id="check-Commander"
+                />
+                <label for="check-Commander" class="form-check-label">Commander</label>
+              </div>
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Standard"
+                  id="check-Standard"
+                />
+                <label for="check-Standard" class="form-check-label">Standard</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Draft" id="check-Draft" />
+                <label for="check-Draft" class="form-check-label">Draft</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Modern" id="check-Modern" />
+                <label for="check-Modern" class="form-check-label">Modern</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Pauper" id="check-Pauper" />
+                <label for="check-Pauper" class="form-check-label">Pauper</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Pioneer" id="check-Pioneer" />
+                <label for="check-Pioneer" class="form-check-label">Pioneer</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Brawl" id="check-Brawl" />
+                <label for="check-Brawl" class="form-check-label">Brawl</label>
+              </div>
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Historic"
+                  id="check-Historic"
+                />
+                <label for="check-Historic" class="form-check-label">Historic</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Legacy" id="check-Legacy" />
+                <label for="check-Legacy" class="form-check-label">Legacy</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Vintage" id="check-Vintage" />
+                <label for="check-Vintage" class="form-check-label">Vintage</label>
               </div>
             </div>
-            <div class="col mh-100 overflow-auto py-2">
+          </div>
+
+          <!-- right column -->
+          <div class="col" id="col-right">
+            <div class="row">
               <div
-                class="row p-1"
+                v-for="user in filteredUsers"
+                class="col-lg-4 col-md-6 col-sm-12"
                 data-bs-toggle="collapse"
                 :data-bs-target="`#collapse-${user.id}`"
                 aria-expanded="false"
                 :aria-controls="`#collapse-${user.id}`"
-                v-for="user in users"
                 v-bind:key="user.id"
               >
-                <div class="col-7">
-                  <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
-                </div>
-                <div class="col-5">
-                  <span style="font-size: 25px">
-                    {{ user.first_name }}
-                  </span>
-                  <span id="user-id">#{{ user.id }}</span>
+                <div class="row">
+                  <div class="col-7">
+                    <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
+                  </div>
+                  <div class="col-5">
+                    <span style="font-size: 20px">
+                      {{ user.first_name }}
+                    </span>
+                    <span id="user-id">#{{ user.id }}</span>
 
-                  <ul class="list-group">
-                    <li v-for="format in user.favoriteformats" class="list-group-item" :key="`format-${format.id}`">
-                      {{ format.format }}
-                    </li>
-                  </ul>
+                    <ul class="list-group">
+                      <li class="list-group-item" v-for="favformat in user.favoriteformats" :key="favformat.id">
+                        {{ favformat.format }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 <!-- more info -->
@@ -61,36 +150,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-4 mh-100 overflow-auto py-2">
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-              <div>Here's all the map info</div>
-            </div>
           </div>
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </section>
+  </main>
 </template>
 
 <style></style>
@@ -102,24 +166,40 @@ import distance from "@turf/distance";
 export default {
   data: function () {
     return {
-      users: [],
-      favorite_formats: [
-        { id: 1, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
-        { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
-        { id: 3, name: "Draft / Cube", checked: false, user_id: localStorage.user_id },
-        { id: 4, name: "Modern", checked: false, user_id: localStorage.user_id },
-        { id: 5, name: "Pauper", checked: false, user_id: localStorage.user_id },
-        { id: 6, name: "Pioneer", checked: false, user_id: localStorage.user_id },
-        { id: 7, name: "Brawl", checked: false, user_id: localStorage.user_id },
-        { id: 8, name: "Historic", checked: false, user_id: localStorage.user_id },
-        { id: 9, name: "Legacy", checked: false, user_id: localStorage.user_id },
-        { id: 10, name: "Vintage", checked: false, user_id: localStorage.user_id },
-      ],
+      rawUsers: [],
+      anyDistance: false,
+      formats: {
+        all: true,
+        Commander: false,
+        Standard: false,
+        Draft: false,
+        Modern: false,
+        Pauper: false,
+        Pioneer: false,
+        Brawl: false,
+        Historic: false,
+        Legacy: false,
+        Vintage: false,
+      },
       user: this.$parent.user,
+      distance: 15,
     };
   },
   created: function () {
     this.usersIndex();
+  },
+  computed: {
+    filteredUsers: function () {
+      if (this.anyDistance) {
+        return this.rawUsers;
+      } else {
+        return this.rawUsers.filter((user) => {
+          if (parseFloat(user.distance) <= parseFloat(this.distance)) {
+            return user;
+          }
+        });
+      }
+    },
   },
   methods: {
     findDistance: function (user) {
@@ -130,25 +210,25 @@ export default {
     },
     usersIndex: function () {
       axios.get("/users").then((response) => {
-        this.users = response.data;
+        this.rawUsers = response.data;
         // console.log(response.data);
 
         // deletes yourself from the array of users
-        for (var index = 0; index < this.users.length; index++) {
-          if (this.users[index].id == localStorage.user_id) {
-            this.users.splice(index, 1);
+        for (var index = 0; index < this.rawUsers.length; index++) {
+          if (this.rawUsers[index].id == localStorage.user_id) {
+            this.rawUsers.splice(index, 1);
           }
         }
 
         // calculates all the distances
-        this.users.forEach((user) => {
+        this.rawUsers.forEach((user) => {
           user.distance = this.findDistance(user);
         });
 
         // sorts by distance
-        this.users.sort(function (a, b) {
-          return a.distance - b.distance;
-        });
+        // this.rawUsers.sort(function (a, b) {
+        //   return a.distance - b.distance;
+        // });
       });
     },
     addFriend: function (requested_user) {
