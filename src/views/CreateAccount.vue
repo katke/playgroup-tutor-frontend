@@ -371,20 +371,17 @@ export default {
     };
   },
   created: function () {
-    let coinFlip = Math.floor(Math.random() * 2);
-    if (coinFlip === 0) {
-      // picks a random color
-      setTimeout(() => {
-        this.inputParams.profile_picture = this.colors[Math.floor(Math.random() * 5) + 1].img;
-        console.log(this.inputParams.profile_picture);
-      }, 30);
-    } else {
-      // picks a random guild
-      setTimeout(() => {
-        this.inputParams.profile_picture = this.guilds[Math.floor(Math.random() * 10) + 1].img;
-        console.log(this.inputParams.profile_picture);
-      }, 30);
-    }
+    let coinFlip = Math.round(Math.random() * 1);
+    setTimeout(() => {
+      if (coinFlip === 0) {
+        // picks a random color
+        this.inputParams.profile_picture = this.colors[Math.round(Math.random() * 4)].img;
+      } else {
+        // picks a random guild
+        let rand = Math.round(Math.random() * 9);
+        this.inputParams.profile_picture = this.guilds[rand].img;
+      }
+    }, 100);
   },
   methods: {
     showLogIn: function () {
