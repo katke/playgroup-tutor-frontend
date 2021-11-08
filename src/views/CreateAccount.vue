@@ -1,8 +1,10 @@
 <template>
   <div id="create">
     <main id="main">
-      <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
-        <a href="/" class="btn-about">Log in</a>
+      <div class="row">
+        <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
+          <a href="/" class="btn-about">Log in</a>
+        </div>
       </div>
       <section id="about" class="about" data-aos="zoom-up" data-aos-delay="100">
         <div class="container" data-aos="fade-up">

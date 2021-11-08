@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@srexi/purecounterjs": "^1.2.1",
     "@syncfusion/ej2-vue-dropdowns": "^19.3.47",
     "@turf/buffer": "^6.5.0",
     "@turf/collect": "^6.5.0",

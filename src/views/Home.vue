@@ -1,30 +1,32 @@
 <template>
   <div class="home">
     <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex align-items-center">
-      <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-        <h1>Welcome to Playgroup Tutor!</h1>
-        <h2>Find nearby MTG players and form new playgroups</h2>
-        <div class="blurry_box">
-          Email:
-          <input type="text" v-model="inputParams.email" />
-          Password:
-          <input type="text" v-model="inputParams.password" />
-        </div>
-        <button @click="signIn()" class="btn-about">Log in</button>
+    <section id="hero">
+      <div class="container">
+        <div class="row d-flex align-items-center">
+          <div class="d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+            <h1 id="splash-text">Welcome to Playgroup Tutor!</h1>
+            <h2 style="font-size: 30px">Find nearby Magic: the Gathering players</h2>
+            <h2 style="font-size: 30px">Form new playgroups</h2>
+            <div class="blurry_box">
+              Email:
+              <input type="text" v-model="inputParams.email" />
+              Password:
+              <input type="text" v-model="inputParams.password" />
+            </div>
+            <button @click="signIn()" class="btn-about">Log in</button>
 
-        <button @click="showCreateAccount()" class="btn-about">Create Account</button>
+            <button @click="showCreateAccount()" class="btn-about">Create Account</button>
+            <div class="col-2 d-flex flex-column align-items-center"></div>
+          </div>
+        </div>
       </div>
     </section>
     <!-- End Hero -->
   </div>
 </template>
 
-<style>
-.request-count {
-  color: red;
-}
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
@@ -33,7 +35,7 @@ export default {
   data: function () {
     return {
       inputParams: {
-        email: "wanda@test.com",
+        email: "dave@gmail.com",
         password: "password",
       },
     };

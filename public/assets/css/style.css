@@ -427,7 +427,7 @@ h6 {
   transition: 0.5s;
   margin-top: 30px;
   color: #fff;
-  background: #34b7a7;
+  background: #000000;
 }
 #hero .btn-about:hover {
   background: #3dc8b7;
@@ -1270,4 +1270,12 @@ div#col-left,
 div#col-right {
   max-height: 100vh; /* not available in Bootstrap */
   overflow-y: scroll;
+}
+
+#splash-text {
+  text-shadow: -4px 0 #0a0e27;
+}
+
+#friend-requests {
+  color: red;
 }

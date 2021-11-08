@@ -5,6 +5,7 @@ import CreateAccount from "../views/CreateAccount.vue";
 import FindFriends from "../views/FindFriends.vue";
 import MyProfile from "../views/MyProfile.vue";
 import FriendRequests from "../views/FriendRequests.vue";
+import LearnMagic from "../views/LearnMagic.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes = [
     path: "/friend-requests",
     name: "Friend Requests",
     component: FriendRequests,
+  },
+  {
+    path: "/learn-magic",
+    name: "LearnMagic",
+    component: LearnMagic,
   },
 ];
 

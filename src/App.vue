@@ -129,8 +129,10 @@
           Created by
           <strong><span>David Ryan</span></strong>
           2021
+          <div>
+            <a href="/learn-magic" alt="" class="btn btn-outline-danger">Wait, what is Magic the Gathering?</a>
+          </div>
         </div>
-        <div class="credits"></div>
       </div>
     </footer>
     <!-- End  Footer -->
@@ -271,7 +273,6 @@ export default {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
         this.friendRequestCount();
         this.importFriends();
-        this.importUser();
       } else {
         this.loginStatus = "Not logged in";
       }
@@ -309,16 +310,6 @@ export default {
       this.$router.push("/me");
     },
 
-    importUser: function () {
-      axios.get(`/users/${localStorage.user_id}`).then((response) => {
-        this.user = response.data;
-        this.myself = {
-          name: this.user.first_name,
-          id: this.user.user_id,
-          profilePicture: this.user.profile_picture,
-        };
-      });
-    },
     importFriends: function () {
       axios.get("/friends").then((response) => {
         this.friends = response.data;
@@ -465,7 +456,10 @@ export default {
   // headeer/footer does NOT show up on login/create pages
   computed: {
     isHome() {
-      return this.$route.name !== "Home" && this.$route.name !== "Log In" && this.$route.name !== "Create Account"
+      return this.$route.name !== "Home" &&
+        this.$route.name !== "Log In" &&
+        this.$route.name !== "Create Account" &&
+        this.$route.name !== "LearnMagic"
         ? true
         : false;
     },

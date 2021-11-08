@@ -333,12 +333,14 @@ export default {
 
         // deletes yourself from the array of users
         for (var index = 0; index < this.rawUsers.length; index++) {
-          if (this.rawUsers[index].id == this.user.id) {
+          if (this.rawUsers[index].id == this.$parent.id) {
             this.rawUsers.splice(index, 1);
+            this.originalUsers.splice(index, 1);
           }
           this.$parent.friends.forEach((friend) => {
             if (this.rawUsers[index].id == friend.id) {
               this.rawUsers.splice(index, 1);
+              this.originalUsers.splice(index, 1);
             }
           });
         }
