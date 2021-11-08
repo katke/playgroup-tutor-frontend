@@ -16,7 +16,7 @@
             </div>
             <div class="form-check">
               <input class="form-check-inline" type="checkbox" value="" id="any-distance" v-model="anyDistance" />
-              <label class="form-check-label" for="any-distance">Any distance ({{ originalUsers.length }})</label>
+              <label class="form-check-label" for="any-distance">Any distance ({{ rawUsers.length }})</label>
             </div>
           </div>
         </div>
@@ -41,12 +41,20 @@
             <hr />
             <!-- every format -->
             <div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.EDH" id="check-Commander" />
-                <label for="check-Commander" class="form-check-label">Commander (EDH)</label>
-              </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
+              <div class="form-check">
                 <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Commander"
+                  id="check-Commander"
+                  @click="filterFormats(!allBox)"
+                />
+                <label for="check-Commander" class="form-check-label">Commander / EDH</label>
+              </div>
+              <div class="form-check">
+                <input
+                  @click="filterFormats(!allBox)"
                   type="checkbox"
                   class="form-check-input"
                   value=""
@@ -55,28 +63,64 @@
                 />
                 <label for="check-Standard" class="form-check-label">Standard</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Cube" id="check-Draft" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Cube"
+                  id="check-Draft"
+                />
                 <label for="check-Draft" class="form-check-label">Cube / Draft</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Modern" id="check-Modern" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Modern"
+                  id="check-Modern"
+                />
                 <label for="check-Modern" class="form-check-label">Modern</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Pauper" id="check-Pauper" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Pauper"
+                  id="check-Pauper"
+                />
                 <label for="check-Pauper" class="form-check-label">Pauper</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Pioneer" id="check-Pioneer" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Pioneer"
+                  id="check-Pioneer"
+                />
                 <label for="check-Pioneer" class="form-check-label">Pioneer</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Brawl" id="check-Brawl" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Brawl"
+                  id="check-Brawl"
+                />
                 <label for="check-Brawl" class="form-check-label">Brawl</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
+              <div class="form-check">
                 <input
+                  @click="filterFormats(!allBox)"
                   type="checkbox"
                   class="form-check-input"
                   value=""
@@ -85,12 +129,26 @@
                 />
                 <label for="check-Historic" class="form-check-label">Historic</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Legacy" id="check-Legacy" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Legacy"
+                  id="check-Legacy"
+                />
                 <label for="check-Legacy" class="form-check-label">Legacy</label>
               </div>
-              <div class="form-check" @click="filterFormats(!allBox)">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Vintage" id="check-Vintage" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  @click="filterFormats(!allBox)"
+                  class="form-check-input"
+                  value=""
+                  v-model="formats.Vintage"
+                  id="check-Vintage"
+                />
                 <label for="check-Vintage" class="form-check-label">Vintage</label>
               </div>
             </div>
@@ -167,9 +225,9 @@ export default {
       anyDistance: false,
       formats: {
         all: true,
-        EDH: false,
+        Commander: false,
         Standard: false,
-        Draft: false,
+        Cube: false,
         Modern: false,
         Pauper: false,
         Pioneer: false,
@@ -201,24 +259,33 @@ export default {
   },
   methods: {
     filterFormats: function (chosenBox) {
-      if (chosenBox === true) {
-        for (var key in this.formats) {
-          this.formats[key] = false;
+      setTimeout(() => {
+        if (chosenBox === true) {
+          for (var key in this.formats) {
+            this.formats[key] = false;
+            let allBoxElement = document.getElementById("all-formats");
+            allBoxElement.setAttribute("disabled", "disabled");
+            this.formats.all = true;
+          }
+        } else if (Object.values(this.formats).every((v) => v === false)) {
+          this.formats.all = true;
+          this.formats["all"] = true;
           let allBoxElement = document.getElementById("all-formats");
           allBoxElement.setAttribute("disabled", "disabled");
           this.formats.all = true;
+        } else {
+          let allBoxElement = document.getElementById("all-formats");
+          allBoxElement.removeAttribute("disabled");
+          this.formats.all = false;
         }
-      } else {
-        let allBoxElement = document.getElementById("all-formats");
-        allBoxElement.removeAttribute("disabled");
-        this.formats.all = false;
-      }
+      }, 50);
+
       setTimeout(() => {
-        if (this.formats.all) {
+        if (this.formats.all === true) {
           var arrayOfChosenFormats = [
-            "EDH",
+            "Commander / EDH",
             "Standard",
-            "Cube",
+            "Cube / Draft",
             "Modern",
             "Pauper",
             "Pioneer",
@@ -231,7 +298,13 @@ export default {
           arrayOfChosenFormats = [];
           for (var key in this.formats) {
             if (this.formats[key] === true) {
-              arrayOfChosenFormats.push(key);
+              if (key === "Commander") {
+                arrayOfChosenFormats.push("Commander / EDH");
+              } else if (key === "Cube") {
+                arrayOfChosenFormats.push("Cube / Draft");
+              } else {
+                arrayOfChosenFormats.push(key);
+              }
             }
           }
         }
@@ -260,10 +333,18 @@ export default {
 
         // deletes yourself from the array of users
         for (var index = 0; index < this.rawUsers.length; index++) {
-          if (this.rawUsers[index].id == localStorage.user_id) {
+          if (this.rawUsers[index].id == this.user.id) {
             this.rawUsers.splice(index, 1);
           }
+          this.$parent.friends.forEach((friend) => {
+            if (this.rawUsers[index].id == friend.id) {
+              this.rawUsers.splice(index, 1);
+            }
+          });
         }
+
+        console.log(this.user.relationships);
+        console.log(this.user);
 
         // calculates all the distances
         this.rawUsers.forEach((user) => {
@@ -274,6 +355,11 @@ export default {
         // this.rawUsers.sort(function (a, b) {
         //   return a.distance - b.distance;
         // });
+      });
+    },
+    importUser: function () {
+      axios.get(`/users/${localStorage.user_id}`).then((response) => {
+        this.user = response.data;
       });
     },
     addFriend: function (requested_user) {
