@@ -14,9 +14,9 @@
             <div>
               <input type="range" class="form-range" id="customRange1" v-model="distance" style="max-width: 300px" />
             </div>
-            <div class="form-check float-end">
+            <div class="form-check">
               <input class="form-check-inline" type="checkbox" value="" id="any-distance" v-model="anyDistance" />
-              <label class="form-check-label" for="any-distance">All users ({{ rawUsers.length }})</label>
+              <label class="form-check-label" for="any-distance">Any distance ({{ originalUsers.length }})</label>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <!-- left column -->
           <div class="col-2" id="col-left">
             <h2>Filters</h2>
-            <div class="form-check">
+            <div class="form-check" @click="filterFormats(allBox)">
               <input
                 v-model="formats.all"
                 class="form-check-input"
@@ -41,17 +41,11 @@
             <hr />
             <!-- every format -->
             <div>
-              <div class="form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  value=""
-                  v-model="formats.Commander"
-                  id="check-Commander"
-                />
-                <label for="check-Commander" class="form-check-label">Commander</label>
+              <div class="form-check" @click="filterFormats(!allBox)">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.EDH" id="check-Commander" />
+                <label for="check-Commander" class="form-check-label">Commander (EDH)</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -61,27 +55,27 @@
                 />
                 <label for="check-Standard" class="form-check-label">Standard</label>
               </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" value="" v-model="formats.Draft" id="check-Draft" />
-                <label for="check-Draft" class="form-check-label">Draft</label>
+              <div class="form-check" @click="filterFormats(!allBox)">
+                <input type="checkbox" class="form-check-input" value="" v-model="formats.Cube" id="check-Draft" />
+                <label for="check-Draft" class="form-check-label">Cube / Draft</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Modern" id="check-Modern" />
                 <label for="check-Modern" class="form-check-label">Modern</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Pauper" id="check-Pauper" />
                 <label for="check-Pauper" class="form-check-label">Pauper</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Pioneer" id="check-Pioneer" />
                 <label for="check-Pioneer" class="form-check-label">Pioneer</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Brawl" id="check-Brawl" />
                 <label for="check-Brawl" class="form-check-label">Brawl</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -91,11 +85,11 @@
                 />
                 <label for="check-Historic" class="form-check-label">Historic</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Legacy" id="check-Legacy" />
                 <label for="check-Legacy" class="form-check-label">Legacy</label>
               </div>
-              <div class="form-check">
+              <div class="form-check" @click="filterFormats(!allBox)">
                 <input type="checkbox" class="form-check-input" value="" v-model="formats.Vintage" id="check-Vintage" />
                 <label for="check-Vintage" class="form-check-label">Vintage</label>
               </div>
@@ -136,9 +130,10 @@
                 <div class="collapse" :id="`collapse-${user.id}`">
                   <div class="card card-body">
                     {{ user.about_me }}
+                    <hr />
                     <div>
                       <div style="color: gray">Distance from you: ~{{ user.distance }} miles</div>
-                      <div style="color: gray">Age: {{ user.age }} miles</div>
+                      <div style="color: gray">Age: {{ user.age }}</div>
                       <br />
                       <div>
                         <button @click="addFriend(user)" class="btn btn-outline-danger">
@@ -166,11 +161,13 @@ import distance from "@turf/distance";
 export default {
   data: function () {
     return {
+      allBox: true,
       rawUsers: [],
+      originalUsers: [],
       anyDistance: false,
       formats: {
         all: true,
-        Commander: false,
+        EDH: false,
         Standard: false,
         Draft: false,
         Modern: false,
@@ -193,15 +190,62 @@ export default {
       if (this.anyDistance) {
         return this.rawUsers;
       } else {
-        return this.rawUsers.filter((user) => {
+        let distanced = this.rawUsers.filter((user) => {
           if (parseFloat(user.distance) <= parseFloat(this.distance)) {
             return user;
           }
         });
+        return distanced;
       }
     },
   },
   methods: {
+    filterFormats: function (chosenBox) {
+      if (chosenBox === true) {
+        for (var key in this.formats) {
+          this.formats[key] = false;
+          let allBoxElement = document.getElementById("all-formats");
+          allBoxElement.setAttribute("disabled", "disabled");
+          this.formats.all = true;
+        }
+      } else {
+        let allBoxElement = document.getElementById("all-formats");
+        allBoxElement.removeAttribute("disabled");
+        this.formats.all = false;
+      }
+      setTimeout(() => {
+        if (this.formats.all) {
+          var arrayOfChosenFormats = [
+            "EDH",
+            "Standard",
+            "Cube",
+            "Modern",
+            "Pauper",
+            "Pioneer",
+            "Brawl",
+            "Historic",
+            "Legacy",
+            "Vintage",
+          ];
+        } else {
+          arrayOfChosenFormats = [];
+          for (var key in this.formats) {
+            if (this.formats[key] === true) {
+              arrayOfChosenFormats.push(key);
+            }
+          }
+        }
+        this.rawUsers = this.originalUsers;
+        this.rawUsers = this.rawUsers.filter((user) => {
+          let arr2 = [];
+          user.favoriteformats.forEach((formatHash) => {
+            arr2.push(formatHash.format);
+          });
+          let test2 = arrayOfChosenFormats.some((ai) => arr2.includes(ai));
+          return test2;
+        });
+      }, 50);
+    },
     findDistance: function (user) {
       var from = [user.latitude, user.longitude];
       var to = [localStorage.latitude, localStorage.longitude];
@@ -211,6 +255,7 @@ export default {
     usersIndex: function () {
       axios.get("/users").then((response) => {
         this.rawUsers = response.data;
+        this.originalUsers = response.data;
         // console.log(response.data);
 
         // deletes yourself from the array of users
