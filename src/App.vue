@@ -273,9 +273,20 @@ export default {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
         this.friendRequestCount();
         this.importFriends();
+        this.importUser();
       } else {
         this.loginStatus = "Not logged in";
       }
+    },
+    importUser: function () {
+      axios.get(`/users/${localStorage.user_id}`).then((response) => {
+        this.user = response.data;
+        this.myself = {
+          name: this.user.first_name,
+          id: this.user.user_id,
+          profilePicture: this.user.profile_picture,
+        };
+      });
     },
     friendRequestCount: function () {
       if (localStorage.jwt) {

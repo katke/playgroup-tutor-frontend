@@ -178,8 +178,8 @@
                       <span id="user-id">#{{ user.id }}</span>
                     </div>
                     <div class="row">
-                      <ul class="list-group">
-                        <li class="list-group-item" v-for="favformat in user.favoriteformats" :key="favformat.id">
+                      <ul class="find-friend format-list">
+                        <li v-for="favformat in user.favoriteformats" :key="favformat.id">
                           {{ favformat.format }}
                         </li>
                       </ul>
@@ -238,7 +238,7 @@ export default {
         Legacy: false,
         Vintage: false,
       },
-      user: this.$parent.user,
+      user: {},
       distance: 15,
     };
   },
@@ -328,33 +328,32 @@ export default {
       return distance(from, to, options).toFixed(1);
     },
     usersIndex: function () {
-      axios.get("/users").then((response) => {
-        this.rawUsers = response.data;
-        this.originalUsers = response.data;
-        // console.log(response.data);
+      this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
+        this.user = response.data;
+        axios.get("/users").then((response) => {
+          this.rawUsers = response.data;
+          this.originalUsers = response.data;
+          // console.log(response.data);
 
-        // deletes yourself from the array of users
-        for (var index = 0; index < this.rawUsers.length; index++) {
-          if (this.rawUsers[index].id == this.$parent.id) {
-            this.rawUsers.splice(index, 1);
-            this.originalUsers.splice(index, 1);
-          }
-          this.$parent.friends.forEach((friend) => {
-            if (this.rawUsers[index].id == friend.id) {
+          // deletes yourself from the array of users
+          for (var index = 0; index < this.rawUsers.length; index++) {
+            if (this.rawUsers[index].id == this.user.id) {
               this.rawUsers.splice(index, 1);
               this.originalUsers.splice(index, 1);
             }
+            this.$parent.friends.forEach((friend) => {
+              if (this.rawUsers[index] && this.rawUsers[index].id == friend.id) {
+                this.rawUsers.splice(index, 1);
+                this.originalUsers.splice(index, 1);
+              }
+            });
+          }
+
+          // calculates all the distances
+          this.rawUsers.forEach((user) => {
+            user.distance = this.findDistance(user);
           });
-        }
-
-        console.log(this.user.relationships);
-        console.log(this.user);
-
-        // calculates all the distances
-        this.rawUsers.forEach((user) => {
-          user.distance = this.findDistance(user);
         });
-
         // sorts by distance
         // this.rawUsers.sort(function (a, b) {
         //   return a.distance - b.distance;
