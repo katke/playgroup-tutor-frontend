@@ -14,7 +14,7 @@
               <div class="row">
                 <div class="col-12">
                   <h3><strong>Profile Picture:</strong></h3>
-                  <img v-bind:src="user.profile_picture" alt="" id="profile-pic" />
+                  <img v-bind:src="user.profile_picture" alt="" id="profile-pic" class="img-fluid centered-element" />
                   <div>
                     <hr />
                     <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
@@ -50,7 +50,7 @@
                       <li>
                         <span
                           class="dropdown-item"
-                          @click="pictureEdit(color.img)"
+                          @click="iconEdit(color.img)"
                           v-for="color in colors"
                           :key="`color-id-${color.id}`"
                         >
@@ -76,7 +76,7 @@
                       <li>
                         <a
                           class="dropdown-item"
-                          @click="pictureEdit(guild.img)"
+                          @click="iconEdit(guild.img)"
                           v-for="guild in guilds"
                           :key="`guild-id-${guild.id}`"
                         >
@@ -414,10 +414,6 @@ export default {
     this.importCurrentUser();
   },
   methods: {
-    testModal: function () {
-      this.showModal = true;
-      console.log("it worked?");
-    },
     importCurrentUser: function () {
       this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
         this.user = response.data;
@@ -463,7 +459,6 @@ export default {
 
       // reset all selected items
       let actives = document.getElementsByClassName("active");
-      console.log("test", actives);
       actives.forEach((element) => {
         element.classList.remove("active");
       });
@@ -527,6 +522,10 @@ export default {
     },
     selectCard: function (card) {
       this.selectedCard = card;
+    },
+    iconEdit: function (imageString) {
+      this.user.profile_picture = imageString;
+      axios.patch(`/users/${localStorage.user_id}`, this.user);
     },
     pictureEdit: function () {
       if (this.selectedCard.card_faces) {
