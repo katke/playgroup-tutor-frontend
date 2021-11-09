@@ -15,6 +15,12 @@
                 <div class="col-12">
                   <h3><strong>Profile Picture:</strong></h3>
                   <img v-bind:src="user.profile_picture" alt="" id="profile-pic" class="img-fluid centered-element" />
+                  <div v-if="cardInfo.name">
+                    <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
+                      {{ cardInfo.name }}
+                    </a>
+                    <span style="font-style: italic" class="float-end">Artist: {{ cardInfo.artist }}</span>
+                  </div>
                   <div>
                     <hr />
                     <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
@@ -369,6 +375,7 @@ export default {
       selectedCard: {},
       showSaveButton: false,
       scryfallNameField: "",
+      cardInfo: {},
       editing: {
         about_me: false,
         age: false,
@@ -417,6 +424,12 @@ export default {
     importCurrentUser: function () {
       this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
         this.user = response.data;
+        // regex is tough, but this lets you find the exact card upon loading
+        fetch(`https://api.scryfall.com/cards/${/.*\/\b(.*).jpg/.exec(this.user.profile_picture)[1]}`)
+          .then((response) => response.json())
+          .then((data) => {
+            this.cardInfo = data;
+          });
         axios.get("/favoriteformats").then((response) => {
           this.favorite_formats.forEach((format) => {
             response.data.forEach((myformat) => {
@@ -518,6 +531,7 @@ export default {
         .then((data) => {
           this.selectedCard = data;
           this.pictureEdit();
+          this.cardInfo = this.selectedCard;
         });
     },
     selectCard: function (card) {
@@ -533,6 +547,7 @@ export default {
       } else {
         this.user.profile_picture = this.selectedCard["image_uris"]["art_crop"];
       }
+      this.cardInfo = this.selectedCard;
       axios.patch(`/users/${localStorage.user_id}`, this.user);
       this.scryfallNameField = null;
     },
