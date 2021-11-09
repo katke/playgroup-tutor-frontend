@@ -11,7 +11,7 @@
             <li><a href="/test-chat"></a></li>
             <li>
               <a href="/friend-requests">
-                Friend Requests&nbsp;
+                Friends &amp; Requests&nbsp;
                 <span id="friend-requests" class="">({{ friendRequests }})</span>
               </a>
             </li>

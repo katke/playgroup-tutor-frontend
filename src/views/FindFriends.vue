@@ -178,11 +178,14 @@
                       <span id="user-id">#{{ user.id }}</span>
                     </div>
                     <div class="row">
-                      <ul class="find-friend format-list">
+                      <!-- <ul class="find-friend format-list">
                         <li v-for="favformat in user.favoriteformats" :key="favformat.id">
                           {{ favformat.format }}
                         </li>
-                      </ul>
+                      </ul> -->
+                      <div class="col-6" v-for="favformat in user.favoriteformats" :key="favformat.id">
+                        {{ favformat.format }}
+                      </div>
                     </div>
                   </div>
                 </div>

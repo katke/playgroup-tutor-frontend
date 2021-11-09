@@ -17,7 +17,6 @@
             <button @click="signIn()" class="btn-about">Log in</button>
 
             <button @click="showCreateAccount()" class="btn-about">Create Account</button>
-            <div class="col-2 d-flex flex-column align-items-center"></div>
           </div>
         </div>
       </div>
