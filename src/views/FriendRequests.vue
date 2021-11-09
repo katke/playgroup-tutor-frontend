@@ -14,8 +14,8 @@
                     class="btn btn-outline-danger"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target="#blockIgnoreModal"
-                    @click="currentRequest = request"
+                    data-bs-target="#friendModal"
+                    @click="currentFriend = friend"
                   >
                     <i class="bi bi-x-circle-fill"></i>
                   </button>
@@ -35,7 +35,7 @@
             </div>
             <div class="col-8" id="col-left">
               <div class="section-title">
-                <h2>Friend Requests:</h2>
+                <h2>Friend Requests</h2>
               </div>
               <div v-if="friendRequests.length === 0">No friend requests!</div>
               <div
@@ -86,7 +86,8 @@
                   <div>
                     {{ request.requester.about_me }}
                   </div>
-                  <div>distance: {{ request.requester.distance }} miles</div>
+                  <div style="color: gray">Distance from you: ~{{ request.requester.distance }} miles</div>
+                  <div style="color: gray">Age: {{ request.requester.age }}</div>
                   <div>
                     <button @click="acceptRequest(request)" class="btn btn-outline-success" type="button">
                       Accept Friend Request
@@ -114,6 +115,38 @@
         </div>
         <!-- end list -->
       </section>
+
+      <!-- Friend Modal -->
+      <div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="friendModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="friendModalLabel">Do you want to un-friend, or block this user?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                data-bs-dismiss="modal"
+                @click="blockFriend(currentFriend)"
+              >
+                Block user
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+                @click="unfriend(currentFriend)"
+              >
+                Unfriend
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- End friend modal -->
 
       <!-- Request Modal -->
       <div
@@ -167,6 +200,7 @@ export default {
     return {
       friendRequests: {},
       currentRequest: {},
+      currentFriend: {},
     };
   },
   created() {
@@ -234,6 +268,41 @@ export default {
         alert.classList.remove("d-none");
         console.log("user", user);
         console.log("alert", alert);
+      });
+    },
+    unfriend: function (friend) {
+      // console.log(friend);
+      axios.get("/friendships").then((response) => {
+        // console.log(response);
+        let theseRelationships = response.data;
+        theseRelationships.forEach((relationship) => {
+          // console.log(relationship);
+          if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
+            console.log("found the relationship", relationship);
+            axios.delete(`/relationships/${relationship.id}`).then((response) => {
+              console.log(response);
+              this.$parent.importFriends();
+            });
+          }
+        });
+      });
+    },
+    blockFriend: function (friend) {
+      console.log(friend);
+      axios.get("/friendships").then((response) => {
+        // console.log(response);
+        let theseRelationships = response.data;
+        theseRelationships.forEach((relationship) => {
+          // console.log(relationship);
+          if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
+            console.log("found the relationship", relationship);
+            let params = { status: "Blocked" };
+            axios.patch(`/relationships/${relationship.id}`, params).then((response) => {
+              console.log(response);
+              this.$parent.importFriends();
+            });
+          }
+        });
       });
     },
   },
