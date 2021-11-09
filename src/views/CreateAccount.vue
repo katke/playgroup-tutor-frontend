@@ -27,6 +27,12 @@
                         alt=""
                         id="profile-pic"
                       />
+                      <div v-if="cardInfo.name">
+                        <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
+                          {{ cardInfo.name }}
+                        </a>
+                        <span style="font-style: italic" class="float-end">Artist: {{ cardInfo.artist }}</span>
+                      </div>
                     </div>
                     <hr />
                     <strong>Search for your favorite card...</strong>
@@ -330,6 +336,7 @@ export default {
       cards: [],
       selectedCard: {},
       showSaveButton: false,
+      cardInfo: {},
       errors: {
         Password: "",
         Email: "",
@@ -385,6 +392,7 @@ export default {
       }
     }, 100);
   },
+
   methods: {
     showLogIn: function () {
       this.$router.push("/log-in");
@@ -444,7 +452,6 @@ export default {
                 firstPicture.classList.add("show");
                 firstPicture.classList.add("active");
               }, 30);
-              // console.log("formats", data);
             });
         });
     },
@@ -452,7 +459,13 @@ export default {
       fetch("https://api.scryfall.com/cards/random")
         .then((response) => response.json())
         .then((data) => {
-          this.inputParams.profile_picture = data["image_uris"]["art_crop"];
+          if (data.card_faces) {
+            this.inputParams.profile_picture = data.card_faces[0]["image_uris"]["art_crop"];
+          } else {
+            this.inputParams.profile_picture = data["image_uris"]["art_crop"];
+          }
+          this.cardInfo = data;
+          console.log(this.cardInfo);
         });
     },
     selectCard: function (card) {
@@ -464,10 +477,11 @@ export default {
       } else {
         this.inputParams.profile_picture = this.selectedCard["image_uris"]["art_crop"];
       }
+      this.cardInfo = this.selectedCard;
     },
     selectIcon: function (card) {
       this.inputParams.profile_picture = card.img;
-      this.inputParams.profile_picture = card.img;
+      this.cardInfo = {};
     },
     createAccount: function () {
       axios
