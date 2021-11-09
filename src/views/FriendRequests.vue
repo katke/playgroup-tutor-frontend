@@ -37,7 +37,7 @@
               <div class="section-title">
                 <h2>Friend Requests</h2>
               </div>
-              <div v-if="friendRequests.length === 0">No friend requests!</div>
+              <div v-if="friendRequests.length === 0" class="d-flex justify-content-center">No friend requests!</div>
               <div
                 v-for="request in friendRequests"
                 v-bind:key="request.id"
@@ -50,8 +50,7 @@
                   :id="`accept-${request.requester.id}`"
                 >
                   <h5 style="text-align: center">Added {{ request.requester.first_name }} as a friend!</h5>
-                  Go ahead and send them
-                  <a href="/chat" class="alert-link">a message.</a>
+                  Go ahead and send them a message (bottom right button)
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div
@@ -220,54 +219,54 @@ export default {
         this.friendRequests.forEach((request) => {
           request.requester.distance = this.findDistance(request.requester);
         });
-        console.log("friend requests", this.friendRequests);
+        // console.log("friend requests", this.friendRequests);
       });
     },
 
     acceptRequest: function (request) {
       let params = { status: "Accepted" };
-      axios.patch(`/relationships/${request.id}`, params).then((response) => {
-        console.log(response.data);
+      axios.patch(`/relationships/${request.id}`, params).then(() => {
+        // console.log(response.data);
         this.$parent.friendRequestCount();
         this.$parent.importFriends();
-        console.log("the resquester id: ", request.requester.id);
+        // console.log("the resquester id: ", request.requester.id);
         let user = document.getElementById(`user-${request.requester.id}`);
 
         user.classList.add("d-none");
         let alert = document.getElementById(`accept-${request.requester.id}`);
         alert.classList.remove("d-none");
-        console.log("user", user);
-        console.log("alert", alert);
+        // console.log("user", user);
+        // console.log("alert", alert);
       });
     },
     ignoreRequest: function (request) {
       let params = { status: "Ignored" };
-      axios.patch(`/relationships/${request.id}`, params).then((response) => {
-        console.log(response.data);
+      axios.patch(`/relationships/${request.id}`, params).then(() => {
+        // console.log(response.data);
         this.$parent.friendRequestCount();
-        console.log("the resquester id: ", request.requester.id);
+        // console.log("the resquester id: ", request.requester.id);
         let user = document.getElementById(`user-${request.requester.id}`);
 
         user.classList.add("d-none");
         let alert = document.getElementById(`ignore-${request.requester.id}`);
         alert.classList.remove("d-none");
-        console.log("user", user);
-        console.log("alert", alert);
+        // console.log("user", user);
+        // console.log("alert", alert);
       });
     },
     blockRequest: function (request) {
       let params = { status: "Ignored" };
-      axios.patch(`/relationships/${request.id}`, params).then((response) => {
-        console.log(response.data);
+      axios.patch(`/relationships/${request.id}`, params).then(() => {
+        // console.log(response.data);
         this.$parent.friendRequestCount();
-        console.log("the resquester id: ", request.requester.id);
+        // console.log("the resquester id: ", request.requester.id);
         let user = document.getElementById(`user-${request.requester.id}`);
 
         user.classList.add("d-none");
         let alert = document.getElementById(`block-${request.requester.id}`);
         alert.classList.remove("d-none");
-        console.log("user", user);
-        console.log("alert", alert);
+        // console.log("user", user);
+        // console.log("alert", alert);
       });
     },
     unfriend: function (friend) {
@@ -278,9 +277,9 @@ export default {
         theseRelationships.forEach((relationship) => {
           // console.log(relationship);
           if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
-            console.log("found the relationship", relationship);
-            axios.delete(`/relationships/${relationship.id}`).then((response) => {
-              console.log(response);
+            // console.log("found the relationship", relationship);
+            axios.delete(`/relationships/${relationship.id}`).then(() => {
+              // console.log(response);
               this.$parent.importFriends();
             });
           }
@@ -288,17 +287,17 @@ export default {
       });
     },
     blockFriend: function (friend) {
-      console.log(friend);
+      // console.log(friend);
       axios.get("/friendships").then((response) => {
         // console.log(response);
         let theseRelationships = response.data;
         theseRelationships.forEach((relationship) => {
           // console.log(relationship);
           if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
-            console.log("found the relationship", relationship);
+            // console.log("found the relationship", relationship);
             let params = { status: "Blocked" };
-            axios.patch(`/relationships/${relationship.id}`, params).then((response) => {
-              console.log(response);
+            axios.patch(`/relationships/${relationship.id}`, params).then(() => {
+              // console.log(response);
               this.$parent.importFriends();
             });
           }

@@ -361,6 +361,9 @@ export default {
           let bulkMessages = response.data.filter((message) => {
             return message.sender_id === friend.id || message.receiver_id === friend.id;
           });
+          bulkMessages.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
+
+          // console.log(bulkMessages);
 
           bulkMessages.forEach((message) => {
             // console.log(message.created_at.substring(11, 13));
@@ -376,6 +379,10 @@ export default {
                 second: message.created_at.substring(17, 19),
               },
             };
+            // console.log(this.timeConverter(message.created_at.substring(11, 13)));
+            // console.log(message.created_at.substring(14, 16));
+            // console.log(message.created_at.substring(17, 19));
+
             if (message.sender.id === friend.id) {
               tempMessage.myself = false;
             } else {
@@ -385,6 +392,7 @@ export default {
             tempMessages.push(tempMessage);
           });
           this.messages = tempMessages;
+          // console.log("messages:", this.messages);
         });
       } else {
         this.visible = !this.visible;
