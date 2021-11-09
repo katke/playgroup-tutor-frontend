@@ -2,83 +2,120 @@
   <div id="create">
     <main id="main">
       <section class="container d-flex flex-column align-items-center" data-aos="fade-up">
-        <h1>Friend Requests:</h1>
-        <div v-if="friendRequests.length === 0">No friend requests!</div>
-        <div
-          v-for="request in friendRequests"
-          v-bind:key="request.id"
-          class="container d-flex flex-column align-items-center"
-        >
-          <!-- alerts -->
-          <div
-            class="alert alert-success alert-dismissible fade show d-none"
-            role="alert"
-            :id="`accept-${request.requester.id}`"
-          >
-            <h5 style="text-align: center">Added {{ request.requester.first_name }} as a friend!</h5>
-            Go ahead and send them
-            <a href="/chat" class="alert-link">a message.</a>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          <div
-            class="alert alert-secondary alert-dismissible fade show d-none"
-            role="alert"
-            :id="`ignore-${request.requester.id}`"
-          >
-            <h5 style="text-align: center">Ignored {{ request.requester.first_name }}'s request</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          <div
-            class="alert alert-danger alert-dismissible fade show d-none"
-            role="alert"
-            :id="`block-${request.requester.id}`"
-          >
-            <h5 style="text-align: center">
-              {{ request.requester.first_name }} is blocked from sending you messages or requests.
-            </h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          <!-- end alerts -->
-
-          <!-- friend requester user -->
-          <div class="container d-flex flex-column align-items-center" :id="`user-${request.requester.id}`">
-            <img :src="request.requester.profile_picture" alt="" id="profile-pic" />
-            <div>
-              {{ request.requester.first_name }}
-              <span id="user-id">#{{ request.requester.id }}</span>
+        <div class="container" id="users-container">
+          <div class="row">
+            <div class="col-4" id="col-left">
+              <div class="section-title">
+                <h2>Your friends</h2>
+              </div>
+              <div class="row d-flex align-items-center" v-for="friend in $parent.friends" :key="friend.id">
+                <div class="col-2">
+                  <button
+                    class="btn btn-outline-danger"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#blockIgnoreModal"
+                    @click="currentRequest = request"
+                  >
+                    <i class="bi bi-x-circle-fill"></i>
+                  </button>
+                </div>
+                <div class="col-6">
+                  <img :src="friend.profile_picture" alt="" class="find-friend profile-pic" />
+                </div>
+                <div class="col-4">
+                  {{ friend.first_name }}
+                  <span id="user-id">#{{ friend.id }}</span>
+                  <br />
+                </div>
+                <div>
+                  <hr />
+                </div>
+              </div>
             </div>
-            <div>
-              {{ request.requester.about_me }}
-            </div>
-            <div>distance: {{ request.requester.distance }} miles</div>
-            <div>
-              <button @click="acceptRequest(request)" class="btn btn-outline-success" type="button">
-                Accept Friend Request
-                <i class="bi bi-check"></i>
-              </button>
-              <button
-                class="btn btn-outline-danger"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#blockIgnoreModal"
-                @click="currentRequest = request"
+            <div class="col-8" id="col-left">
+              <div class="section-title">
+                <h2>Friend Requests:</h2>
+              </div>
+              <div v-if="friendRequests.length === 0">No friend requests!</div>
+              <div
+                v-for="request in friendRequests"
+                v-bind:key="request.id"
+                class="container d-flex flex-column align-items-center"
               >
-                <i class="bi bi-x-circle-fill"></i>
-              </button>
+                <!-- alerts -->
+                <div
+                  class="alert alert-success alert-dismissible fade show d-none"
+                  role="alert"
+                  :id="`accept-${request.requester.id}`"
+                >
+                  <h5 style="text-align: center">Added {{ request.requester.first_name }} as a friend!</h5>
+                  Go ahead and send them
+                  <a href="/chat" class="alert-link">a message.</a>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div
+                  class="alert alert-secondary alert-dismissible fade show d-none"
+                  role="alert"
+                  :id="`ignore-${request.requester.id}`"
+                >
+                  <h5 style="text-align: center">Ignored {{ request.requester.first_name }}'s request</h5>
+
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div
+                  class="alert alert-danger alert-dismissible fade show d-none"
+                  role="alert"
+                  :id="`block-${request.requester.id}`"
+                >
+                  <h5 style="text-align: center">
+                    {{ request.requester.first_name }} is blocked from sending you messages or requests.
+                  </h5>
+
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <!-- end alerts -->
+
+                <!-- friend requester user -->
+                <div class="container d-flex flex-column align-items-center" :id="`user-${request.requester.id}`">
+                  <img :src="request.requester.profile_picture" alt="" id="profile-pic" />
+                  <div>
+                    {{ request.requester.first_name }}
+                    <span id="user-id">#{{ request.requester.id }}</span>
+                  </div>
+                  <div>
+                    {{ request.requester.about_me }}
+                  </div>
+                  <div>distance: {{ request.requester.distance }} miles</div>
+                  <div>
+                    <button @click="acceptRequest(request)" class="btn btn-outline-success" type="button">
+                      Accept Friend Request
+                      <i class="bi bi-check"></i>
+                    </button>
+                    <button
+                      class="btn btn-outline-danger"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#blockIgnoreModal"
+                      @click="currentRequest = request"
+                    >
+                      <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                  </div>
+                  <li v-for="format in request.requester.favoriteformats" v-bind:key="`format-${format.id}`">
+                    {{ format.format }}
+                  </li>
+                  <br />
+                </div>
+                <!-- end friend requester user -->
+              </div>
             </div>
-            <li v-for="format in request.requester.favoriteformats" v-bind:key="`format-${format.id}`">
-              {{ format.format }}
-            </li>
-            <br />
           </div>
-          <!-- end friend requester user -->
         </div>
         <!-- end list -->
       </section>
 
-      <!-- Modal -->
+      <!-- Request Modal -->
       <div
         class="modal fade"
         id="blockIgnoreModal"
@@ -158,6 +195,7 @@ export default {
       axios.patch(`/relationships/${request.id}`, params).then((response) => {
         console.log(response.data);
         this.$parent.friendRequestCount();
+        this.$parent.importFriends();
         console.log("the resquester id: ", request.requester.id);
         let user = document.getElementById(`user-${request.requester.id}`);
 
