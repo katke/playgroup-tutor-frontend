@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top" v-if="isHome">
+    <header id="header" class="fixed-top" v-if="isLoggedIn">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <h1 class="logo me-auto me-lg-0"><a href="#">Playgroup Tutor</a></h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
@@ -64,7 +64,7 @@
     <router-view />
 
     <!-- Chat! -->
-    <div v-if="isHome">
+    <div v-if="isLoggedIn">
       <div class="btn-group friends-floaty">
         <button
           class="btn btn-danger dropdown-toggle"
@@ -123,14 +123,30 @@
     </div>
     <!-- end Chat -->
     <!-- ======= Footer ======= -->
-    <footer id="footer" v-if="isHome2">
+    <footer id="footer">
       <div class="container">
         <div class="copyright">
-          Created by
-          <strong><span>David Ryan</span></strong>
-          2021
-          <div>
-            <a href="/learn-magic" alt="" class="btn btn-outline-danger">Wait, what is Magic the Gathering?</a>
+          <div class="row">
+            <div class="col-3">
+              <a
+                href="/learn-magic"
+                alt=""
+                class="btn btn-outline-secondary"
+                style="max-width: 175px"
+                v-if="notLearnPage"
+              >
+                Wait, what is Magic: the Gathering?
+              </a>
+            </div>
+            <div class="col-6">
+              Created by
+              <strong>David Ryan</strong>
+              2021
+              <div>
+                <a href="/about" alt="" class="btn btn-secondary" v-if="notAboutPage">about</a>
+              </div>
+            </div>
+            <div class="col-3"></div>
           </div>
         </div>
       </div>
@@ -476,7 +492,7 @@ export default {
   },
   // headeer/footer does NOT show up on login/create pages
   computed: {
-    isHome() {
+    isLoggedIn() {
       return this.$route.name !== "Home" &&
         this.$route.name !== "Log In" &&
         this.$route.name !== "Create Account" &&
@@ -485,8 +501,11 @@ export default {
         ? true
         : false;
     },
-    isHome2() {
+    notLearnPage() {
       return this.$route.name !== "LearnMagic" ? true : false;
+    },
+    notAboutPage() {
+      return this.$route.name !== "About" ? true : false;
     },
   },
 };

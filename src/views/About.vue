@@ -49,12 +49,12 @@
           </div>
           <div class="col-lg-5">
             <div class="ro">
-              <img src="assets/img/vamp-tutor.jpeg" class="img-fluid" alt="" />
-              <p class="fst-italic float-end">Vampiric Tutor</p>
+              <img src="assets/img/idyllic-tutor.jpeg" class="img-fluid" alt="" />
+              <p class="fst-italic float-end">Idyllic Tutor, Illustrated by Jaime Jones</p>
             </div>
             <div class="ro">
               <img src="assets/img/vamp-tutor.jpeg" class="img-fluid" alt="" />
-              <p class="fst-italic float-end">Vampiric Tutor</p>
+              <p class="fst-italic float-end">Vampiric Tutor, Illustrated by Lucas Graciano</p>
             </div>
           </div>
         </div>
@@ -66,6 +66,11 @@
             <h2>User Heatmap</h2>
           </div>
           <div id="map"></div>
+          <div class="row">
+            <div class="container d-flex flex-column align-items-center" data-aos="fade-up">
+              <a href="javascript:history.back()" class="btn btn-about">Back</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
