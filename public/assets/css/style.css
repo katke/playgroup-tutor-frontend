@@ -1155,8 +1155,11 @@ section {
 }
 
 .find-friend.profile-pic {
-  max-width: 100px;
+  max-width: 100%;
   transition: all ease-in-out 0.3s;
+}
+#users-container {
+  padding: 0px;
 }
 
 #profile-pic {

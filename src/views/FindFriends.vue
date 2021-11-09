@@ -166,24 +166,26 @@
                 :aria-controls="`#collapse-${user.id}`"
                 v-bind:key="user.id"
               >
-                <div class="row">
-                  <div class="col-7">
-                    <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
-                  </div>
-                  <div class="col-5">
-                    <span style="font-size: 20px">
-                      {{ user.first_name }}
-                    </span>
-                    <span id="user-id">#{{ user.id }}</span>
-
-                    <ul class="list-group">
-                      <li class="list-group-item" v-for="favformat in user.favoriteformats" :key="favformat.id">
-                        {{ favformat.format }}
-                      </li>
-                    </ul>
+                <div class="container" id="users-container">
+                  <div class="row">
+                    <div class="col-7">
+                      <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
+                    </div>
+                    <div class="col-5">
+                      <span style="font-size: 20px">
+                        {{ user.first_name }}
+                      </span>
+                      <span id="user-id">#{{ user.id }}</span>
+                    </div>
+                    <div class="row">
+                      <ul class="list-group">
+                        <li class="list-group-item" v-for="favformat in user.favoriteformats" :key="favformat.id">
+                          {{ favformat.format }}
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-
                 <!-- more info -->
                 <div class="collapse" :id="`collapse-${user.id}`">
                   <div class="card card-body">
