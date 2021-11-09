@@ -168,6 +168,9 @@
               >
                 <div class="container" id="users-container">
                   <div class="row">
+                    <hr />
+                  </div>
+                  <div class="row">
                     <div class="col-7">
                       <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
                     </div>
@@ -178,13 +181,11 @@
                       <span id="user-id">#{{ user.id }}</span>
                     </div>
                     <div class="row">
-                      <!-- <ul class="find-friend format-list">
-                        <li v-for="favformat in user.favoriteformats" :key="favformat.id">
-                          {{ favformat.format }}
-                        </li>
-                      </ul> -->
                       <div class="col-6" v-for="favformat in user.favoriteformats" :key="favformat.id">
-                        {{ favformat.format }}
+                        <i class="bi bi-caret-right"></i>
+                        <span style="font-style: italic; font-size: 14px">
+                          {{ favformat.format }}
+                        </span>
                       </div>
                     </div>
                   </div>
