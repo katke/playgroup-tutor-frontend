@@ -123,7 +123,7 @@
     </div>
     <!-- end Chat -->
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" v-if="isHome2">
       <div class="container">
         <div class="copyright">
           Created by
@@ -137,9 +137,8 @@
     </footer>
     <!-- End  Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <a @click="scrollToTop()" class="back-to-top d-flex align-items-center justify-content-center">
       <i class="bi bi-arrow-up-short"></i>
-      test
     </a>
   </div>
 </template>
@@ -268,6 +267,9 @@ export default {
     this.loginCheck();
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     loginCheck: function () {
       if (localStorage.jwt) {
         this.loginStatus = `Logged in as ${localStorage.first_name}`;
@@ -481,6 +483,9 @@ export default {
         this.$route.name !== "LearnMagic"
         ? true
         : false;
+    },
+    isHome2() {
+      return this.$route.name !== "LearnMagic" ? true : false;
     },
   },
 };

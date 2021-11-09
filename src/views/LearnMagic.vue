@@ -234,14 +234,13 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="container d-flex flex-column align-items-center" data-aos="fade-up">
+          <a href="javascript:history.back()" class="btn btn-about">Back</a>
+        </div>
+      </div>
     </section>
     <!-- End Facts Section -->
-
-    <div class="row">
-      <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
-        <a href="javascript:history.back()" class="btn btn-about">Back</a>
-      </div>
-    </div>
   </main>
   <!-- End #main -->
 </template>
