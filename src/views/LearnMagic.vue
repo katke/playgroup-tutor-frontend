@@ -196,7 +196,7 @@
           <div class="col-lg-3 col-6 text-center">
             <span
               data-purecounter-start="0"
-              data-purecounter-end="232"
+              data-purecounter-end="21284"
               data-purecounter-duration="1"
               class="purecounter"
             ></span>
@@ -206,7 +206,7 @@
           <div class="col-lg-3 col-6 text-center">
             <span
               data-purecounter-start="0"
-              data-purecounter-end="521"
+              data-purecounter-end="65"
               data-purecounter-duration="1"
               class="purecounter"
             ></span>
@@ -216,7 +216,7 @@
           <div class="col-lg-3 col-6 text-center">
             <span
               data-purecounter-start="0"
-              data-purecounter-end="1463"
+              data-purecounter-end="35142683"
               data-purecounter-duration="1"
               class="purecounter"
             ></span>
@@ -226,7 +226,7 @@
           <div class="col-lg-3 col-6 text-center">
             <span
               data-purecounter-start="0"
-              data-purecounter-end="15"
+              data-purecounter-end="32451"
               data-purecounter-duration="1"
               class="purecounter"
             ></span>
