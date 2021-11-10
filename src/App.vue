@@ -131,7 +131,7 @@
               <a
                 href="/learn-magic"
                 alt=""
-                class="btn btn-outline-secondary"
+                class="btn btn-outline-secondary btn-sm"
                 style="max-width: 175px"
                 v-if="notLearnPage"
               >
@@ -143,7 +143,7 @@
               <strong>David Ryan</strong>
               2021
               <div>
-                <a href="/about" alt="" class="btn btn-secondary" v-if="notAboutPage">about</a>
+                <a href="/about" alt="" class="btn btn-secondary btn-sm" v-if="notAboutPage">about</a>
               </div>
             </div>
             <div class="col-3"></div>

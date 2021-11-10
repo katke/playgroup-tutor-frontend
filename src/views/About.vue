@@ -30,7 +30,7 @@
                 <h4>Context</h4>
                 <p>
                   A "tutor" in Magic: the Gathering is a nickname for cards that let you find another card of your
-                  choice from your deck. Hense, Playgroup Tutor lets you find a playgroup or just friends!
+                  choice from your deck. Hence, Playgroup Tutor lets you find a playgroup or just friends!
                 </p>
                 <br />
               </div>
