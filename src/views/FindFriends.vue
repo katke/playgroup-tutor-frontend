@@ -15,7 +15,7 @@
                 <i class="bi bi-emoji-smile"></i>
                 &nbsp;
                 <strong>Success!</strong>
-                Added {{ friend }} as a friend
+                Requested {{ newFriend }} to be friends
               </div>
             </transition>
 
@@ -239,6 +239,7 @@ import "animate.css";
 export default {
   data: function () {
     return {
+      newFriend: "them",
       friends: [],
       blocked: [],
       flash: false,
@@ -417,6 +418,7 @@ export default {
         .post("/relationships", responder)
         .then((response) => {
           console.log(response);
+          this.newFriend = requested_user.first_name;
           this.flashMessage(requested_user);
         })
         .catch((error) => {

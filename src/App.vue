@@ -12,7 +12,7 @@
             <li>
               <a href="/friend-requests">
                 Friends &amp; Requests&nbsp;
-                <span id="friend-requests" class="">({{ friendRequests }})</span>
+                <span id="friend-requests" style="color: red">({{ friendRequests }})</span>
               </a>
             </li>
           </ul>
