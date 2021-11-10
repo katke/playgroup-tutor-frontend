@@ -6,6 +6,19 @@
           <div class="section-title">
             <h2>Search your library for a planeswalker...</h2>
 
+            <transition
+              name="custom-classes-transition"
+              enter-active-class="animate__animated animate__fadeIn"
+              leave-active-class="animate__animated animate__fadeOut"
+            >
+              <div v-if="flash" class="alert alert-success" role="alert" id="popup">
+                <i class="bi bi-emoji-smile"></i>
+                &nbsp;
+                <strong>Success!</strong>
+                Added {{ friend }} as a friend
+              </div>
+            </transition>
+
             <label for="customRange1" class="form-label">
               Showing all users ({{ filteredUsers.length }}) within
               <input type="number" style="color: blue; max-width: 50px" v-model="distance" />
@@ -221,10 +234,14 @@
 <script>
 import axios from "axios";
 import distance from "@turf/distance";
+import "animate.css";
 
 export default {
   data: function () {
     return {
+      friends: [],
+      blocked: [],
+      flash: false,
       allBox: true,
       rawUsers: [],
       originalUsers: [],
@@ -264,6 +281,14 @@ export default {
     },
   },
   methods: {
+    flashMessage: function () {
+      this.flash = true;
+
+      setTimeout(() => {
+        this.flash = false;
+      }, 2500);
+    },
+
     filterFormats: function (chosenBox) {
       setTimeout(() => {
         if (chosenBox === true) {
@@ -332,50 +357,53 @@ export default {
       return distance(from, to, options).toFixed(1);
     },
     usersIndex: function () {
-      this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
-        this.user = response.data;
-        axios.get("/users").then((response) => {
-          this.originalUsers = response.data;
-
-          // loop through your friends, and then filter them out from the total userbase
-          this.$parent.friends.forEach((friend) => {
-            this.originalUsers = this.originalUsers.filter((user) => {
-              if (user.id === friend.id || user.id === this.user.id) {
-                console.log("friend detected", friend);
-              } else {
-                return user;
-              }
-            });
-          });
-
-          // loop through again, but this time for blocked users
-          axios.get("/blocked").then((response) => {
-            let blocked = response.data;
-
-            blocked.forEach((blockedUser) => {
+      axios
+        .all([
+          axios.get("/friends"),
+          axios.get(`/users/${localStorage.user_id}`),
+          axios.get("/users"),
+          axios.get("/blocked"),
+        ])
+        .then(
+          axios.spread((friends, user, users, blocked) => {
+            console.log(friends.data, user.data, users.data, blocked.data);
+            this.friends = friends.data;
+            this.user = user.data;
+            this.originalUsers = users.data;
+            this.blocked = blocked.data;
+            //
+            // loop through your friends, and then filter them out from the total userbase
+            this.friends.forEach((friend) => {
               this.originalUsers = this.originalUsers.filter((user) => {
-                if (user.id === blockedUser.id) {
-                  console.log("blocked user detected", blockedUser);
+                if (user.id === friend.id || user.id === this.user.id) {
+                  // console.log("friend detected", friend);
                 } else {
                   return user;
                 }
               });
             });
 
-            //two user groups lets you 'reset' your filters
-            this.rawUsers = this.originalUsers;
+            // same for blocked users
+            this.blocked.forEach((blockedUser) => {
+              this.originalUsers = this.originalUsers.filter((user) => {
+                if (user.id === blockedUser.id) {
+                  // console.log("blocked user detected", blockedUser);
+                } else {
+                  return user;
+                }
+              });
+            });
 
             // calculates all the distances
-            this.rawUsers.forEach((user) => {
+            this.originalUsers.forEach((user) => {
               user.distance = this.findDistance(user);
             });
-          });
-        });
-        // sorts by distance
-        // this.rawUsers.sort(function (a, b) {
-        //   return a.distance - b.distance;
-        // });
-      });
+
+            //two user groups lets you 'reset' your filters
+            this.rawUsers = this.originalUsers;
+          })
+        )
+        .catch((error) => console.log(error));
     },
     importUser: function () {
       axios.get(`/users/${localStorage.user_id}`).then((response) => {
@@ -389,6 +417,7 @@ export default {
         .post("/relationships", responder)
         .then((response) => {
           console.log(response);
+          this.flashMessage(requested_user);
         })
         .catch((error) => {
           console.log(error.response);

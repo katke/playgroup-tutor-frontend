@@ -21,6 +21,7 @@
     "vue": "^2.6.11",
     "vue-advanced-chat": "^1.2.1",
     "vue-cool-select": "^3.5.2",
+    "vue-flash-message": "^0.7.2",
     "vue-mapbox": "^0.4.1",
     "vue-quick-chat": "^1.2.8",
     "vue-router": "^3.5.3",

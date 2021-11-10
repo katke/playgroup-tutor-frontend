@@ -20,8 +20,8 @@
                       id="EmailForm"
                       v-model="inputParams.email"
                     />
-                    <div class="invalid-feedback">{{ errors["Email"] }}.</div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Invalid email or password.</div>
+                    <div class="valid-feedback"></div>
                   </div>
                   <div class="col">
                     Password
@@ -31,8 +31,8 @@
                       id="PasswordForm"
                       v-model="inputParams.password"
                     />
-                    <div class="invalid-feedback">{{ errors["Password"] }}.</div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">!!</div>
+                    <div class="valid-feedback"></div>
                   </div>
                 </div>
               </div>
@@ -60,10 +60,6 @@ export default {
         email: "",
         password: "",
       },
-      errors: {
-        Password: "",
-        Email: "",
-      },
     };
   },
   created: function () {},
@@ -88,33 +84,14 @@ export default {
           this.$parent.friendRequestCount();
           this.$router.push("/find-friends");
         })
-        .catch((error) => {
-          // reset errors
-          this.errors = {
-            Password: "",
-            Email: "",
-          };
-          for (var key in this.errors) {
-            // console.log(key);
-            let form = document.getElementById(`${key}Form`);
-            // console.log(form);
-            form.classList.add("is-valid");
-            form.classList.remove("is-invalid");
-          }
-
+        .catch(() => {
           // now make any error an invalid state
-          console.log("ERROR!", error.response.data.errors);
-          error.response.data.errors.forEach((error) => {
-            let errorName = error.split(" ")[0];
-            this.errors[errorName] = error;
-            let form = document.getElementById(`${errorName}Form`);
-            // console.log(form)
-            if (form) {
-              form.classList.add("is-invalid");
-              form.classList.remove("is-valid");
-            }
-          });
-          console.log(this.errors);
+          let form = document.getElementById(`EmailForm`);
+          form.classList.add("is-invalid");
+          form.classList.remove("is-valid");
+          let form2 = document.getElementById(`Password`);
+          form2.classList.add("is-invalid");
+          form2.classList.remove("is-valid");
         });
     },
   },
