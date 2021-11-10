@@ -335,27 +335,40 @@ export default {
       this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
         this.user = response.data;
         axios.get("/users").then((response) => {
-          this.rawUsers = response.data;
           this.originalUsers = response.data;
-          // console.log(response.data);
 
-          // deletes yourself from the array of users
-          for (var index = 0; index < this.rawUsers.length; index++) {
-            if (this.rawUsers[index].id == this.user.id) {
-              this.rawUsers.splice(index, 1);
-              this.originalUsers.splice(index, 1);
-            }
-            this.$parent.friends.forEach((friend) => {
-              if (this.rawUsers[index] && this.rawUsers[index].id == friend.id) {
-                this.rawUsers.splice(index, 1);
-                this.originalUsers.splice(index, 1);
+          // loop through your friends, and then filter them out from the total userbase
+          this.$parent.friends.forEach((friend) => {
+            this.originalUsers = this.originalUsers.filter((user) => {
+              if (user.id === friend.id || user.id === this.user.id) {
+                console.log("friend detected", friend);
+              } else {
+                return user;
               }
             });
-          }
+          });
 
-          // calculates all the distances
-          this.rawUsers.forEach((user) => {
-            user.distance = this.findDistance(user);
+          // loop through again, but this time for blocked users
+          axios.get("/blocked").then((response) => {
+            let blocked = response.data;
+
+            blocked.forEach((blockedUser) => {
+              this.originalUsers = this.originalUsers.filter((user) => {
+                if (user.id === blockedUser.id) {
+                  console.log("blocked user detected", blockedUser);
+                } else {
+                  return user;
+                }
+              });
+            });
+
+            //two user groups lets you 'reset' your filters
+            this.rawUsers = this.originalUsers;
+
+            // calculates all the distances
+            this.rawUsers.forEach((user) => {
+              user.distance = this.findDistance(user);
+            });
           });
         });
         // sorts by distance
