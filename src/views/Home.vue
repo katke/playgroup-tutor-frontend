@@ -31,7 +31,7 @@
                       id="PasswordForm"
                       v-model="inputParams.password"
                     />
-                    <div class="invalid-feedback">!!</div>
+                    <div class="invalid-feedback"></div>
                     <div class="valid-feedback"></div>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export default {
           let form = document.getElementById(`EmailForm`);
           form.classList.add("is-invalid");
           form.classList.remove("is-valid");
-          let form2 = document.getElementById(`Password`);
+          let form2 = document.getElementById(`PasswordForm`);
           form2.classList.add("is-invalid");
           form2.classList.remove("is-valid");
         });
