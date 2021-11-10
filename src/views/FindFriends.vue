@@ -260,7 +260,7 @@ export default {
         Legacy: false,
         Vintage: false,
       },
-      user: {},
+      currentUser: {},
       distance: 15,
     };
   },
@@ -369,16 +369,35 @@ export default {
           axios.spread((friends, user, users, blocked) => {
             console.log(friends.data, user.data, users.data, blocked.data);
             this.friends = friends.data;
-            this.user = user.data;
+            this.currentUser = user.data;
             this.originalUsers = users.data;
             this.blocked = blocked.data;
             //
+
+            console.log("my formats", this.currentUser.favoriteformats);
+            var weightedFormats = [];
+
+            this.currentUser.favoriteformats.forEach((format) => {
+              weightedFormats.push(format.format);
+            });
+            console.log("list of strings formats", weightedFormats);
+
             // loop through your friends, and then filter them out from the total userbase
             this.friends.forEach((friend) => {
               this.originalUsers = this.originalUsers.filter((user) => {
-                if (user.id === friend.id || user.id === this.user.id) {
+                user.weight = 0;
+                if (user.id === friend.id || user.id === this.currentUser.id) {
                   // console.log("friend detected", friend);
                 } else {
+                  // console.log("test", user.favoriteformats);
+                  user.favoriteformats.forEach((format) => {
+                    // console.log(format);
+                    if (weightedFormats.includes(format.format)) {
+                      user.weight += 10;
+                    } else {
+                      user.weight -= 1;
+                    }
+                  });
                   return user;
                 }
               });
@@ -400,16 +419,14 @@ export default {
               user.distance = this.findDistance(user);
             });
 
+            // weighs the results
+            this.originalUsers.sort((a, b) => (a.weight < b.weight ? 1 : b.weight < a.weight ? -1 : 0));
+
             //two user groups lets you 'reset' your filters
             this.rawUsers = this.originalUsers;
           })
         )
         .catch((error) => console.log(error));
-    },
-    importUser: function () {
-      axios.get(`/users/${localStorage.user_id}`).then((response) => {
-        this.user = response.data;
-      });
     },
     addFriend: function (requested_user) {
       var responder = {};
