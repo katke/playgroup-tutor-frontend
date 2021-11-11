@@ -65,6 +65,9 @@
             <br />
             <h2>User Heatmap</h2>
           </div>
+          <img v-if="loading" src="/assets/img/loading.gif" alt="" />
+
+          <img v-if="failedToLoad" src="/assets/img/table-flip.gif" alt="" />
           <div id="map"></div>
           <div class="row">
             <div class="container d-flex flex-column align-items-center" data-aos="fade-up">
@@ -91,6 +94,8 @@ export default {
   data: function () {
     return {
       users: [],
+      loading: true,
+      failedToLoad: false,
       position: [-12.554729, -55.70651],
       places: [
         { address: "merchandise mart", description: "A place in Australia" },
@@ -135,6 +140,7 @@ export default {
       });
 
       map.on("load", () => {
+        this.loading = false;
         // Add a geojson point source.
         // Heatmap layers also work with a vector tile source.
         map.addSource("earthquakes", {
@@ -254,13 +260,6 @@ export default {
             // console.log(map);
           });
       });
-
-      // map.addControl(
-      //   ne({
-      //     accessToken: mapboxgl.accessToken,
-      //   }),
-      //   "top-left"
-      // );
     },
   },
 };

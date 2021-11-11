@@ -246,7 +246,7 @@
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="cardListLabel">Which card did you mean?</h5>
+            <h5 class="modal-title" id="cardListLabel" v-if="!error">Which card did you mean?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="height: 60vh">
@@ -309,41 +309,31 @@
                         id="picture-preview"
                         class="centered-element"
                       />
-                      <!-- <img
-                        v-if="card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris.art_crop"
-                        :src="card.card_faces[0].image_uris.art_crop"
+                      <img
+                        v-if="
+                          card.card_faces &&
+                          card.card_faces.length > 0 &&
+                          card.card_faces[0] &&
+                          card.card_faces[0]['image_uris']
+                        "
+                        :src="card.card_faces[0]['image_uris']['art_crop']"
                         alt=""
                         id="picture-preview"
                         class="centered-element"
-                      /> -->
-                      <div style="font-style: italic" class="float-end">Artist: {{ card.artist }}</div>
+                      />
+                      <div style="font-style: italic" class="float-end" v-if="card.lang">Artist: {{ card.artist }}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer" v-if="!error">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button
-              v-if="!showSaveButton"
-              class="btn btn-primary"
-              @click="
-                scryfallFormatSearch(selectedCard.name);
-                cards = [];
-              "
-            >
+            <button v-if="!showSaveButton" class="btn btn-primary" @click="scryfallFormatSearch(selectedCard.name)">
               Next! Choose which printing...
             </button>
-            <button
-              v-if="showSaveButton"
-              class="btn btn-primary"
-              @click="
-                pictureEdit();
-                cards = [];
-              "
-              data-bs-dismiss="modal"
-            >
+            <button v-if="showSaveButton" class="btn btn-primary" @click="pictureEdit()" data-bs-dismiss="modal">
               Save it!
             </button>
           </div>
@@ -375,6 +365,7 @@ export default {
       selectedCard: {},
       showSaveButton: false,
       scryfallNameField: "",
+      error: false,
       cardInfo: {},
       editing: {
         about_me: false,
@@ -384,9 +375,9 @@ export default {
         zipcode: false,
       },
       favorite_formats: [
-        { id: 1, name: "Commander (EDH)", checked: false, user_id: localStorage.user_id },
+        { id: 1, name: "Commander / EDH", checked: false, user_id: localStorage.user_id },
         { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
-        { id: 3, name: "Draft / Cube", checked: false, user_id: localStorage.user_id },
+        { id: 3, name: "Cube / Draft", checked: false, user_id: localStorage.user_id },
         { id: 4, name: "Modern", checked: false, user_id: localStorage.user_id },
         { id: 5, name: "Pauper", checked: false, user_id: localStorage.user_id },
         { id: 6, name: "Pioneer", checked: false, user_id: localStorage.user_id },
@@ -468,6 +459,7 @@ export default {
         });
     },
     scryfallSearch: function (cardName) {
+      this.error = false;
       this.showSaveButton = false;
 
       // reset all selected items
@@ -475,54 +467,86 @@ export default {
       actives.forEach((element) => {
         element.classList.remove("active");
       });
-      actives.forEach((element) => {
-        element.classList.remove("active");
-      });
-      // just doing it twice works.. not sure why but I'll leave it for now
-      //
+
+      // selects the loading image
+      this.cards = [{ id: 1, name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } }];
+      setTimeout(() => {
+        let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+        let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+        firstCard.classList.add("active");
+        firstPicture.classList.add("show");
+        firstPicture.classList.add("active");
+      }, 50);
 
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
-          // console.log("raw data", data);
-          this.cards = data.data;
-          this.selectedCard = this.cards[0];
-          // console.log("cards list", this.cards);
-          setTimeout(() => {
-            let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
-            firstCard.classList.add("active");
-            let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
-            firstPicture.classList.add("show");
-            firstPicture.classList.add("active");
-          }, 30);
+          if (data.object === "list") {
+            console.log("data", data);
+
+            // reset all selected items
+            let actives = document.getElementsByClassName("active");
+            actives.forEach((element) => {
+              element.classList.remove("active");
+            });
+            this.cards = data.data;
+            this.selectedCard = this.cards[0];
+
+            setTimeout(() => {
+              let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
+              let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+              firstCard.classList.add("active");
+              firstPicture.classList.add("show");
+              firstPicture.classList.add("active");
+            }, 50);
+          } else {
+            this.cards = [{ id: 1, name: data.details, image_uris: { art_crop: "/assets/img/table-flip.gif" } }];
+            this.error = true;
+          }
         });
     },
     scryfallFormatSearch: function (cardName) {
       this.showSaveButton = true;
-      let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
-      firstCard.classList.remove("active");
-      let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
-      firstPicture.classList.remove("show");
-      firstPicture.classList.remove("active");
+
+      // reset all selected items
+      let actives = document.getElementsByClassName("active");
+      actives.forEach((element) => {
+        element.classList.remove("active");
+      });
+
+      // selects the loading image
+      this.cards = [
+        { id: 1, name: "Loading...", set_name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } },
+      ];
+
+      setTimeout(() => {
+        let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+        firstCard.classList.add("active");
+        let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+        firstPicture.classList.add("show");
+        firstPicture.classList.add("active");
+      }, 60);
+
       fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`)
         .then((response) => response.json())
         .then((data) => {
           let formatsearch = data.prints_search_uri;
-          fetch(formatsearch)
-            .then((response) => response.json())
-            .then((data) => {
-              this.cards = data.data;
-              this.selectedCard = this.cards[0];
+          setTimeout(() => {
+            fetch(formatsearch)
+              .then((response) => response.json())
+              .then((data) => {
+                this.cards = data.data;
+                this.selectedCard = this.cards[0];
 
-              setTimeout(() => {
-                let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
-                firstCard.classList.add("active");
-                let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
-                firstPicture.classList.add("show");
-                firstPicture.classList.add("active");
-              }, 30);
-              // console.log("formats", data);
-            });
+                setTimeout(() => {
+                  let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+                  firstCard.classList.add("active");
+                  let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+                  firstPicture.classList.add("show");
+                  firstPicture.classList.add("active");
+                }, 60);
+              });
+          }, 60);
         });
     },
     randomScryfall: function () {
