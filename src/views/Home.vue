@@ -5,9 +5,10 @@
       <div class="container">
         <div class="row">
           <div class="d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-            <h1 class="d-flex align-items-center" id="splash-text">Welcome to Playgroup Tutor!</h1>
-            <h2 style="font-size: 30px">Find nearby Magic: the Gathering players</h2>
-            <h2 style="font-size: 30px">Form new playgroups</h2>
+            <h1 class="d-flex align-items-center" style="font-size: 65px" id="splash-text">Playgroup Tutor</h1>
+            <br />
+            <h2 style="font-size: 28px">Find nearby Magic: the Gathering players</h2>
+            <h2 style="font-size: 28px">Form new playgroups</h2>
             <br />
             <form v-on:submit.prevent="signIn()">
               <div class="blurry_box">

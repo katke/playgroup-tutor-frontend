@@ -3,17 +3,16 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top" v-if="isLoggedIn">
       <div class="container-fluid d-flex justify-content-between align-items-center">
-        <h1 class="logo me-auto me-lg-0"><a href="#">Playgroup Tutor</a></h1>
+        <h1 class="logo me-auto me-lg-0" @click="scrollToTop()">Playgroup Tutor</h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
           <!-- ======= Desktop Navbar ======= -->
           <ul>
-            <li><a href="/find-friends">Find Friends</a></li>
-            <li><a href="/test-chat"></a></li>
+            <li><router-link to="/find-friends">Find Friends</router-link></li>
             <li>
-              <a href="/friend-requests">
+              <router-link to="/friend-requests">
                 Friends &amp; Requests&nbsp;
                 <span id="friend-requests" style="color: red">({{ friendRequests }})</span>
-              </a>
+              </router-link>
             </li>
           </ul>
           <!-- End Desktop Navbar -->
@@ -23,13 +22,14 @@
               <i class="bi bi-list mobile-nav-toggle" data-bs-toggle="dropdown" id="mobileDropdown"></i>
 
               <ul class="dropdown" aria-labelledby="mobileDropdown">
-                <li class=""><a href="/find-friends" class="dropdown-item">Find Friends</a></li>
-                <li><a href="/advanced-chat" class="dropdown-item">Chat</a></li>
+                <li class="">
+                  <router-link to="/find-friends" class="dropdown-item">Find Friends</router-link>
+                </li>
                 <li>
-                  <a href="/friend-requests" class="dropdown-item">
-                    Friend Requests&nbsp;
+                  <router-link to="/friend-requests" class="dropdown-item">
+                    Friends &amp; Requests&nbsp;
                     <span id="friend-requests" style="color: red">({{ friendRequests }})</span>
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -49,7 +49,7 @@
               {{ loginStatus }}
             </button>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="loginDropdown">
-              <li><a class="dropdown-item active" href="/me">View / Edit my Profile</a></li>
+              <li><router-link class="dropdown-item active" to="/me">View / Edit my Profile</router-link></li>
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" @click="logOut()">Log out</a></li>
             </ul>
@@ -131,7 +131,7 @@
               <a
                 href="/learn-magic"
                 alt=""
-                class="btn btn-outline-secondary btn-sm"
+                class="btn btn-outline-secondary btn-sm float-start"
                 style="max-width: 175px"
                 v-if="notLearnPage"
               >
@@ -140,14 +140,20 @@
             </div>
             <div class="col-6">
               Created by
-              <strong>David Ryan</strong>
+              <strong>
+                <a href="https://dave-a-ryan.github.io/" target="_blank" alt="" style="color: black">David Ryan</a>
+              </strong>
               2021
               <div>
-                <a href="/about" alt="" class="btn btn-outline-secondary btn-sm" v-if="notAboutPage">about</a>
+                <router-link to="/about" alt="" class="btn btn-outline-secondary btn-sm" v-if="notAboutPage">
+                  About
+                </router-link>
               </div>
             </div>
             <div class="col-3">
-              <a href="/" alt="" class="btn btn-outline-primary btn-sm float-end" v-if="onlyAboutOrLearn">Back Home</a>
+              <router-link to="/" alt="" class="btn btn-outline-primary btn-sm float-end" v-if="onlyAboutOrLearn">
+                Back Home
+              </router-link>
             </div>
           </div>
         </div>

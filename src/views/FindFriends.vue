@@ -3,7 +3,7 @@
     <section id="find-friends" class="find-friends">
       <div class="container">
         <div class="row">
-          <div class="section-title">
+          <div class="section-title" data-aos="fade-up">
             <h2>Search your library for a planeswalker...</h2>
 
             <transition
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="50">
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
           <!-- left column -->
           <div class="col-2" id="col-left">
             <h2>Filters</h2>
