@@ -55,6 +55,8 @@
           <h3>How do you play Magic?</h3>
           <div class="row">
             <div class="col-lg-7">
+              <h3>Tutorial</h3>
+
               <iframe
                 width="560"
                 height="315"
@@ -83,96 +85,76 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="https://magic.wizards.com/en/content/commander-format" target="_blank" alt="">
-                          Commander / EDH
-                        </a>
-                      </strong>
+                      <a href="https://magic.wizards.com/en/content/commander-format" target="_blank" alt="">
+                        Commander / EDH
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a
-                          href="https://magic.wizards.com/en/content/standard-formats-magic-gathering"
-                          target="_blank"
-                          alt=""
-                        >
-                          Standard
-                        </a>
-                      </strong>
+                      <a
+                        href="https://magic.wizards.com/en/content/standard-formats-magic-gathering"
+                        target="_blank"
+                        alt=""
+                      >
+                        Standard
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a
-                          href="http://magic.wizards.com/en/game-info/gameplay/formats/booster-draft"
-                          target="_blank"
-                          alt=""
-                        >
-                          Cube / Draft
-                        </a>
-                      </strong>
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/booster-draft"
+                        target="_blank"
+                        alt=""
+                      >
+                        Cube / Draft
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="https://magic.wizards.com/en/game-info/gameplay/formats/modern" target="_blank" alt="">
-                          Modern
-                        </a>
-                      </strong>
+                      <a href="https://magic.wizards.com/en/game-info/gameplay/formats/modern" target="_blank" alt="">
+                        Modern
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="http://magic.wizards.com/en/game-info/gameplay/formats/legacy" target="_blank" alt="">
-                          Legacy
-                        </a>
-                      </strong>
+                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/legacy" target="_blank" alt="">
+                        Legacy
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pauper" target="_blank" alt="">
-                          Pauper
-                        </a>
-                      </strong>
+                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pauper" target="_blank" alt="">
+                        Pauper
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pioneer" target="_blank" alt="">
-                          Pioneer
-                        </a>
-                      </strong>
+                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pioneer" target="_blank" alt="">
+                        Pioneer
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="http://magic.wizards.com/en/game-info/gameplay/formats/brawl" target="_blank" alt="">
-                          Brawl
-                        </a>
-                      </strong>
+                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/brawl" target="_blank" alt="">
+                        Brawl
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="" target="_blank" alt="https://www.magic.gg/news/what-is-the-historic-format">
-                          Historic
-                        </a>
-                      </strong>
+                      <a href="" target="_blank" alt="https://www.magic.gg/news/what-is-the-historic-format">
+                        Historic
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                     <li>
-                      <i class="bi bi-rounded-right"></i>
-                      <strong>
-                        <a href="http://magic.wizards.com/en/game-info/gameplay/formats/vintage" target="_blank" alt="">
-                          Vintage
-                        </a>
-                      </strong>
+                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/vintage" target="_blank" alt="">
+                        Vintage
+                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>

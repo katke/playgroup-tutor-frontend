@@ -143,7 +143,7 @@
               <strong>David Ryan</strong>
               2021
               <div>
-                <a href="/about" alt="" class="btn btn-secondary btn-sm" v-if="notAboutPage">about</a>
+                <a href="/about" alt="" class="btn btn-outline-secondary btn-sm" v-if="notAboutPage">about</a>
               </div>
             </div>
             <div class="col-3"></div>

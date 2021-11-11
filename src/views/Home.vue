@@ -3,9 +3,9 @@
     <!-- ======= Hero Section ======= -->
     <section id="hero">
       <div class="container">
-        <div class="row d-flex align-items-center">
+        <div class="row">
           <div class="d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-            <h1 id="splash-text">Welcome to Playgroup Tutor!</h1>
+            <h1 class="d-flex align-items-center" id="splash-text">Welcome to Playgroup Tutor!</h1>
             <h2 style="font-size: 30px">Find nearby Magic: the Gathering players</h2>
             <h2 style="font-size: 30px">Form new playgroups</h2>
             <br />
@@ -65,7 +65,7 @@ export default {
   created: function () {},
   methods: {
     showCreateAccount: function () {
-      this.$router.push("/create-account#");
+      this.$router.push("/create-account");
     },
     signIn: function () {
       // console.log(this.inputParams);

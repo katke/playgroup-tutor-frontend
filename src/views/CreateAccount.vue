@@ -3,7 +3,7 @@
     <main id="main">
       <div class="row">
         <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
-          <a href="/" class="btn-about">Log in</a>
+          <a href="/" class="btn btn-about">Log in</a>
         </div>
       </div>
       <section id="about" class="about" data-aos="zoom-up" data-aos-delay="100">
@@ -203,7 +203,7 @@
           <div class="row">
             <div class="col">
               <div data-aos="zoom-in" data-aos-delay="50">
-                <button @click="createAccount()" class="btn-about centered-element">Sign up</button>
+                <button @click="createAccount()" class="btn btn-about centered-element">Sign up</button>
               </div>
             </div>
           </div>
