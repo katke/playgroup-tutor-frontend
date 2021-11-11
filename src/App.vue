@@ -146,7 +146,9 @@
                 <a href="/about" alt="" class="btn btn-outline-secondary btn-sm" v-if="notAboutPage">about</a>
               </div>
             </div>
-            <div class="col-3"></div>
+            <div class="col-3">
+              <a href="/" alt="" class="btn btn-outline-primary btn-sm float-end" v-if="onlyAboutOrLearn">Back Home</a>
+            </div>
           </div>
         </div>
       </div>
@@ -506,6 +508,9 @@ export default {
     },
     notAboutPage() {
       return this.$route.name !== "About" ? true : false;
+    },
+    onlyAboutOrLearn() {
+      return this.$route.name === "About" || this.$route.name === "LearnMagic" ? true : false;
     },
   },
 };
