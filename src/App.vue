@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- hello from windows! -->
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top" v-if="isLoggedIn">
       <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -74,7 +75,7 @@
           data-bs-auto-close="false"
           aria-expanded="false"
         >
-          Chat with Friends
+          Chat with your Friends
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickable">
           <li class="dropdown-item" v-for="friend in friends" :key="`chat-${friend.id}`" @click="loadChatRoom(friend)">
