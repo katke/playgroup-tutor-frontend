@@ -509,7 +509,7 @@ export default {
     },
     createAccount: function () {
       axios
-        .post("/users", this.inputParams)
+        .post("playgroup-tutor-api.herokuapp.com/users", this.inputParams)
         .then((response) => {
           this.favorite_formats.forEach((format) => {
             if (format.checked === true) {
