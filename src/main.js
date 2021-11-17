@@ -6,8 +6,7 @@ import { CoolSelectPlugin } from "vue-cool-select";
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://playgroup-tutor-api.herokuapp.com/"
+    ? "https://playgroup-tutor-api.herokuapp.com/"
     : "/";
 var jwt = localStorage.getItem("jwt");
 if (jwt) {
