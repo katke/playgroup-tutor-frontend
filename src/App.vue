@@ -1,10 +1,20 @@
 <template>
   <div id="app">
     <!-- hello from windows! -->
+
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top" v-if="isLoggedIn">
-      <div class="container-fluid d-flex justify-content-between align-items-center">
-        <h1 class="logo me-auto me-lg-0" @click="scrollToTop()">Playgroup Tutor</h1>
+      <div
+        class="
+          container-fluid
+          d-flex
+          justify-content-between
+          align-items-center
+        "
+      >
+        <h1 class="logo me-auto me-lg-0" @click="scrollToTop()">
+          Playgroup Tutor
+        </h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
           <!-- ======= Desktop Navbar ======= -->
           <ul>
@@ -12,7 +22,9 @@
             <li>
               <router-link to="/friend-requests">
                 Friends &amp; Requests&nbsp;
-                <span id="friend-requests" style="color: red">({{ friendRequests }})</span>
+                <span id="friend-requests" style="color: red"
+                  >({{ friendRequests }})</span
+                >
               </router-link>
             </li>
           </ul>
@@ -20,16 +32,24 @@
           <!-- ======= Mobile Dropdown -->
           <div class="navbar order-last order-lg-0" id="mobile-dropdown">
             <div class="dropdown">
-              <i class="bi bi-list mobile-nav-toggle" data-bs-toggle="dropdown" id="mobileDropdown"></i>
+              <i
+                class="bi bi-list mobile-nav-toggle"
+                data-bs-toggle="dropdown"
+                id="mobileDropdown"
+              ></i>
 
               <ul class="dropdown" aria-labelledby="mobileDropdown">
                 <li class="">
-                  <router-link to="/find-friends" class="dropdown-item">Find Friends</router-link>
+                  <router-link to="/find-friends" class="dropdown-item"
+                    >Find Friends</router-link
+                  >
                 </li>
                 <li>
                   <router-link to="/friend-requests" class="dropdown-item">
                     Friends &amp; Requests&nbsp;
-                    <span id="friend-requests" style="color: red">({{ friendRequests }})</span>
+                    <span id="friend-requests" style="color: red"
+                      >({{ friendRequests }})</span
+                    >
                   </router-link>
                 </li>
               </ul>
@@ -49,8 +69,15 @@
             >
               {{ loginStatus }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="loginDropdown">
-              <li><router-link class="dropdown-item active" to="/me">View / Edit my Profile</router-link></li>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="loginDropdown"
+            >
+              <li>
+                <router-link class="dropdown-item active" to="/me"
+                  >View / Edit my Profile</router-link
+                >
+              </li>
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" @click="logOut()">Log out</a></li>
             </ul>
@@ -78,7 +105,12 @@
           Chat with your Friends
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickable">
-          <li class="dropdown-item" v-for="friend in friends" :key="`chat-${friend.id}`" @click="loadChatRoom(friend)">
+          <li
+            class="dropdown-item"
+            v-for="friend in friends"
+            :key="`chat-${friend.id}`"
+            @click="loadChatRoom(friend)"
+          >
             {{ friend.first_name }}
           </li>
         </ul>
@@ -142,17 +174,33 @@
             <div class="col-6">
               Created by
               <strong>
-                <a href="https://dave-a-ryan.github.io/" target="_blank" alt="" style="color: black">David Ryan</a>
+                <a
+                  href="https://dave-a-ryan.github.io/"
+                  target="_blank"
+                  alt=""
+                  style="color: black"
+                  >David Ryan</a
+                >
               </strong>
               2021
               <div>
-                <router-link to="/about" alt="" class="btn btn-outline-secondary btn-sm" v-if="notAboutPage">
+                <router-link
+                  to="/about"
+                  alt=""
+                  class="btn btn-outline-secondary btn-sm"
+                  v-if="notAboutPage"
+                >
                   About
                 </router-link>
               </div>
             </div>
             <div class="col-3">
-              <router-link to="/" alt="" class="btn btn-outline-primary btn-sm float-end" v-if="onlyAboutOrLearn">
+              <router-link
+                to="/"
+                alt=""
+                class="btn btn-outline-primary btn-sm float-end"
+                v-if="onlyAboutOrLearn"
+              >
                 Back Home
               </router-link>
             </div>
@@ -162,7 +210,10 @@
     </footer>
     <!-- End  Footer -->
 
-    <a @click="scrollToTop()" class="back-to-top d-flex align-items-center justify-content-center">
+    <a
+      @click="scrollToTop()"
+      class="back-to-top d-flex align-items-center justify-content-center"
+    >
       <i class="bi bi-arrow-up-short"></i>
     </a>
   </div>
@@ -386,7 +437,10 @@ export default {
 
         axios.get("/my-messages").then((response) => {
           let bulkMessages = response.data.filter((message) => {
-            return message.sender_id === friend.id || message.receiver_id === friend.id;
+            return (
+              message.sender_id === friend.id ||
+              message.receiver_id === friend.id
+            );
           });
           bulkMessages.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
 
@@ -475,7 +529,8 @@ export default {
       this.visible = false;
     },
     onImageSelected(files, message) {
-      let src = "https://149364066.v2.pressablecdn.com/wp-content/uploads/2017/03/vue.jpg";
+      let src =
+        "https://149364066.v2.pressablecdn.com/wp-content/uploads/2017/03/vue.jpg";
       this.messages.push(message);
       /**
        * This timeout simulates a requisition that uploads the image file to the server.
@@ -517,7 +572,9 @@ export default {
       return this.$route.name !== "About" ? true : false;
     },
     onlyAboutOrLearn() {
-      return this.$route.name === "About" || this.$route.name === "LearnMagic" ? true : false;
+      return this.$route.name === "About" || this.$route.name === "LearnMagic"
+        ? true
+        : false;
     },
   },
 };
