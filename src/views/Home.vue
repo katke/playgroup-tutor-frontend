@@ -71,7 +71,7 @@ export default {
     signIn: function () {
       // console.log(this.inputParams);
       axios
-        .post("playgroup-tutor-api.herokuapp.com/sessions", this.inputParams)
+        .post("/sessions", this.inputParams)
         .then((response) => {
           axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
