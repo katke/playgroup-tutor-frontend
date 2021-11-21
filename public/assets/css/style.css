@@ -505,7 +505,8 @@ section {
 # Cta
 --------------------------------------------------------------*/
 .cta {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../img/bg-1.jpg") fixed center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../img/bg-1.jpg") fixed center center;
   background-size: cover;
   padding: 80px 0;
 }
@@ -966,14 +967,20 @@ section {
   margin-top: 20px;
   position: relative;
 }
-.find-friends-details .find-friends-details-slider .swiper-pagination .swiper-pagination-bullet {
+.find-friends-details
+  .find-friends-details-slider
+  .swiper-pagination
+  .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
   background-color: #fff;
   opacity: 1;
   border: 1px solid #34b7a7;
 }
-.find-friends-details .find-friends-details-slider .swiper-pagination .swiper-pagination-bullet-active {
+.find-friends-details
+  .find-friends-details-slider
+  .swiper-pagination
+  .swiper-pagination-bullet-active {
   background-color: #34b7a7;
 }
 .find-friends-details .find-friends-info {
@@ -1161,8 +1168,16 @@ section {
   font-family: Helvetica, sans-serif;
 }
 
+.profile-pic {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.profile-pic:hover {
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
+}
+
 .find-friend.profile-pic {
   max-width: 100%;
+  max-height: 150px;
   transition: all ease-in-out 0.3s;
 }
 
@@ -1264,14 +1279,14 @@ section {
 
 .friends-floaty {
   position: fixed;
-  right: 10px;
-  bottom: 10px;
+  right: 1%;
+  bottom: 1%;
 }
 
 .chat-floaty {
   position: fixed;
-  right: 180px;
-  bottom: 10px;
+  right: 220px;
+  bottom: 1%;
   width: 375px;
   height: 400px;
   max-height: 100%;

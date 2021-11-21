@@ -84,10 +84,10 @@
             <br />
             <h2>User Heatmap</h2>
           </div>
-          <img v-if="loading" src="/assets/img/loading.gif" alt="" />
+          <!-- <img v-if="loading" src="/assets/img/loading.gif" alt="" /> -->
 
           <img v-if="failedToLoad" src="/assets/img/table-flip.gif" alt="" />
-          <div id="map" class="d-none"></div>
+          <div id="map"></div>
           <div class="row">
             <div
               class="container d-flex flex-column align-items-center"
@@ -176,8 +176,6 @@ export default {
 
       map.on("load", () => {
         this.loading = false;
-        let mapbox = document.getElementById("map");
-        mapbox.classList.remove("d-none");
         // Add a geojson point source.
         // Heatmap layers also work with a vector tile source.
         map.addSource("earthquakes", {

@@ -10,26 +10,31 @@
 
           <div class="row g-3">
             <!-- profile picture section -->
-            <div class="col-lg-4">
-              <div class="row">
+            <div class="col-lg-4" style="text-align: center">
+              <div class="row mb-3">
                 <div class="col-12">
-                  <h3><strong>Profile Picture:</strong></h3>
-                  <img
-                    v-bind:src="user.profile_picture"
-                    alt=""
-                    id="profile-pic"
-                    class="img-fluid centered-element"
-                  />
-                  <div v-if="cardInfo.name">
+                  <div class="content">
+                    <h3>Profile Picture</h3>
+                  </div>
+                  <div>
                     <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
                       {{ cardInfo.name }}
                     </a>
-                    <span style="font-style: italic" class="float-end"
-                      >Artist: {{ cardInfo.artist }}</span
-                    >
+                    <img
+                      v-bind:src="user.profile_picture"
+                      alt=""
+                      id="profile-pic"
+                      class="img-fluid centered-element rounded"
+                    />
+                    <div v-if="cardInfo.name">
+                      <span style="font-style: italic"
+                        >Artist: {{ cardInfo.artist }}</span
+                      >
+                    </div>
                   </div>
+
                   <div>
-                    <hr />
+                    <br />
                     <form
                       v-on:submit.prevent="scryfallSearch(scryfallNameField)"
                     >
@@ -54,60 +59,59 @@
                   </div>
                 </div>
               </div>
-
-              <div class="row">
+              <div class="row mb-3">
                 <strong>Or choose your...</strong>
 
                 <!-- Color Choosing Dropdown  -->
                 <div class="col-6">
-                  <div class="input-group mb-3">
-                    <button
-                      class="btn btn-outline-secondary dropdown-toggle"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Favorite Color
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <span
-                          class="dropdown-item"
-                          @click="iconEdit(color.img)"
-                          v-for="color in colors"
-                          :key="`color-id-${color.id}`"
-                        >
-                          {{ color.name }}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+                  <button
+                    class="btn btn-outline-secondary dropdown-toggle float-end"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Favorite Color
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <span
+                        class="dropdown-item"
+                        @click="iconEdit(color.img)"
+                        v-for="color in colors"
+                        :key="`color-id-${color.id}`"
+                      >
+                        {{ color.name }}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
                 <!-- End Color  -->
                 <!-- Guild Choosing Dropdown  -->
                 <div class="col-6">
-                  <div class="input-group mb-3 col-6">
-                    <button
-                      class="btn btn-outline-secondary dropdown-toggle"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Ravnica Guild
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          @click="iconEdit(guild.img)"
-                          v-for="guild in guilds"
-                          :key="`guild-id-${guild.id}`"
-                        >
-                          {{ guild.name }}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                  <button
+                    class="
+                      btn btn-outline-secondary
+                      dropdown-toggle
+                      float-start
+                    "
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Ravnica Guild
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        @click="iconEdit(guild.img)"
+                        v-for="guild in guilds"
+                        :key="`guild-id-${guild.id}`"
+                      >
+                        {{ guild.name }}
+                      </a>
+                    </li>
+                  </ul>
                 </div>
                 <!-- End Guild  -->
               </div>
@@ -241,7 +245,37 @@
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                     </li>
-
+                    <li>
+                      <span v-if="!editing.age" @click="showUpdate(`age`)">
+                        <strong>Age:</strong>
+                        {{ user.age }}
+                      </span>
+                      <div v-if="editing.age" class="input-group">
+                        <strong>Age:</strong>
+                        <input
+                          v-model="user.age"
+                          type="number"
+                          class="form-control"
+                          id="ageForm"
+                        />
+                        <div class="input-group-prepend">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="saveEdit(`age`)"
+                          >
+                            <i class="bi bi-check" style="color: white"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="disableEditing(`age`)"
+                          >
+                            <i class="bi bi-x" style="color: white"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
                     <li>
                       <span
                         v-if="!editing.about_me"
@@ -284,37 +318,6 @@
                 </div>
                 <div class="col-lg-6">
                   <ul>
-                    <li>
-                      <span v-if="!editing.age" @click="showUpdate(`age`)">
-                        <strong>Age:</strong>
-                        {{ user.age }}
-                      </span>
-                      <div v-if="editing.age" class="input-group">
-                        <strong>Age:</strong>
-                        <input
-                          v-model="user.age"
-                          type="number"
-                          class="form-control"
-                          id="ageForm"
-                        />
-                        <div class="input-group-prepend">
-                          <button
-                            type="button"
-                            class="btn btn-success"
-                            @click="saveEdit(`age`)"
-                          >
-                            <i class="bi bi-check" style="color: white"></i>
-                          </button>
-                          <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="disableEditing(`age`)"
-                          >
-                            <i class="bi bi-x" style="color: white"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
                     <li>
                       <div>
                         <strong>Favorite Formats:</strong>
@@ -436,7 +439,7 @@
                         :src="card.image_uris.art_crop"
                         alt=""
                         id="picture-preview"
-                        class="centered-element"
+                        class="centered-element rounded"
                       />
                       <img
                         v-if="
@@ -448,7 +451,7 @@
                         :src="card.card_faces[0]['image_uris']['art_crop']"
                         alt=""
                         id="picture-preview"
-                        class="centered-element"
+                        class="centered-element rounded"
                       />
                       <div
                         style="font-style: italic"
@@ -791,6 +794,7 @@ export default {
     },
     iconEdit: function (imageString) {
       this.user.profile_picture = imageString;
+      this.cardInfo = {};
       axios.patch(`/users/${localStorage.user_id}`, this.user);
     },
     pictureEdit: function () {

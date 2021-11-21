@@ -76,8 +76,8 @@ export default {
   data: function () {
     return {
       inputParams: {
-        email: "",
-        password: "",
+        email: "dave@demo.com",
+        password: "password",
       },
     };
   },

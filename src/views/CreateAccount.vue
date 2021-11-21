@@ -16,117 +16,116 @@
           </div>
           <div class="row g-3">
             <!-- profile picture section -->
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="text-align: center">
               <div class="row">
                 <div class="col-12 mb-3">
                   <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
                     <div class="section-title">
                       <h3><strong>Profile Picture</strong></h3>
                     </div>
-                    <div class="preview-box">
+                    <div>
+                      <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
+                        {{ cardInfo.name }}
+                      </a>
                       <img
                         :src="inputParams.profile_picture"
-                        class="img-fluid centered-element"
+                        class="img-fluid centered-element rounded"
                         alt=""
                         id="profile-pic"
                       />
                       <div v-if="cardInfo.name">
-                        <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
-                          {{ cardInfo.name }}
-                        </a>
-                        <span style="font-style: italic" class="float-end"
+                        <span style="font-style: italic"
                           >Artist: {{ cardInfo.artist }}</span
                         >
                       </div>
                     </div>
-                    <hr />
-                    <strong>Search for your favorite card...</strong>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        v-model="scryfallNameField"
-                        class="form-control"
-                      />
-                      <div class="input-group-append">
-                        <button
-                          class="btn btn-outline-secondary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#cardList"
-                        >
-                          Search
-                        </button>
+                    <br />
+                    <div>
+                      <strong>Search for your favorite card...</strong>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          v-model="scryfallNameField"
+                          class="form-control"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-outline-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#cardList"
+                          >
+                            Search
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </form>
                 </div>
               </div>
-              <div class="row">
+              <div class="row mb-3">
                 <strong>Or choose your...</strong>
                 <!-- Color choosing dropdown  -->
-                <div class="col-6 mb-3">
-                  <div class="input-group">
-                    <button
-                      class="
-                        btn btn-outline-secondary
-                        centered-element
-                        dropdown-toggle
-                      "
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Favorite Color
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <span
-                          class="dropdown-item"
-                          @click="selectIcon(color)"
-                          v-for="color in colors"
-                          :key="`color-id-${color.id}`"
-                        >
-                          {{ color.name }}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="col-6">
+                  <button
+                    class="
+                      btn btn-outline-secondary
+                      centered-element
+                      dropdown-toggle
+                      float-end
+                    "
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Favorite Color
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <span
+                        class="dropdown-item"
+                        @click="selectIcon(color)"
+                        v-for="color in colors"
+                        :key="`color-id-${color.id}`"
+                      >
+                        {{ color.name }}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
 
                 <!-- end Color choosing dropdown  -->
                 <!-- guild choosing dropdown  -->
-                <div class="col-6 mb-3">
-                  <div class="input-group">
-                    <button
-                      class="
-                        btn btn-outline-secondary
-                        centered-element
-                        dropdown-toggle
-                      "
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Ravnica Guild
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          @click="selectIcon(guild)"
-                          v-for="guild in guilds"
-                          :key="`guild-id-${guild.id}`"
-                        >
-                          {{ guild.name }}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="col-6">
+                  <button
+                    class="
+                      btn btn-outline-secondary
+                      dropdown-toggle
+                      float-start
+                    "
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Ravnica Guild
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        @click="selectIcon(guild)"
+                        v-for="guild in guilds"
+                        :key="`guild-id-${guild.id}`"
+                      >
+                        {{ guild.name }}
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <button
-                    class="btn btn-outline-dark centered-element"
+                    class="btn btn-secondary centered-element"
                     @click="randomScryfall()"
                   >
                     Or a random card!
@@ -177,7 +176,6 @@
                 </div>
               </div>
               <br />
-              <!-- <hr /> -->
               <div class="row">
                 <div class="col-lg-6">
                   <ul>
@@ -379,7 +377,7 @@
                         :src="card.image_uris.art_crop"
                         alt=""
                         id="picture-preview"
-                        class="centered-element"
+                        class="centered-element rounded"
                       />
                       <img
                         v-if="
@@ -391,7 +389,7 @@
                         :src="card.card_faces[0]['image_uris']['art_crop']"
                         alt=""
                         id="picture-preview"
-                        class="centered-element"
+                        class="centered-element rounded"
                       />
                       <div
                         style="font-style: italic"
@@ -543,12 +541,12 @@ export default {
     setTimeout(() => {
       if (coinFlip === 0) {
         // picks a random color
-        this.inputParams.profile_picture =
-          this.colors[Math.round(Math.random() * 4)].img;
+        let randColor = Math.round(Math.random() * 4);
+        this.inputParams.profile_picture = this.colors[randColor].img;
       } else {
         // picks a random guild
-        let rand = Math.round(Math.random() * 9);
-        this.inputParams.profile_picture = this.guilds[rand].img;
+        let randGuild = Math.round(Math.random() * 9);
+        this.inputParams.profile_picture = this.guilds[randGuild].img;
       }
     }, 100);
   },

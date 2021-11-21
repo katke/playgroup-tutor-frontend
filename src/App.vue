@@ -289,8 +289,8 @@ export default {
         myself: true,
         styles: {
           width: "75px",
-          height: "75px",
-          borderRadius: "50%",
+          height: "60px",
+          // borderRadius: "50%",
         },
       },
       timestampConfig: {
