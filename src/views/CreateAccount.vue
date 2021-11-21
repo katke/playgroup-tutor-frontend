@@ -2,7 +2,10 @@
   <div id="create">
     <main id="main">
       <div class="row">
-        <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
+        <div
+          class="container d-flex flex-column align-items-center"
+          data-aos="zoom-down"
+        >
           <a href="/" class="btn btn-about">Log in</a>
         </div>
       </div>
@@ -31,15 +34,25 @@
                         <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
                           {{ cardInfo.name }}
                         </a>
-                        <span style="font-style: italic" class="float-end">Artist: {{ cardInfo.artist }}</span>
+                        <span style="font-style: italic" class="float-end"
+                          >Artist: {{ cardInfo.artist }}</span
+                        >
                       </div>
                     </div>
                     <hr />
                     <strong>Search for your favorite card...</strong>
                     <div class="input-group">
-                      <input type="text" v-model="scryfallNameField" class="form-control" />
+                      <input
+                        type="text"
+                        v-model="scryfallNameField"
+                        class="form-control"
+                      />
                       <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
+                        <button
+                          class="btn btn-outline-secondary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#cardList"
+                        >
                           Search
                         </button>
                       </div>
@@ -53,7 +66,11 @@
                 <div class="col-6 mb-3">
                   <div class="input-group">
                     <button
-                      class="btn btn-outline-secondary centered-element dropdown-toggle"
+                      class="
+                        btn btn-outline-secondary
+                        centered-element
+                        dropdown-toggle
+                      "
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -80,7 +97,11 @@
                 <div class="col-6 mb-3">
                   <div class="input-group">
                     <button
-                      class="btn btn-outline-secondary centered-element dropdown-toggle"
+                      class="
+                        btn btn-outline-secondary
+                        centered-element
+                        dropdown-toggle
+                      "
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -104,7 +125,10 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <button class="btn btn-outline-dark centered-element" @click="randomScryfall()">
+                  <button
+                    class="btn btn-outline-dark centered-element"
+                    @click="randomScryfall()"
+                  >
                     Or a random card!
                   </button>
                 </div>
@@ -115,23 +139,39 @@
             <!-- end profile picture section -->
 
             <!-- forms section -->
-            <form class="col-lg-8 pt-4 pt-lg-0 content" id="signup-form " v-on:submit.prevent="createAccount()">
+            <form
+              class="col-lg-8 pt-4 pt-lg-0 content"
+              id="signup-form "
+              v-on:submit.prevent="createAccount()"
+            >
               <div class="row">
                 <div class="col">
                   <h3>
                     <label for="EmailForm" class="form-label">Email</label>
                   </h3>
 
-                  <input type="text" class="form-control" id="EmailForm" v-model="inputParams.email" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="EmailForm"
+                    v-model="inputParams.email"
+                  />
                   <div class="invalid-feedback">{{ errors["Email"] }}.</div>
                   <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="col">
                   <h3>
-                    <label for="PasswordForm" class="form-label">Password</label>
+                    <label for="PasswordForm" class="form-label"
+                      >Password</label
+                    >
                   </h3>
 
-                  <input type="text" class="form-control" id="PasswordForm" v-model="inputParams.password" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="PasswordForm"
+                    v-model="inputParams.password"
+                  />
                   <div class="invalid-feedback">{{ errors["Password"] }}.</div>
                   <div class="valid-feedback">Looks good!</div>
                 </div>
@@ -142,14 +182,32 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <strong><label for="FirstForm" class="form-label">First Name</label></strong>
-                      <input type="text" class="form-control" id="FirstForm" v-model="inputParams.first_name" />
+                      <strong
+                        ><label for="FirstForm" class="form-label"
+                          >First Name</label
+                        ></strong
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="FirstForm"
+                        v-model="inputParams.first_name"
+                      />
                       <div class="invalid-feedback">{{ errors["First"] }}.</div>
                       <div class="valid-feedback">Looks good!</div>
                     </li>
                     <li>
-                      <strong><label for="ZIPForm" class="form-label">Zip Code</label></strong>
-                      <input type="text" class="form-control" id="ZIPForm" v-model="inputParams.zipcode" />
+                      <strong
+                        ><label for="ZIPForm" class="form-label"
+                          >Zip Code</label
+                        ></strong
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="ZIPForm"
+                        v-model="inputParams.zipcode"
+                      />
                       <div class="invalid-feedback">{{ errors["ZIP"] }}</div>
                       <div class="valid-feedback">Looks good!</div>
                     </li>
@@ -172,16 +230,31 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <strong><label for="AgeForm" class="form-label">Age</label></strong>
-                      <input type="number" class="form-control" id="AgeForm" v-model="inputParams.age" min="18" />
-                      <div class="invalid-feedback">I'm sorry, you must be over 18 to use this site.</div>
+                      <strong
+                        ><label for="AgeForm" class="form-label"
+                          >Age</label
+                        ></strong
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="AgeForm"
+                        v-model="inputParams.age"
+                        min="18"
+                      />
+                      <div class="invalid-feedback">
+                        I'm sorry, you must be over 18 to use this site.
+                      </div>
                       <div class="valid-feedback">Looks good!</div>
                     </li>
                     <li>
                       <div>
                         <strong>What are your favorite formats?</strong>
                       </div>
-                      <div v-for="format in favorite_formats" :key="format.name">
+                      <div
+                        v-for="format in favorite_formats"
+                        :key="format.name"
+                      >
                         <div class="form-check">
                           <input
                             class="form-check-input"
@@ -190,20 +263,29 @@
                             :id="format.name"
                             v-model="format.checked"
                           />
-                          <label class="form-check-label" :for="format.name">{{ format.name }}</label>
+                          <label class="form-check-label" :for="format.name">{{
+                            format.name
+                          }}</label>
                         </div>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
-              <button class="d-none">This is my hidden button to allow the 2nd form to work</button>
+              <button class="d-none">
+                This is my hidden button to allow the 2nd form to work
+              </button>
             </form>
           </div>
           <div class="row">
             <div class="col">
               <div data-aos="zoom-in" data-aos-delay="50">
-                <button @click="createAccount()" class="btn btn-about centered-element">Sign up</button>
+                <button
+                  @click="createAccount()"
+                  class="btn btn-about centered-element"
+                >
+                  Sign up
+                </button>
               </div>
             </div>
           </div>
@@ -212,15 +294,35 @@
     </main>
 
     <!-- Modal -->
-    <div class="modal fade" id="cardList" tabindex="-1" aria-labelledby="cardListLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="cardList"
+      tabindex="-1"
+      aria-labelledby="cardListLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="cardListLabel" v-if="!error">Which card did you mean?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="cardListLabel" v-if="!error">
+              Which card did you mean?
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body" style="height: 60vh">
-            <div class="container-fluid d-flex flex-column flex-grow-1 overflow-hidden">
+            <div
+              class="
+                container-fluid
+                d-flex
+                flex-column flex-grow-1
+                overflow-hidden
+              "
+            >
               <div class="row flex-grow-1 overflow-hidden" id="card-picker">
                 <div class="col-5 overflow-auto py-2">
                   <div
@@ -291,7 +393,13 @@
                         id="picture-preview"
                         class="centered-element"
                       />
-                      <div style="font-style: italic" class="float-end" v-if="card.lang">Artist: {{ card.artist }}</div>
+                      <div
+                        style="font-style: italic"
+                        class="float-end"
+                        v-if="card.lang"
+                      >
+                        Artist: {{ card.artist }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -299,11 +407,26 @@
             </div>
           </div>
           <div class="modal-footer" v-if="!error">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button v-if="!showSaveButton" class="btn btn-primary" @click="scryfallFormatSearch(selectedCard.name)">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              v-if="!showSaveButton"
+              class="btn btn-primary"
+              @click="scryfallFormatSearch(selectedCard.name)"
+            >
               Next! Choose which printing...
             </button>
-            <button v-if="showSaveButton" class="btn btn-primary" @click="saveCard()" data-bs-dismiss="modal">
+            <button
+              v-if="showSaveButton"
+              class="btn btn-primary"
+              @click="saveCard()"
+              data-bs-dismiss="modal"
+            >
               Save it!
             </button>
           </div>
@@ -337,16 +460,61 @@ export default {
         ZIP: "",
       },
       favorite_formats: [
-        { id: 1, name: "Commander / EDH", checked: false, user_id: localStorage.user_id },
-        { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
-        { id: 3, name: "Cube / Draft", checked: false, user_id: localStorage.user_id },
-        { id: 4, name: "Modern", checked: false, user_id: localStorage.user_id },
-        { id: 5, name: "Pauper", checked: false, user_id: localStorage.user_id },
-        { id: 6, name: "Pioneer", checked: false, user_id: localStorage.user_id },
+        {
+          id: 1,
+          name: "Commander / EDH",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 2,
+          name: "Standard",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 3,
+          name: "Cube / Draft",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 4,
+          name: "Modern",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 5,
+          name: "Pauper",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 6,
+          name: "Pioneer",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
         { id: 7, name: "Brawl", checked: false, user_id: localStorage.user_id },
-        { id: 8, name: "Historic", checked: false, user_id: localStorage.user_id },
-        { id: 9, name: "Legacy", checked: false, user_id: localStorage.user_id },
-        { id: 10, name: "Vintage", checked: false, user_id: localStorage.user_id },
+        {
+          id: 8,
+          name: "Historic",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 9,
+          name: "Legacy",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 10,
+          name: "Vintage",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
       ],
       colors: [
         { id: 1, name: "White", img: "assets/img/icons/W.png" },
@@ -375,7 +543,8 @@ export default {
     setTimeout(() => {
       if (coinFlip === 0) {
         // picks a random color
-        this.inputParams.profile_picture = this.colors[Math.round(Math.random() * 4)].img;
+        this.inputParams.profile_picture =
+          this.colors[Math.round(Math.random() * 4)].img;
       } else {
         // picks a random guild
         let rand = Math.round(Math.random() * 9);
@@ -399,7 +568,13 @@ export default {
       });
 
       // selects the loading image
-      this.cards = [{ id: 1, name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } }];
+      this.cards = [
+        {
+          id: 1,
+          name: "Loading...",
+          image_uris: { art_crop: "/assets/img/loading.gif" },
+        },
+      ];
       setTimeout(() => {
         let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
         let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
@@ -423,14 +598,24 @@ export default {
             this.selectedCard = this.cards[0];
 
             setTimeout(() => {
-              let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
-              let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+              let firstCard = document.getElementById(
+                `card-id-${this.cards[0].id}`
+              );
+              let firstPicture = document.getElementById(
+                `image-${this.cards[0].id}`
+              );
               firstCard.classList.add("active");
               firstPicture.classList.add("show");
               firstPicture.classList.add("active");
             }, 50);
           } else {
-            this.cards = [{ id: 1, name: data.details, image_uris: { art_crop: "/assets/img/table-flip.gif" } }];
+            this.cards = [
+              {
+                id: 1,
+                name: data.details,
+                image_uris: { art_crop: "/assets/img/table-flip.gif" },
+              },
+            ];
             this.error = true;
           }
         });
@@ -446,11 +631,18 @@ export default {
 
       // selects the loading image
       this.cards = [
-        { id: 1, name: "Loading...", set_name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } },
+        {
+          id: 1,
+          name: "Loading...",
+          set_name: "Loading...",
+          image_uris: { art_crop: "/assets/img/loading.gif" },
+        },
       ];
 
       setTimeout(() => {
-        let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+        let firstCard = document.getElementById(
+          `format-id-${this.cards[0].id}`
+        );
         firstCard.classList.add("active");
         let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
         firstPicture.classList.add("show");
@@ -469,9 +661,13 @@ export default {
                 this.selectedCard = this.cards[0];
 
                 setTimeout(() => {
-                  let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+                  let firstCard = document.getElementById(
+                    `format-id-${this.cards[0].id}`
+                  );
                   firstCard.classList.add("active");
-                  let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+                  let firstPicture = document.getElementById(
+                    `image-${this.cards[0].id}`
+                  );
                   firstPicture.classList.add("show");
                   firstPicture.classList.add("active");
                 }, 60);
@@ -484,7 +680,8 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if (data.card_faces) {
-            this.inputParams.profile_picture = data.card_faces[0]["image_uris"]["art_crop"];
+            this.inputParams.profile_picture =
+              data.card_faces[0]["image_uris"]["art_crop"];
           } else {
             this.inputParams.profile_picture = data["image_uris"]["art_crop"];
           }
@@ -497,9 +694,11 @@ export default {
     },
     saveCard: function () {
       if (this.selectedCard.card_faces) {
-        this.inputParams.profile_picture = this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
+        this.inputParams.profile_picture =
+          this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
       } else {
-        this.inputParams.profile_picture = this.selectedCard["image_uris"]["art_crop"];
+        this.inputParams.profile_picture =
+          this.selectedCard["image_uris"]["art_crop"];
       }
       this.cardInfo = this.selectedCard;
     },

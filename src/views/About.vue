@@ -1,7 +1,11 @@
 <template>
   <main id="main">
     <div class="row">
-      <div id="info" class="container d-flex flex-column align-items-center" data-aos="zoom-down">
+      <div
+        id="info"
+        class="container d-flex flex-column align-items-center"
+        data-aos="zoom-down"
+      >
         <a href="javascript:history.back()" class="btn btn-about">Go Back</a>
       </div>
     </div>
@@ -19,9 +23,11 @@
               <div class="resume-item pb-0">
                 <h4>Me</h4>
                 <p>
-                  Hello! My name is David Ryan and I built this site's frontend (display) and backend (database) from
-                  scratch. I utilized themes, Bootstrap, and other components that people have made to fully customize
-                  how this site works and how you can interact with it. I made this site because I wanted a way for
+                  Hello! My name is David Ryan and I built this site's frontend
+                  (display) and backend (database) from scratch. I utilized
+                  themes, Bootstrap, and other components that people have made
+                  to fully customize how this site works and how you can
+                  interact with it. I made this site because I wanted a way for
                   people who play Magic: the Gathering to connect.
                 </p>
                 <br />
@@ -29,8 +35,10 @@
               <div class="resume-item pb-0">
                 <h4>Context</h4>
                 <p>
-                  A "tutor" in Magic: the Gathering is a nickname for cards that let you find another card of your
-                  choice from your deck. Hence, Playgroup Tutor lets you find a playgroup or just friends!
+                  A "tutor" in Magic: the Gathering is a nickname for cards that
+                  let you find another card of your choice from your deck.
+                  Hence, Playgroup Tutor lets you find a playgroup or just
+                  friends!
                 </p>
                 <br />
               </div>
@@ -38,23 +46,34 @@
                 <h4>Tools</h4>
 
                 <p>
-                  I use several APIs, most importantly 'Turf' to find the distance between two points. This allows users
-                  to filter their search results to people who are as close to them as they wish. The other important
-                  API is the 'Scryfall' API. That lets me search for any of the 20,000+ unique Magic cards for their art
-                  (and other info). Below is another API that I've utilized - 'Mapbox'. This is just a neat way of
-                  showing where all my users are.
+                  I use several APIs, most importantly 'Turf' to find the
+                  distance between two points. This allows users to filter their
+                  search results to people who are as close to them as they
+                  wish. The other important API is the 'Scryfall' API. That lets
+                  me search for any of the 20,000+ unique Magic cards for their
+                  art (and other info). Below is another API that I've utilized
+                  - 'Mapbox'. This is just a neat way of showing where all my
+                  users are.
                 </p>
               </div>
             </section>
           </div>
           <div class="col-lg-5">
             <div class="ro">
-              <img src="assets/img/idyllic-tutor.jpeg" class="img-fluid" alt="" />
-              <p class="fst-italic float-end">Idyllic Tutor, Illustrated by Jaime Jones</p>
+              <img
+                src="assets/img/idyllic-tutor.jpeg"
+                class="img-fluid"
+                alt=""
+              />
+              <p class="fst-italic float-end">
+                Idyllic Tutor, Illustrated by Jaime Jones
+              </p>
             </div>
             <div class="ro">
               <img src="assets/img/vamp-tutor.jpeg" class="img-fluid" alt="" />
-              <p class="fst-italic float-end">Vampiric Tutor, Illustrated by Lucas Graciano</p>
+              <p class="fst-italic float-end">
+                Vampiric Tutor, Illustrated by Lucas Graciano
+              </p>
             </div>
           </div>
         </div>
@@ -68,9 +87,12 @@
           <img v-if="loading" src="/assets/img/loading.gif" alt="" />
 
           <img v-if="failedToLoad" src="/assets/img/table-flip.gif" alt="" />
-          <div id="map"></div>
+          <div id="map" v-if="!loading"></div>
           <div class="row">
-            <div class="container d-flex flex-column align-items-center" data-aos="fade-up">
+            <div
+              class="container d-flex flex-column align-items-center"
+              data-aos="fade-up"
+            >
               <a href="javascript:history.back()" class="btn btn-about">Back</a>
             </div>
           </div>
@@ -103,7 +125,10 @@ export default {
       ],
       userLocations: {
         type: "FeatureCollection",
-        crs: { type: "name", properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        crs: {
+          type: "name",
+          properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+        },
         features: [],
       },
     };
@@ -118,8 +143,17 @@ export default {
         this.users.forEach((user) => {
           this.userLocations.features.push({
             type: "Feature",
-            properties: { id: user.id, mag: 1, time: 1507425650893, felt: null, tsunami: 0 },
-            geometry: { type: "Point", coordinates: [user.longitude, user.latitude, 0.0] },
+            properties: {
+              id: user.id,
+              mag: 1,
+              time: 1507425650893,
+              felt: null,
+              tsunami: 0,
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [user.longitude, user.latitude, 0.0],
+            },
           });
         });
         // console.log("features", this.userLocations.features);
@@ -157,10 +191,26 @@ export default {
             maxzoom: 9,
             paint: {
               // Increase the heatmap weight based on frequency and property magnitude
-              "heatmap-weight": ["interpolate", ["linear"], ["get", "mag"], 0, 0, 1, 1],
+              "heatmap-weight": [
+                "interpolate",
+                ["linear"],
+                ["get", "mag"],
+                0,
+                0,
+                1,
+                1,
+              ],
               // Increase the heatmap color weight weight by zoom level
               // heatmap-intensity is a multiplier on top of heatmap-weight
-              "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 0, 1, 9, 3],
+              "heatmap-intensity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                0,
+                1,
+                9,
+                3,
+              ],
               // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
               // Begin color ramp at 0-stop with a 0-transparancy color
               // to create a blur-like effect.
@@ -182,9 +232,25 @@ export default {
                 "rgb(178,24,43)",
               ],
               // Adjust the heatmap radius by zoom level
-              "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 0, 2, 9, 20],
+              "heatmap-radius": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                0,
+                2,
+                9,
+                20,
+              ],
               // Transition from heatmap to circle layer by zoom level
-              "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
+              "heatmap-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                7,
+                1,
+                9,
+                0,
+              ],
             },
           },
           "waterway-label"
@@ -228,7 +294,15 @@ export default {
               "circle-stroke-color": "white",
               "circle-stroke-width": 1,
               // Transition from heatmap to circle layer by zoom level
-              "circle-opacity": ["interpolate", ["linear"], ["zoom"], 7, 0, 8, 1],
+              "circle-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                7,
+                0,
+                8,
+                1,
+              ],
             },
           },
           "waterway-label"
@@ -246,7 +320,12 @@ export default {
           })
           .send()
           .then((response) => {
-            if (!response || !response.body || !response.body.features || !response.body.features.length) {
+            if (
+              !response ||
+              !response.body ||
+              !response.body.features ||
+              !response.body.features.length
+            ) {
               console.error("Invalid response:");
               console.error(response);
               return;

@@ -11,7 +11,12 @@
               enter-active-class="animate__animated animate__fadeIn"
               leave-active-class="animate__animated animate__fadeOut"
             >
-              <div v-if="flash" class="alert alert-success" role="alert" id="popup">
+              <div
+                v-if="flash"
+                class="alert alert-success"
+                role="alert"
+                id="popup"
+              >
                 <i class="bi bi-emoji-smile"></i>
                 &nbsp;
                 <strong>Success!</strong>
@@ -21,15 +26,33 @@
 
             <label for="customRange1" class="form-label">
               Showing all users ({{ filteredUsers.length }}) within
-              <input type="number" style="color: blue; max-width: 50px" v-model="distance" />
+              <input
+                type="number"
+                style="color: blue; max-width: 50px"
+                v-model="distance"
+              />
               miles
             </label>
             <div>
-              <input type="range" class="form-range" id="customRange1" v-model="distance" style="max-width: 300px" />
+              <input
+                type="range"
+                class="form-range"
+                id="customRange1"
+                v-model="distance"
+                style="max-width: 300px"
+              />
             </div>
             <div class="form-check">
-              <input class="form-check-inline" type="checkbox" value="" id="any-distance" v-model="anyDistance" />
-              <label class="form-check-label" for="any-distance">Any distance ({{ rawUsers.length }})</label>
+              <input
+                class="form-check-inline"
+                type="checkbox"
+                value=""
+                id="any-distance"
+                v-model="anyDistance"
+              />
+              <label class="form-check-label" for="any-distance"
+                >Any distance ({{ rawUsers.length }})</label
+              >
             </div>
           </div>
         </div>
@@ -49,7 +72,9 @@
                 data-filter="*"
                 disabled
               />
-              <label class="form-check-label" for="all-formats">All formats</label>
+              <label class="form-check-label" for="all-formats"
+                >All formats</label
+              >
             </div>
             <hr />
             <!-- every format -->
@@ -63,7 +88,9 @@
                   id="check-Commander"
                   @click="filterFormats(!allBox)"
                 />
-                <label for="check-Commander" class="form-check-label">Commander / EDH</label>
+                <label for="check-Commander" class="form-check-label"
+                  >Commander / EDH</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -74,7 +101,9 @@
                   v-model="formats.Standard"
                   id="check-Standard"
                 />
-                <label for="check-Standard" class="form-check-label">Standard</label>
+                <label for="check-Standard" class="form-check-label"
+                  >Standard</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -85,7 +114,9 @@
                   v-model="formats.Cube"
                   id="check-Draft"
                 />
-                <label for="check-Draft" class="form-check-label">Cube / Draft</label>
+                <label for="check-Draft" class="form-check-label"
+                  >Cube / Draft</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -96,7 +127,9 @@
                   v-model="formats.Modern"
                   id="check-Modern"
                 />
-                <label for="check-Modern" class="form-check-label">Modern</label>
+                <label for="check-Modern" class="form-check-label"
+                  >Modern</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -107,7 +140,9 @@
                   v-model="formats.Pauper"
                   id="check-Pauper"
                 />
-                <label for="check-Pauper" class="form-check-label">Pauper</label>
+                <label for="check-Pauper" class="form-check-label"
+                  >Pauper</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -118,7 +153,9 @@
                   v-model="formats.Pioneer"
                   id="check-Pioneer"
                 />
-                <label for="check-Pioneer" class="form-check-label">Pioneer</label>
+                <label for="check-Pioneer" class="form-check-label"
+                  >Pioneer</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -140,7 +177,9 @@
                   v-model="formats.Historic"
                   id="check-Historic"
                 />
-                <label for="check-Historic" class="form-check-label">Historic</label>
+                <label for="check-Historic" class="form-check-label"
+                  >Historic</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -151,7 +190,9 @@
                   v-model="formats.Legacy"
                   id="check-Legacy"
                 />
-                <label for="check-Legacy" class="form-check-label">Legacy</label>
+                <label for="check-Legacy" class="form-check-label"
+                  >Legacy</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -162,7 +203,9 @@
                   v-model="formats.Vintage"
                   id="check-Vintage"
                 />
-                <label for="check-Vintage" class="form-check-label">Vintage</label>
+                <label for="check-Vintage" class="form-check-label"
+                  >Vintage</label
+                >
               </div>
             </div>
           </div>
@@ -185,7 +228,11 @@
                   </div>
                   <div class="row">
                     <div class="col-7">
-                      <img :src="user.profile_picture" alt="" class="find-friend profile-pic" />
+                      <img
+                        :src="user.profile_picture"
+                        alt=""
+                        class="find-friend profile-pic"
+                      />
                     </div>
                     <div class="col-5">
                       <span style="font-size: 20px">
@@ -194,7 +241,11 @@
                       <span id="user-id">#{{ user.id }}</span>
                     </div>
                     <div class="row">
-                      <div class="col-6" v-for="favformat in user.favoriteformats" :key="favformat.id">
+                      <div
+                        class="col-6"
+                        v-for="favformat in user.favoriteformats"
+                        :key="favformat.id"
+                      >
                         <i class="bi bi-caret-right"></i>
                         <span style="font-style: italic; font-size: 14px">
                           {{ favformat.format }}
@@ -209,11 +260,16 @@
                     {{ user.about_me }}
                     <hr />
                     <div>
-                      <div style="color: gray">Distance from you: ~{{ user.distance }} miles</div>
+                      <div style="color: gray">
+                        Distance from you: ~{{ user.distance }} miles
+                      </div>
                       <div style="color: gray">Age: {{ user.age }}</div>
                       <br />
                       <div>
-                        <button @click="addFriend(user)" class="btn btn-outline-danger">
+                        <button
+                          @click="addFriend(user)"
+                          class="btn btn-outline-danger"
+                        >
                           Friend Request {{ user.first_name }}
                         </button>
                       </div>
@@ -420,7 +476,9 @@ export default {
             });
 
             // weighs the results
-            this.originalUsers.sort((a, b) => (a.weight < b.weight ? 1 : b.weight < a.weight ? -1 : 0));
+            this.originalUsers.sort((a, b) =>
+              a.weight < b.weight ? 1 : b.weight < a.weight ? -1 : 0
+            );
 
             //two user groups lets you 'reset' your filters
             this.rawUsers = this.originalUsers;
