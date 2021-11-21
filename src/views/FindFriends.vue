@@ -59,7 +59,7 @@
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <!-- left column -->
-          <div class="col-2" id="col-left">
+          <div class="col-2">
             <h2>Filters</h2>
             <div class="form-check" @click="filterFormats(allBox)">
               <input
@@ -231,7 +231,7 @@
                       <img
                         :src="user.profile_picture"
                         alt=""
-                        class="find-friend profile-pic"
+                        class="find-friend profile-pic rounded"
                       />
                     </div>
                     <div class="col-5">
@@ -285,8 +285,6 @@
   </main>
 </template>
 
-<style></style>
-
 <script>
 import axios from "axios";
 import distance from "@turf/distance";
@@ -302,6 +300,7 @@ export default {
       allBox: true,
       rawUsers: [],
       originalUsers: [],
+      filteredIDs: [],
       anyDistance: false,
       formats: {
         all: true,
@@ -409,7 +408,7 @@ export default {
     },
     findDistance: function (user) {
       var from = [user.latitude, user.longitude];
-      var to = [localStorage.latitude, localStorage.longitude];
+      var to = [this.currentUser.latitude, this.currentUser.longitude];
       var options = { units: "miles" };
       return distance(from, to, options).toFixed(1);
     },
@@ -438,41 +437,31 @@ export default {
             });
             console.log("list of strings formats", weightedFormats);
 
-            // loop through your friends, and then filter them out from the total userbase
-            this.friends.forEach((friend) => {
-              this.originalUsers = this.originalUsers.filter((user) => {
-                user.weight = 0;
-                if (user.id === friend.id || user.id === this.currentUser.id) {
-                  // console.log("friend detected", friend);
-                } else {
-                  // console.log("test", user.favoriteformats);
-                  user.favoriteformats.forEach((format) => {
-                    // console.log(format);
-                    if (weightedFormats.includes(format.format)) {
-                      user.weight += 10;
-                    } else {
-                      user.weight -= 1;
-                    }
-                  });
-                  return user;
-                }
-              });
-            });
-
-            // same for blocked users
+            this.filteredIDs.push(this.currentUser.id);
             this.blocked.forEach((blockedUser) => {
-              this.originalUsers = this.originalUsers.filter((user) => {
-                if (user.id === blockedUser.id) {
-                  // console.log("blocked user detected", blockedUser);
-                } else {
-                  return user;
-                }
-              });
+              this.filteredIDs.push(blockedUser.id);
             });
+            this.friends.forEach((friend) => {
+              this.filteredIDs.push(friend.id);
+            });
+            console.log("bad ids", this.filteredIDs);
 
-            // calculates all the distances
-            this.originalUsers.forEach((user) => {
-              user.distance = this.findDistance(user);
+            // get rid of yourself, friends, or blocked people in your search, then find distance and add weight
+            this.originalUsers = this.originalUsers.filter((user) => {
+              user.weight = 0;
+              if (this.filteredIDs.includes(user.id)) {
+                // console.log("friend detected", friend);
+              } else {
+                user.distance = this.findDistance(user);
+                user.favoriteformats.forEach((format) => {
+                  if (weightedFormats.includes(format.format)) {
+                    user.weight += 10;
+                  } else {
+                    user.weight -= 1;
+                  }
+                });
+                return user;
+              }
             });
 
             // weighs the results
