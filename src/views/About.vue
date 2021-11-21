@@ -87,7 +87,7 @@
           <img v-if="loading" src="/assets/img/loading.gif" alt="" />
 
           <img v-if="failedToLoad" src="/assets/img/table-flip.gif" alt="" />
-          <div id="map" v-if="!loading"></div>
+          <div id="map" class="d-none"></div>
           <div class="row">
             <div
               class="container d-flex flex-column align-items-center"
@@ -163,7 +163,8 @@ export default {
       });
     },
     createMap: function () {
-      mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_API_KEY;
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibWFwcHlib2FzZGxraiIsImEiOiJja3VyMjIyOTcwNmg0MnBueXVuN3JpbHZ5In0.Rk8sqDFqh3lTE6bBbwa9_A";
 
       const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
       const map = new mapboxgl.Map({
@@ -175,6 +176,8 @@ export default {
 
       map.on("load", () => {
         this.loading = false;
+        let mapbox = document.getElementById("map");
+        mapbox.classList.remove("d-none");
         // Add a geojson point source.
         // Heatmap layers also work with a vector tile source.
         map.addSource("earthquakes", {

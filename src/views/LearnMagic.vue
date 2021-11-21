@@ -1,7 +1,10 @@
 <template>
   <main id="main">
     <div class="row">
-      <div class="container d-flex flex-column align-items-center" data-aos="zoom-down">
+      <div
+        class="container d-flex flex-column align-items-center"
+        data-aos="zoom-down"
+      >
         <a href="javascript:history.back()" class="btn btn-about">Go Back</a>
       </div>
     </div>
@@ -11,8 +14,8 @@
         <div class="section-title">
           <h2>What the heck is Magic: The Gathering?</h2>
           <p>
-            Magic: the Gathering is a trading card game where two or more players battle each other with decks of cards
-            they have collected.
+            Magic: the Gathering is a trading card game where two or more
+            players battle each other with decks of cards they have collected.
           </p>
         </div>
 
@@ -26,13 +29,15 @@
             <h3>Formats</h3>
 
             <p>
-              Before we even learn how to play Magic: the Gathering, I would like to introduce the concept of "Formats".
-              A format is unique
+              Before we even learn how to play Magic: the Gathering, I would
+              like to introduce the concept of "Formats". A format is unique
               <span class="fst-italic">way</span>
-              of playing the game. They are essentially just a set of rules to narrow down which cards you're able to
-              play with. Think of a regular deck of cards... "Poker" would be a format, and "Hearts" would be another
-              format. Before you sit down at the table with someone to play a game of cards, you'd first have to agree
-              on which game to play!
+              of playing the game. They are essentially just a set of rules to
+              narrow down which cards you're able to play with. Think of a
+              regular deck of cards... "Poker" would be a format, and "Hearts"
+              would be another format. Before you sit down at the table with
+              someone to play a game of cards, you'd first have to agree on
+              which game to play!
             </p>
           </div>
         </div>
@@ -42,10 +47,12 @@
         <div class="section-title content">
           <h3>What do formats have to do with this site?</h3>
           <p>
-            Playgroup Tutor is a way for Magic players to connect with each other. When you're looking for new friends,
-            the two most important questions you'll have to ask are "How far away is this person?" and "How do they play
-            magic?". If you only play one format (for example "Commander"), you might not want to look for people who
-            only play "Vintage".
+            Playgroup Tutor is a way for Magic players to connect with each
+            other. When you're looking for new friends, the two most important
+            questions you'll have to ask are "How far away is this person?" and
+            "How do they play magic?". If you only play one format (for example
+            "Commander"), you might not want to look for people who only play
+            "Vintage".
           </p>
         </div>
       </div>
@@ -72,9 +79,14 @@
               <h3>Formats</h3>
 
               <p>
-                As many ways to play magic, there are many resources to help learn how to play the game. This video is a
-                great starting point, as well as
-                <a href="https://magic.wizards.com/en/magic-gameplay" target="_blank_" alt="">
+                As many ways to play magic, there are many resources to help
+                learn how to play the game. This video is a great starting
+                point, as well as
+                <a
+                  href="https://magic.wizards.com/en/magic-gameplay"
+                  target="_blank_"
+                  alt=""
+                >
                   the official Magic tutorial.
                 </a>
               </p>
@@ -85,9 +97,16 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <a href="https://magic.wizards.com/en/content/commander-format" target="_blank" alt="">
+                      <a
+                        href="https://magic.wizards.com/en/content/commander-format"
+                        target="_blank"
+                        alt=""
+                      >
                         Commander / EDH
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
@@ -97,7 +116,10 @@
                         alt=""
                       >
                         Standard
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
@@ -107,19 +129,36 @@
                         alt=""
                       >
                         Cube / Draft
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="https://magic.wizards.com/en/game-info/gameplay/formats/modern" target="_blank" alt="">
+                      <a
+                        href="https://magic.wizards.com/en/game-info/gameplay/formats/modern"
+                        target="_blank"
+                        alt=""
+                      >
                         Modern
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/legacy" target="_blank" alt="">
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/legacy"
+                        target="_blank"
+                        alt=""
+                      >
                         Legacy
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                   </ul>
@@ -127,33 +166,68 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pauper" target="_blank" alt="">
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/pauper"
+                        target="_blank"
+                        alt=""
+                      >
                         Pauper
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/pioneer" target="_blank" alt="">
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/pioneer"
+                        target="_blank"
+                        alt=""
+                      >
                         Pioneer
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/brawl" target="_blank" alt="">
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/brawl"
+                        target="_blank"
+                        alt=""
+                      >
                         Brawl
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="" target="_blank" alt="https://www.magic.gg/news/what-is-the-historic-format">
+                      <a
+                        href=""
+                        target="_blank"
+                        alt="https://www.magic.gg/news/what-is-the-historic-format"
+                      >
                         Historic
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                     <li>
-                      <a href="http://magic.wizards.com/en/game-info/gameplay/formats/vintage" target="_blank" alt="">
+                      <a
+                        href="http://magic.wizards.com/en/game-info/gameplay/formats/vintage"
+                        target="_blank"
+                        alt=""
+                      >
                         Vintage
-                        <i style="color: black" class="bi bi-box-arrow-in-up-right"></i>
+                        <i
+                          style="color: black"
+                          class="bi bi-box-arrow-in-up-right"
+                        ></i>
                       </a>
                     </li>
                   </ul>
@@ -171,7 +245,10 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Facts about Magic</h2>
-          <p>Magic: the Gathering is immensely popular, complex, and most importantly - fun!</p>
+          <p>
+            Magic: the Gathering is immensely popular, complex, and most
+            importantly - fun!
+          </p>
         </div>
 
         <div class="row counters">
@@ -217,7 +294,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="container d-flex flex-column align-items-center" data-aos="fade-up">
+        <div
+          class="container d-flex flex-column align-items-center"
+          data-aos="fade-up"
+        >
           <a href="javascript:history.back()" class="btn btn-about">Back</a>
         </div>
       </div>

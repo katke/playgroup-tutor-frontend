@@ -1,14 +1,21 @@
 <template>
   <div id="create">
     <main id="main">
-      <section class="container d-flex flex-column align-items-center" data-aos="fade-up">
+      <section
+        class="container d-flex flex-column align-items-center"
+        data-aos="fade-up"
+      >
         <div class="container" id="users-container">
           <div class="row">
             <div class="col-4" id="col-left">
               <div class="section-title">
                 <h2>Your friends</h2>
               </div>
-              <div class="row d-flex align-items-center" v-for="friend in $parent.friends" :key="friend.id">
+              <div
+                class="row d-flex align-items-center"
+                v-for="friend in $parent.friends"
+                :key="friend.id"
+              >
                 <div class="col-2">
                   <button
                     class="btn btn-outline-danger"
@@ -21,7 +28,11 @@
                   </button>
                 </div>
                 <div class="col-6">
-                  <img :src="friend.profile_picture" alt="" class="find-friend profile-pic" />
+                  <img
+                    :src="friend.profile_picture"
+                    alt=""
+                    class="find-friend profile-pic"
+                  />
                 </div>
                 <div class="col-4">
                   {{ friend.first_name }}
@@ -37,7 +48,12 @@
               <div class="section-title">
                 <h2>Friend Requests</h2>
               </div>
-              <div v-if="friendRequests.length === 0" class="d-flex justify-content-center">No friend requests!</div>
+              <div
+                v-if="friendRequests.length === 0"
+                class="d-flex justify-content-center"
+              >
+                No friend requests!
+              </div>
               <div
                 v-for="request in friendRequests"
                 v-bind:key="request.id"
@@ -49,18 +65,37 @@
                   role="alert"
                   :id="`accept-${request.requester.id}`"
                 >
-                  <h5 style="text-align: center">Added {{ request.requester.first_name }} as a friend!</h5>
+                  <h5 style="text-align: center">
+                    Added {{ request.requester.first_name }} as a friend!
+                  </h5>
                   Go ahead and send them a message (bottom right button)
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
                 </div>
                 <div
-                  class="alert alert-secondary alert-dismissible fade show d-none"
+                  class="
+                    alert alert-secondary alert-dismissible
+                    fade
+                    show
+                    d-none
+                  "
                   role="alert"
                   :id="`ignore-${request.requester.id}`"
                 >
-                  <h5 style="text-align: center">Ignored {{ request.requester.first_name }}'s request</h5>
+                  <h5 style="text-align: center">
+                    Ignored {{ request.requester.first_name }}'s request
+                  </h5>
 
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
                 </div>
                 <div
                   class="alert alert-danger alert-dismissible fade show d-none"
@@ -68,16 +103,29 @@
                   :id="`block-${request.requester.id}`"
                 >
                   <h5 style="text-align: center">
-                    {{ request.requester.first_name }} is blocked from sending you messages or requests.
+                    {{ request.requester.first_name }} is blocked from sending
+                    you messages or requests.
                   </h5>
 
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
                 </div>
                 <!-- end alerts -->
 
                 <!-- friend requester user -->
-                <div class="container d-flex flex-column align-items-center" :id="`user-${request.requester.id}`">
-                  <img :src="request.requester.profile_picture" alt="" id="profile-pic" />
+                <div
+                  class="container d-flex flex-column align-items-center"
+                  :id="`user-${request.requester.id}`"
+                >
+                  <img
+                    :src="request.requester.profile_picture"
+                    alt=""
+                    id="profile-pic"
+                  />
                   <div>
                     {{ request.requester.first_name }}
                     <span id="user-id">#{{ request.requester.id }}</span>
@@ -85,10 +133,18 @@
                   <div>
                     {{ request.requester.about_me }}
                   </div>
-                  <div style="color: gray">Distance from you: ~{{ request.requester.distance }} miles</div>
-                  <div style="color: gray">Age: {{ request.requester.age }}</div>
+                  <div style="color: gray">
+                    Distance from you: ~{{ request.requester.distance }} miles
+                  </div>
+                  <div style="color: gray">
+                    Age: {{ request.requester.age }}
+                  </div>
                   <div>
-                    <button @click="acceptRequest(request)" class="btn btn-outline-success" type="button">
+                    <button
+                      @click="acceptRequest(request)"
+                      class="btn btn-outline-success"
+                      type="button"
+                    >
                       Accept Friend Request
                       <i class="bi bi-check"></i>
                     </button>
@@ -102,7 +158,10 @@
                       <i class="bi bi-x-circle-fill"></i>
                     </button>
                   </div>
-                  <li v-for="format in request.requester.favoriteformats" v-bind:key="`format-${format.id}`">
+                  <li
+                    v-for="format in request.requester.favoriteformats"
+                    v-bind:key="`format-${format.id}`"
+                  >
                     {{ format.format }}
                   </li>
                   <br />
@@ -116,12 +175,25 @@
       </section>
 
       <!-- Friend Modal -->
-      <div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="friendModalLabel" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="friendModal"
+        tabindex="-1"
+        aria-labelledby="friendModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered modal-sm">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="friendModalLabel">Do you want to un-friend, or block this user?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="friendModalLabel">
+                Do you want to un-friend, or block this user?
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-footer">
               <button
@@ -161,7 +233,12 @@
               <h5 class="modal-title" id="blockIgnoreModalLabel">
                 Do you want to ignore the request, or block this user?
               </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-footer">
               <button
@@ -276,7 +353,10 @@ export default {
         let theseRelationships = response.data;
         theseRelationships.forEach((relationship) => {
           // console.log(relationship);
-          if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
+          if (
+            relationship.responder_id === friend.id ||
+            relationship.requester_id === friend.id
+          ) {
             // console.log("found the relationship", relationship);
             axios.delete(`/relationships/${relationship.id}`).then(() => {
               // console.log(response);
@@ -293,13 +373,18 @@ export default {
         let theseRelationships = response.data;
         theseRelationships.forEach((relationship) => {
           // console.log(relationship);
-          if (relationship.responder_id === friend.id || relationship.requester_id === friend.id) {
+          if (
+            relationship.responder_id === friend.id ||
+            relationship.requester_id === friend.id
+          ) {
             // console.log("found the relationship", relationship);
             let params = { status: "Blocked" };
-            axios.patch(`/relationships/${relationship.id}`, params).then(() => {
-              // console.log(response);
-              this.$parent.importFriends();
-            });
+            axios
+              .patch(`/relationships/${relationship.id}`, params)
+              .then(() => {
+                // console.log(response);
+                this.$parent.importFriends();
+              });
           }
         });
       });

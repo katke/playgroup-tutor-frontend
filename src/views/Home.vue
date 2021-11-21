@@ -4,10 +4,22 @@
     <section id="hero">
       <div class="container">
         <div class="row">
-          <div class="d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-            <h1 class="d-flex align-items-center" style="font-size: 65px" id="splash-text">Playgroup Tutor</h1>
+          <div
+            class="d-flex flex-column align-items-center"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <h1
+              class="d-flex align-items-center"
+              style="font-size: 65px"
+              id="splash-text"
+            >
+              Playgroup Tutor
+            </h1>
             <br />
-            <h2 style="font-size: 28px">Find nearby Magic: the Gathering players</h2>
+            <h2 style="font-size: 28px">
+              Find nearby Magic: the Gathering players
+            </h2>
             <h2 style="font-size: 28px">Form new playgroups</h2>
             <br />
             <form v-on:submit.prevent="signIn()">
@@ -21,7 +33,9 @@
                       id="EmailForm"
                       v-model="inputParams.email"
                     />
-                    <div class="invalid-feedback">Invalid email or password.</div>
+                    <div class="invalid-feedback">
+                      Invalid email or password.
+                    </div>
                     <div class="valid-feedback"></div>
                   </div>
                   <div class="col">
@@ -37,10 +51,14 @@
                   </div>
                 </div>
               </div>
-              <button class="d-none">This is my hidden button to allow 'enter' to log you in</button>
+              <button class="d-none">
+                This is my hidden button to allow 'enter' to log you in
+              </button>
             </form>
             <button @click="signIn()" class="btn-about">Log in</button>
-            <button @click="showCreateAccount()" class="btn-about">Create Account</button>
+            <button @click="showCreateAccount()" class="btn-about">
+              Create Account
+            </button>
           </div>
         </div>
       </div>
@@ -73,12 +91,16 @@ export default {
       axios
         .post("/sessions", this.inputParams)
         .then((response) => {
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
           localStorage.setItem("email", response.data.email);
           localStorage.setItem("first_name", response.data.first_name);
-          localStorage.setItem("profile_picture", response.data.profile_picture);
+          localStorage.setItem(
+            "profile_picture",
+            response.data.profile_picture
+          );
           localStorage.setItem("latitude", response.data.latitude);
           localStorage.setItem("longitude", response.data.longitude);
           this.$parent.loginCheck();

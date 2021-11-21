@@ -14,21 +14,38 @@
               <div class="row">
                 <div class="col-12">
                   <h3><strong>Profile Picture:</strong></h3>
-                  <img v-bind:src="user.profile_picture" alt="" id="profile-pic" class="img-fluid centered-element" />
+                  <img
+                    v-bind:src="user.profile_picture"
+                    alt=""
+                    id="profile-pic"
+                    class="img-fluid centered-element"
+                  />
                   <div v-if="cardInfo.name">
                     <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
                       {{ cardInfo.name }}
                     </a>
-                    <span style="font-style: italic" class="float-end">Artist: {{ cardInfo.artist }}</span>
+                    <span style="font-style: italic" class="float-end"
+                      >Artist: {{ cardInfo.artist }}</span
+                    >
                   </div>
                   <div>
                     <hr />
-                    <form v-on:submit.prevent="scryfallSearch(scryfallNameField)">
+                    <form
+                      v-on:submit.prevent="scryfallSearch(scryfallNameField)"
+                    >
                       <strong>Search for your favorite card...</strong>
                       <div class="input-group">
-                        <input type="text" v-model="scryfallNameField" class="form-control" />
+                        <input
+                          type="text"
+                          v-model="scryfallNameField"
+                          class="form-control"
+                        />
                         <div class="input-group-append">
-                          <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardList">
+                          <button
+                            class="btn btn-outline-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#cardList"
+                          >
                             Search
                           </button>
                         </div>
@@ -96,7 +113,10 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="btn btn-secondary centered-element" @click="randomScryfall()">
+                  <button
+                    class="btn btn-secondary centered-element"
+                    @click="randomScryfall()"
+                  >
                     Or a random card!
                   </button>
                 </div>
@@ -113,12 +133,27 @@
               <div v-if="editing.email" class="input-group">
                 <h3>Email:</h3>
 
-                <h3><input v-model="user.email" class="form-control" type="text" id="emailForm" /></h3>
+                <h3>
+                  <input
+                    v-model="user.email"
+                    class="form-control"
+                    type="text"
+                    id="emailForm"
+                  />
+                </h3>
                 <div class="input-group-prepend">
-                  <button type="button" class="btn btn-success" @click="saveEdit(`email`)">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    @click="saveEdit(`email`)"
+                  >
                     <i class="bi bi-check" style="color: white"></i>
                   </button>
-                  <button type="button" class="btn btn-danger" @click="disableEditing(`email`)">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    @click="disableEditing(`email`)"
+                  >
                     <i class="bi bi-x" style="color: white"></i>
                   </button>
                 </div>
@@ -129,65 +164,119 @@
                 <div class="col-lg-6">
                   <ul>
                     <li>
-                      <span v-if="!editing.first_name" @click="showUpdate(`first_name`)">
+                      <span
+                        v-if="!editing.first_name"
+                        @click="showUpdate(`first_name`)"
+                      >
                         <strong>First Name:</strong>
                         {{ user.first_name }}
                       </span>
                       <div v-if="editing.first_name" class="input-group">
                         <strong>First Name:</strong>
-                        <input v-model="user.first_name" type="text" class="form-control" id="first_nameForm" />
+                        <input
+                          v-model="user.first_name"
+                          type="text"
+                          class="form-control"
+                          id="first_nameForm"
+                        />
                         <div class="input-group-prepend">
-                          <button type="button" class="btn btn-success" @click="saveEdit(`first_name`)">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="saveEdit(`first_name`)"
+                          >
                             <i class="bi bi-check" style="color: white"></i>
                           </button>
-                          <button type="button" class="btn btn-danger" @click="disableEditing(`first_name`)">
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="disableEditing(`first_name`)"
+                          >
                             <i class="bi bi-x" style="color: white"></i>
                           </button>
                         </div>
-                        <div class="invalid-feedback">First name can't be blank</div>
+                        <div class="invalid-feedback">
+                          First name can't be blank
+                        </div>
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                     </li>
                     <li>
                       <!-- need to make the other forms just like the first name one ^ -->
-                      <span v-if="!editing.zipcode" @click="showUpdate(`zipcode`)">
+                      <span
+                        v-if="!editing.zipcode"
+                        @click="showUpdate(`zipcode`)"
+                      >
                         <strong>ZIP Code:</strong>
                         {{ user.zipcode }}
                       </span>
                       <div v-if="editing.zipcode" class="input-group">
                         <strong>ZIP Code:</strong>
 
-                        <input v-model="user.zipcode" type="text" class="form-control" id="zipcodeForm" />
+                        <input
+                          v-model="user.zipcode"
+                          type="text"
+                          class="form-control"
+                          id="zipcodeForm"
+                        />
                         <div class="input-group-prepend">
-                          <button type="button" class="btn btn-success" @click="saveEdit(`zipcode`)">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="saveEdit(`zipcode`)"
+                          >
                             <i class="bi bi-check" style="color: white"></i>
                           </button>
-                          <button type="button" class="btn btn-danger" @click="disableEditing(`zipcode`)">
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="disableEditing(`zipcode`)"
+                          >
                             <i class="bi bi-x" style="color: white"></i>
                           </button>
                         </div>
-                        <div class="invalid-feedback">"ZIP code must be a valid 5 digit entry"</div>
+                        <div class="invalid-feedback">
+                          "ZIP code must be a valid 5 digit entry"
+                        </div>
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                     </li>
 
                     <li>
-                      <span v-if="!editing.about_me" @click="showUpdate(`about_me`)">
+                      <span
+                        v-if="!editing.about_me"
+                        @click="showUpdate(`about_me`)"
+                      >
                         <strong>A little about yourself:</strong>
                         {{ user.about_me }}
                       </span>
                       <div v-if="editing.about_me">
                         <strong>A little about yourself:</strong>
-                        <textarea v-model="user.about_me" class="form-control" rows="7" id="about_meForm" />
+                        <textarea
+                          v-model="user.about_me"
+                          class="form-control"
+                          rows="7"
+                          id="about_meForm"
+                        />
                         <div class="input-group-prepend">
-                          <button type="button" class="btn btn-success" @click="saveEdit(`about_me`)">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="saveEdit(`about_me`)"
+                          >
                             <i class="bi bi-check" style="color: white"></i>
                           </button>
-                          <button type="button" class="btn btn-danger" @click="disableEditing(`about_me`)">
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="disableEditing(`about_me`)"
+                          >
                             <i class="bi bi-x" style="color: white"></i>
                           </button>
                         </div>
-                        <div class="invalid-feedback">About me can't be blank</div>
+                        <div class="invalid-feedback">
+                          About me can't be blank
+                        </div>
                         <div class="valid-feedback">Looks good!</div>
                       </div>
                     </li>
@@ -202,12 +291,25 @@
                       </span>
                       <div v-if="editing.age" class="input-group">
                         <strong>Age:</strong>
-                        <input v-model="user.age" type="number" class="form-control" id="ageForm" />
+                        <input
+                          v-model="user.age"
+                          type="number"
+                          class="form-control"
+                          id="ageForm"
+                        />
                         <div class="input-group-prepend">
-                          <button type="button" class="btn btn-success" @click="saveEdit(`age`)">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="saveEdit(`age`)"
+                          >
                             <i class="bi bi-check" style="color: white"></i>
                           </button>
-                          <button type="button" class="btn btn-danger" @click="disableEditing(`age`)">
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="disableEditing(`age`)"
+                          >
                             <i class="bi bi-x" style="color: white"></i>
                           </button>
                         </div>
@@ -217,7 +319,10 @@
                       <div>
                         <strong>Favorite Formats:</strong>
                       </div>
-                      <div v-for="format in favorite_formats" v-bind:key="format.name">
+                      <div
+                        v-for="format in favorite_formats"
+                        v-bind:key="format.name"
+                      >
                         <div class="form-check">
                           <input
                             class="form-check-input"
@@ -227,7 +332,11 @@
                             v-bind:id="format.name"
                             v-model="format.checked"
                           />
-                          <label class="form-check-label" v-bind:for="format.name">{{ format.name }}</label>
+                          <label
+                            class="form-check-label"
+                            v-bind:for="format.name"
+                            >{{ format.name }}</label
+                          >
                         </div>
                       </div>
                     </li>
@@ -242,15 +351,35 @@
     </main>
 
     <!-- Modal -->
-    <div class="modal fade" id="cardList" tabindex="-1" aria-labelledby="cardListLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="cardList"
+      tabindex="-1"
+      aria-labelledby="cardListLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="cardListLabel" v-if="!error">Which card did you mean?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="cardListLabel" v-if="!error">
+              Which card did you mean?
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body" style="height: 60vh">
-            <div class="container-fluid d-flex flex-column flex-grow-1 overflow-hidden">
+            <div
+              class="
+                container-fluid
+                d-flex
+                flex-column flex-grow-1
+                overflow-hidden
+              "
+            >
               <div class="row flex-grow-1 overflow-hidden" id="card-picker">
                 <div class="col-5 overflow-auto py-2">
                   <div
@@ -321,7 +450,13 @@
                         id="picture-preview"
                         class="centered-element"
                       />
-                      <div style="font-style: italic" class="float-end" v-if="card.lang">Artist: {{ card.artist }}</div>
+                      <div
+                        style="font-style: italic"
+                        class="float-end"
+                        v-if="card.lang"
+                      >
+                        Artist: {{ card.artist }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -329,11 +464,26 @@
             </div>
           </div>
           <div class="modal-footer" v-if="!error">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button v-if="!showSaveButton" class="btn btn-primary" @click="scryfallFormatSearch(selectedCard.name)">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              v-if="!showSaveButton"
+              class="btn btn-primary"
+              @click="scryfallFormatSearch(selectedCard.name)"
+            >
               Next! Choose which printing...
             </button>
-            <button v-if="showSaveButton" class="btn btn-primary" @click="pictureEdit()" data-bs-dismiss="modal">
+            <button
+              v-if="showSaveButton"
+              class="btn btn-primary"
+              @click="pictureEdit()"
+              data-bs-dismiss="modal"
+            >
               Save it!
             </button>
           </div>
@@ -375,16 +525,61 @@ export default {
         zipcode: false,
       },
       favorite_formats: [
-        { id: 1, name: "Commander / EDH", checked: false, user_id: localStorage.user_id },
-        { id: 2, name: "Standard", checked: false, user_id: localStorage.user_id },
-        { id: 3, name: "Cube / Draft", checked: false, user_id: localStorage.user_id },
-        { id: 4, name: "Modern", checked: false, user_id: localStorage.user_id },
-        { id: 5, name: "Pauper", checked: false, user_id: localStorage.user_id },
-        { id: 6, name: "Pioneer", checked: false, user_id: localStorage.user_id },
+        {
+          id: 1,
+          name: "Commander / EDH",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 2,
+          name: "Standard",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 3,
+          name: "Cube / Draft",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 4,
+          name: "Modern",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 5,
+          name: "Pauper",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 6,
+          name: "Pioneer",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
         { id: 7, name: "Brawl", checked: false, user_id: localStorage.user_id },
-        { id: 8, name: "Historic", checked: false, user_id: localStorage.user_id },
-        { id: 9, name: "Legacy", checked: false, user_id: localStorage.user_id },
-        { id: 10, name: "Vintage", checked: false, user_id: localStorage.user_id },
+        {
+          id: 8,
+          name: "Historic",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 9,
+          name: "Legacy",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
+        {
+          id: 10,
+          name: "Vintage",
+          checked: false,
+          user_id: localStorage.user_id,
+        },
       ],
       colors: [
         { id: 1, name: "White", img: "assets/img/icons/W.png" },
@@ -413,26 +608,32 @@ export default {
   },
   methods: {
     importCurrentUser: function () {
-      this.user = axios.get(`/users/${localStorage.user_id}`).then((response) => {
-        this.user = response.data;
-        // regex is tough, but this lets you find the exact card upon loading
-        fetch(`https://api.scryfall.com/cards/${/.*\/\b(.*).jpg/.exec(this.user.profile_picture)[1]}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.cardInfo = data;
-          });
-        axios.get("/favoriteformats").then((response) => {
-          this.favorite_formats.forEach((format) => {
-            response.data.forEach((myformat) => {
-              if (format.name === myformat.format) {
-                format.checked = true;
-                format.id = myformat.id;
-                format.user_id = localStorage.user_id;
-              }
+      this.user = axios
+        .get(`/users/${localStorage.user_id}`)
+        .then((response) => {
+          this.user = response.data;
+          // regex is tough, but this lets you find the exact card upon loading
+          fetch(
+            `https://api.scryfall.com/cards/${
+              /.*\/\b(.*).jpg/.exec(this.user.profile_picture)[1]
+            }`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              this.cardInfo = data;
+            });
+          axios.get("/favoriteformats").then((response) => {
+            this.favorite_formats.forEach((format) => {
+              response.data.forEach((myformat) => {
+                if (format.name === myformat.format) {
+                  format.checked = true;
+                  format.id = myformat.id;
+                  format.user_id = localStorage.user_id;
+                }
+              });
             });
           });
         });
-      });
     },
     showUpdate: function (field) {
       this.editing[field] = true;
@@ -469,7 +670,13 @@ export default {
       });
 
       // selects the loading image
-      this.cards = [{ id: 1, name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } }];
+      this.cards = [
+        {
+          id: 1,
+          name: "Loading...",
+          image_uris: { art_crop: "/assets/img/loading.gif" },
+        },
+      ];
       setTimeout(() => {
         let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
         let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
@@ -493,14 +700,24 @@ export default {
             this.selectedCard = this.cards[0];
 
             setTimeout(() => {
-              let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
-              let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+              let firstCard = document.getElementById(
+                `card-id-${this.cards[0].id}`
+              );
+              let firstPicture = document.getElementById(
+                `image-${this.cards[0].id}`
+              );
               firstCard.classList.add("active");
               firstPicture.classList.add("show");
               firstPicture.classList.add("active");
             }, 50);
           } else {
-            this.cards = [{ id: 1, name: data.details, image_uris: { art_crop: "/assets/img/table-flip.gif" } }];
+            this.cards = [
+              {
+                id: 1,
+                name: data.details,
+                image_uris: { art_crop: "/assets/img/table-flip.gif" },
+              },
+            ];
             this.error = true;
           }
         });
@@ -516,11 +733,18 @@ export default {
 
       // selects the loading image
       this.cards = [
-        { id: 1, name: "Loading...", set_name: "Loading...", image_uris: { art_crop: "/assets/img/loading.gif" } },
+        {
+          id: 1,
+          name: "Loading...",
+          set_name: "Loading...",
+          image_uris: { art_crop: "/assets/img/loading.gif" },
+        },
       ];
 
       setTimeout(() => {
-        let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+        let firstCard = document.getElementById(
+          `format-id-${this.cards[0].id}`
+        );
         firstCard.classList.add("active");
         let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
         firstPicture.classList.add("show");
@@ -539,9 +763,13 @@ export default {
                 this.selectedCard = this.cards[0];
 
                 setTimeout(() => {
-                  let firstCard = document.getElementById(`format-id-${this.cards[0].id}`);
+                  let firstCard = document.getElementById(
+                    `format-id-${this.cards[0].id}`
+                  );
                   firstCard.classList.add("active");
-                  let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
+                  let firstPicture = document.getElementById(
+                    `image-${this.cards[0].id}`
+                  );
                   firstPicture.classList.add("show");
                   firstPicture.classList.add("active");
                 }, 60);
@@ -567,7 +795,8 @@ export default {
     },
     pictureEdit: function () {
       if (this.selectedCard.card_faces) {
-        this.user.profile_picture = this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
+        this.user.profile_picture =
+          this.selectedCard.card_faces[0]["image_uris"]["art_crop"];
       } else {
         this.user.profile_picture = this.selectedCard["image_uris"]["art_crop"];
       }
