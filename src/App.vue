@@ -290,9 +290,9 @@ export default {
         styles: {
           // width: "75px",
           // height: "75px",
-          overflow: "hidden",
+          objectFit: "cover",
           borderRadius: "50%",
-          width: "90%",
+          width: "75px",
           height: "75px",
         },
       },
