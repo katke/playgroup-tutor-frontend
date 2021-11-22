@@ -18,9 +18,8 @@
             </h1>
             <br />
             <h2 style="font-size: 28px">
-              Find nearby Magic: the Gathering players
+              Find nearby Magic: the Gathering players and form new playgroups
             </h2>
-            <h2 style="font-size: 28px">Form new playgroups</h2>
             <br />
             <form v-on:submit.prevent="signIn()">
               <div class="blurry_box">

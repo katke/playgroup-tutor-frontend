@@ -14,7 +14,7 @@
               <div class="row mb-3">
                 <div class="col-12">
                   <div class="content">
-                    <h3>Profile Picture</h3>
+                    <h3>Profile Picture:</h3>
                   </div>
                   <div>
                     <a :href="cardInfo.scryfall_uri" target="_blank" alt="">
@@ -137,14 +137,17 @@
               <div v-if="editing.email" class="input-group">
                 <h3>Email:</h3>
 
-                <h3>
-                  <input
-                    v-model="user.email"
-                    class="form-control"
-                    type="text"
-                    id="emailForm"
-                  />
-                </h3>
+                <input
+                  v-model="user.email"
+                  class="form-control"
+                  type="text"
+                  id="emailForm"
+                />
+                <div class="invalid-feedback">
+                  For demo purposes, you cannot change this account's
+                  email/password.
+                </div>
+                <div class="valid-feedback">Looks good!</div>
                 <div class="input-group-prepend">
                   <button
                     type="button"
@@ -162,7 +165,47 @@
                   </button>
                 </div>
               </div>
-              <h3>Password: ********</h3>
+
+              <div v-if="!editing.password" @click="showUpdate(`password`)">
+                <h3>Password: ********</h3>
+              </div>
+
+              <div v-if="editing.password" class="input-group">
+                <h3>Password:</h3>
+
+                <input
+                  placeholder="password"
+                  class="form-control"
+                  type="text"
+                  id="passwordForm"
+                />
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    @click="saveEdit(`password`)"
+                  >
+                    <i class="bi bi-check" style="color: white"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    @click="disableEditing(`password`)"
+                  >
+                    <i class="bi bi-x" style="color: white"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback">
+                  For demo purposes, you cannot change this account's
+                  email/password.
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+
+              <!-- <p id="user-id" v-if="user.id === 1">
+                (for demo purposes, you cannot change this account's
+                email/password)
+              </p> -->
               <hr />
               <div class="row">
                 <div class="col-lg-6">
@@ -216,13 +259,15 @@
                       </span>
                       <div v-if="editing.zipcode" class="input-group">
                         <strong>ZIP Code:</strong>
-
                         <input
                           v-model="user.zipcode"
                           type="text"
                           class="form-control"
                           id="zipcodeForm"
                         />
+                        <div class="invalid-feedback">
+                          "ZIP code must be a valid 5 digit entry"
+                        </div>
                         <div class="input-group-prepend">
                           <button
                             type="button"
@@ -239,10 +284,6 @@
                             <i class="bi bi-x" style="color: white"></i>
                           </button>
                         </div>
-                        <div class="invalid-feedback">
-                          "ZIP code must be a valid 5 digit entry"
-                        </div>
-                        <div class="valid-feedback">Looks good!</div>
                       </div>
                     </li>
                     <li>
@@ -291,6 +332,7 @@
                           class="form-control"
                           rows="7"
                           id="about_meForm"
+                          placeholder="Never tell anyone your full name or address. You should always meet strangers at public places like game stores, libraries, or bars."
                         />
                         <div class="input-group-prepend">
                           <button
@@ -526,6 +568,7 @@ export default {
         email: false,
         first_name: false,
         zipcode: false,
+        password: false,
       },
       favorite_formats: [
         {
@@ -648,19 +691,27 @@ export default {
       });
     },
     saveEdit: function (field) {
-      axios
-        .patch(`/users/${localStorage.user_id}`, this.user)
-        .then(() => {
-          this.editing[field] = false;
-        })
-        .catch((error) => {
-          console.log(error);
-          let form = document.getElementById(`${field}Form`);
-          if (form) {
-            form.classList.add("is-invalid");
-            form.classList.remove("is-valid");
-          }
-        });
+      if ((this.user.id === 108 && field == "email") || field == "password") {
+        let form = document.getElementById(`${field}Form`);
+        if (form) {
+          form.classList.add("is-invalid");
+          form.classList.remove("is-valid");
+        }
+      } else {
+        axios
+          .patch(`/users/${localStorage.user_id}`, this.user)
+          .then(() => {
+            this.editing[field] = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            let form = document.getElementById(`${field}Form`);
+            if (form) {
+              form.classList.add("is-invalid");
+              form.classList.remove("is-valid");
+            }
+          });
+      }
     },
     scryfallSearch: function (cardName) {
       this.error = false;

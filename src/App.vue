@@ -288,9 +288,12 @@ export default {
         others: true,
         myself: true,
         styles: {
-          width: "75px",
-          height: "60px",
-          // borderRadius: "50%",
+          // width: "75px",
+          // height: "75px",
+          overflow: "hidden",
+          borderRadius: "50%",
+          width: "90%",
+          height: "75px",
         },
       },
       timestampConfig: {
