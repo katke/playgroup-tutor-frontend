@@ -126,6 +126,11 @@ h6 {
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
+  transition: 0.3s;
+}
+#header .logo:hover {
+  color: #000000;
+  text-shadow: -1px 0 rgb(34, 34, 34);
 }
 #header .logo a {
   color: #222222;

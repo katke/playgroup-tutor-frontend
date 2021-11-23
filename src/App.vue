@@ -11,7 +11,9 @@
         "
       >
         <h1 class="logo me-auto me-lg-0" @click="scrollToTop()">
-          Playgroup Tutor
+          <a href="go to the top of the page" onClick="return false;">
+            Playgroup Tutor
+          </a>
         </h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
           <!-- ======= Desktop Navbar ======= -->
