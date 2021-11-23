@@ -62,7 +62,7 @@
             <div class="ro">
               <img
                 src="assets/img/idyllic-tutor.jpeg"
-                class="img-fluid"
+                class="img-fluid rounded"
                 alt=""
               />
               <p class="fst-italic float-end">
@@ -70,7 +70,11 @@
               </p>
             </div>
             <div class="ro">
-              <img src="assets/img/vamp-tutor.jpeg" class="img-fluid" alt="" />
+              <img
+                src="assets/img/vamp-tutor.jpeg"
+                class="img-fluid rounded"
+                alt=""
+              />
               <p class="fst-italic float-end">
                 Vampiric Tutor, Illustrated by Lucas Graciano
               </p>
@@ -87,7 +91,7 @@
           <!-- <img v-if="loading" src="/assets/img/loading.gif" alt="" /> -->
 
           <img v-if="failedToLoad" src="/assets/img/table-flip.gif" alt="" />
-          <div id="map"></div>
+          <div id="map" class="rounded"></div>
           <div class="row">
             <div
               class="container d-flex flex-column align-items-center"

@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!-- hello from windows! -->
-
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top" v-if="isLoggedIn">
       <div
@@ -290,7 +288,6 @@ export default {
         styles: {
           // width: "75px",
           // height: "75px",
-          objectFit: "cover",
           borderRadius: "50%",
           width: "75px",
           height: "75px",

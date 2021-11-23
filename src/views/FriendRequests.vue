@@ -31,7 +31,7 @@
                   <img
                     :src="friend.profile_picture"
                     alt=""
-                    class="find-friend profile-pic"
+                    class="find-friend profile-pic rounded"
                   />
                 </div>
                 <div class="col-4">
@@ -125,6 +125,7 @@
                     :src="request.requester.profile_picture"
                     alt=""
                     id="profile-pic"
+                    class="find-friend profile-pic rounded"
                   />
                   <div>
                     {{ request.requester.first_name }}

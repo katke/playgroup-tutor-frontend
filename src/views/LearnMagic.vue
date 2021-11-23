@@ -20,8 +20,8 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-7">
-            <img src="assets/img/example-hand.jpeg" class="img-fluid" alt="" />
+          <div class="col-lg-7 pt-4 pt-lg-0">
+            <img src="assets/img/example-hand.png" class="img-fluid" alt="" />
             <p class="fst-italic">An example of some Magic cards</p>
           </div>
 
@@ -72,6 +72,7 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
+                class="rounded"
               ></iframe>
             </div>
 
