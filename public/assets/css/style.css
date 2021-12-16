@@ -1,3 +1,12 @@
+/* 
+  It's less ideal to have a single giant css file. In the past, my teams have used things like 
+  CSS Modules and/or also CSS Module Scripts, which were great for being able to break up styles into
+  different spreadsheets, which made it easier to find which styles apply to which page, and 
+  prevent accidental class name collisions. As far as giant stylesheets go though, this one is really 
+  nicely organized and clearly still gets the job done. Just something to look into 
+  if you weren't already familiar.
+
+*/
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
