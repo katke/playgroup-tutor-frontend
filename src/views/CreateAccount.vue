@@ -551,6 +551,10 @@ export default {
     }, 100);
   },
 
+   // I'm seeing a lot of setTimeouts setup in the moethods here, as well as calling other setTimeouts
+   // within the body of a current setTimeout/fetch, I'm curious what the goal/need for them is here? I think 
+   // I'm not totally following the logic, but am wondering if you're using them to get around async
+   // issues with trying to access data/the DOM before something is received/updated? That can be a code smell
   methods: {
     showLogIn: function () {
       this.$router.push("/log-in");
@@ -573,6 +577,11 @@ export default {
           image_uris: { art_crop: "/assets/img/loading.gif" },
         },
       ];
+      // I see this same setTimeout function body reappear multiple times, I would move this logic to
+      // a separate function and then just pass that function reference in setTimeout, i.e.
+      // setTimeout(setFirstCardToActive, 50);
+      // For a more long-term project, I would also collect the timeout id's and clearTimeout() once
+      // they are no longer needed
       setTimeout(() => {
         let firstCard = document.getElementById(`card-id-${this.cards[0].id}`);
         let firstPicture = document.getElementById(`image-${this.cards[0].id}`);
@@ -583,11 +592,14 @@ export default {
 
       fetch(`https://api.scryfall.com/cards/search?q=${cardName}`)
         .then((response) => response.json())
+        // It would be better practice to check response.ok first,
+        // and also to include a .catch() in the fetch chain
         .then((data) => {
           if (data.object === "list") {
             console.log("data", data);
 
             // reset all selected items
+            // This code looks like a repeat of lines 563-566 above
             let actives = document.getElementsByClassName("active");
             actives.forEach((element) => {
               element.classList.remove("active");
@@ -622,6 +634,7 @@ export default {
       this.showSaveButton = true;
 
       // reset all selected items
+      // another DRY opportunity
       let actives = document.getElementsByClassName("active");
       actives.forEach((element) => {
         element.classList.remove("active");
@@ -672,6 +685,7 @@ export default {
               });
           }, 60);
         });
+        // Don't forget a .catch()
     },
     randomScryfall: function () {
       fetch("https://api.scryfall.com/cards/random")
