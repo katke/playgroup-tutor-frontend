@@ -436,7 +436,9 @@ export default {
             profilePicture: friend.profile_picture,
           },
         ];
-
+// Could you update this endpoint to pass in the user id as a parameter
+// so you can just fetch the relevant messages from the start, rather than
+// having to filter here?
         axios.get("/my-messages").then((response) => {
           let bulkMessages = response.data.filter((message) => {
             return (
