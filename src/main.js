@@ -9,6 +9,9 @@ axios.defaults.baseURL =
     ? "http://localhost:3000"
     : "https://playgroup-tutor-api.herokuapp.com";
 var jwt = localStorage.getItem("jwt");
+// FYI local storage isn't a secure place to keep a bearer token;
+// as an example, I can get it from my browser console, then use it to 
+// look at each individual user's info with /user/${id} in postman
 if (jwt) {
   axios.defaults.headers.common["Authorization"] = "Bearer " + jwt;
 }

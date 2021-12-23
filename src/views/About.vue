@@ -167,6 +167,10 @@ export default {
       });
     },
     createMap: function () {
+      // Be wary of including access tokens in code like this. Does your account with Mapbox secure 
+      // usage of that access token in some way? I.e. restricting which domains/ip's can use it? 
+      // If so, then less of an issue, but a best practice here would be storing these type of 
+      // auth details on the server side
       mapboxgl.accessToken =
         "pk.eyJ1IjoibWFwcHlib2FzZGxraiIsImEiOiJja3VyMjIyOTcwNmg0MnBueXVuN3JpbHZ5In0.Rk8sqDFqh3lTE6bBbwa9_A";
 
@@ -178,6 +182,7 @@ export default {
         zoom: 5, // starting zoom
       });
 
+      // the map + layers looks awesome!
       map.on("load", () => {
         this.loading = false;
         // Add a geojson point source.

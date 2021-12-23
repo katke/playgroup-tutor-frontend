@@ -1,4 +1,5 @@
 <template>
+<!-- Good use of semantic html tags -->
   <main id="main">
     <section id="find-friends" class="find-friends">
       <div class="container">
@@ -24,6 +25,10 @@
               </div>
             </transition>
 
+<!-- I'm seeing a lot of inline style tags mixed in here. Not sure if this is some kind of Vue convention, but 
+if not, I would be careful about using them except when it's strictly necessary given the high specificity of 
+inline styles, and the confusion that can result from having some styles defined inline and others defined in 
+a stylesheet -->
             <label for="customRange1" class="form-label">
               Showing all users ({{ filteredUsers.length }}) within
               <input
@@ -211,6 +216,10 @@
           </div>
 
           <!-- right column -->
+
+<!-- More of a UX comment—would be a good idea to use some kind of hover cursor style on this div so it's clear
+these are clickable elements. I only learned they were interactive when inspecting the code in the browser
+and saw that it referred to collapsing.  -->
           <div class="col" id="col-right">
             <div class="row">
               <div
@@ -223,23 +232,31 @@
                 v-bind:key="user.id"
               >
                 <div class="container" id="users-container">
+                  <!-- Use CSS to generate the look you're going for here, rather than a separate row containing
+                  just a horizontal line element -->
                   <div class="row">
                     <hr />
                   </div>
                   <div class="row">
                     <div class="col-7">
+                      <!-- Make sure to include alt text -->
                       <img
                         :src="user.profile_picture"
-                        alt=""
+                        alt="" 
                         class="find-friend profile-pic rounded"
                       />
                     </div>
                     <div class="col-5">
-                      <span style="font-size: 20px">
+                      <!-- There are people who will disagree on this, but I generally prefer <p> to wrap text
+                      rather than <span> because <p> is more semantically descriptive of the element -->
+                      <span style="font-size: 20px"> 
                         {{ user.first_name }}
                       </span>
                       <span id="user-id">#{{ user.id }}</span>
                     </div>
+                    <!-- This is getting really deeply nested—these additional user format characteristics would probably be
+                    better served as an unordered list rather than using bootstrap columns. Bootstrap's grid 
+                    is amazing but as a result it can be easy to lean on it to handle positioning unnecessarily -->
                     <div class="row">
                       <div
                         class="col-6"

@@ -270,6 +270,8 @@
 
 <script>
 import axios from "axios";
+// I'm curious why you're using axios for your own api requests,
+// but fetch() for the 3rd party api requests (as in CreateAccount)
 import distance from "@turf/distance";
 
 export default {
